@@ -7,12 +7,22 @@
     <artifactId>concesionario</artifactId>
     <version>1.0</version>
 
+    
+
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <maven.compiler.source>17</maven.compiler.source>
         <maven.compiler.target>17</maven.compiler.target>
         <javafx.version>17.0.2</javafx.version> <!-- Cambia a la última versión estable si es necesario -->
     </properties>
+
+    <repositories>
+        <repository>
+            <id>mysql-repo</id>
+            <url>https://repo.mysql.com/maven2/</url>
+        </repository>
+    </repositories>
+
 
     <dependencies>
         <!-- Dependencias de JavaFX -->
@@ -34,6 +44,16 @@
             <version>5.10.0</version>
             <scope>test</scope>
         </dependency>
+
+        <dependency>
+            <groupId>mysql</groupId>
+            <artifactId>mysql-connector-java</artifactId>
+            <version>8.0.33</version>
+            <!--<scope>system</scope>
+            <systemPath>${project.basedir}/libs/mysql-connector-j-8.0.33.jar</systemPath>-->
+        </dependency>
+
+
     </dependencies>
 
     <build>
@@ -78,6 +98,23 @@
                     </archive>
                 </configuration>
             </plugin>
+
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>exec-maven-plugin</artifactId>
+                <version>3.0.0</version>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>java</goal>
+                        </goals>
+                        <configuration>
+                            <mainClass>co.edu.uniquindio.poo.connection.ProbarConexion</mainClass>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+
         </plugins>
     </build>
 </project>
