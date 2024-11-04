@@ -1,1 +1,4 @@
+co\edu\uniquindio\poo\connection\ProbarConexion.class
+co\edu\uniquindio\poo\connection\Connectionsql.class
 co\edu\uniquindio\poo\App.class
+co\edu\uniquindio\poo\Controllers\Login.class
