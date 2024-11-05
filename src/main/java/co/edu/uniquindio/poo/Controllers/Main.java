@@ -2,6 +2,7 @@ package co.edu.uniquindio.poo.Controllers;
 
 import java.io.IOException;
 
+import co.edu.uniquindio.poo.Controllers.empleados.ListarEmpleado;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -18,7 +19,7 @@ public class Main {
     private MenuBar MBMain;
 
     @FXML
-    private Menu MCerrarSesion;
+    private Menu MMiCuenta;
 
     @FXML
     private Menu MClientes;
@@ -35,10 +36,7 @@ public class Main {
     @FXML
     private Menu MVehiculos;
 
-    @FXML
-    void OnCerrarSesion(ActionEvent event) {
-
-    }
+    private ListarEmpleado listarEmpleado;
 
     @FXML
     void OnCloseSesion(ActionEvent event) {
@@ -64,4 +62,45 @@ public class Main {
         Platform.exit();
     }
 
+    @FXML
+    void OnRegistrarEmpleados(ActionEvent event) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getClassLoader().getResource("co/edu/uniquindio/poo/Views/empleados/registrarEmpleado.fxml"));
+            Parent registerRoot = loader.load();
+            
+            // Obtener la escena actual y el Stage
+            Stage stage = (Stage) MBMain.getScene().getWindow();
+            
+            // Configurar la nueva escena con la pantalla de login
+            Scene registerScene = new Scene(registerRoot);
+            stage.setScene(registerScene);
+            stage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+    }
+
+    @FXML
+    void OnListarEmpleado (ActionEvent event) {
+        try {       
+            FXMLLoader loader = new FXMLLoader(getClass().getClassLoader().getResource("co/edu/uniquindio/poo/Views/empleados/listarEmpleado.fxml"));
+            Parent listRoot = loader.load();
+
+            ListarEmpleado controller = loader.getController();
+        
+            // Llamar al método para cargar los empleados
+            controller.obtenerEmpleados();
+
+            // Obtener la escena actual y el Stage
+            Stage stage = (Stage) MBMain.getScene().getWindow();
+
+            // Configurar la nueva escena con la pantalla de login
+            Scene listScene = new Scene(listRoot);
+            stage.setScene(listScene);
+            stage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 }
