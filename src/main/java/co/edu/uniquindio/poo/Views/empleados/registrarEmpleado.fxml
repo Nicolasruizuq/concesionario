@@ -1,11 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
 <?import javafx.scene.control.Menu?>
 <?import javafx.scene.control.MenuBar?>
 <?import javafx.scene.control.MenuItem?>
-<?import javafx.scene.control.TableColumn?>
-<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.RadioButton?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.ToggleGroup?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="co.edu.uniquindio.poo.Controllers.empleados.RegistrarEmpleado">
    <children>
@@ -58,11 +62,32 @@
                </items></Menu>
         </menus>
       </MenuBar>
-      <TableView layoutX="-4.0" layoutY="382.0" prefHeight="200.0" prefWidth="882.0">
-        <columns>
-          <TableColumn prefWidth="75.0" text="C1" />
-          <TableColumn prefWidth="75.0" text="C2" />
-        </columns>
-      </TableView>
+      <Label alignment="CENTER" contentDisplay="CENTER" layoutX="320.0" layoutY="63.0" prefHeight="60.0" prefWidth="227.0" text="REGISTRAR EMPLEADO" textAlignment="CENTER" wrapText="true">
+         <font>
+            <Font name="System Bold" size="20.0" />
+         </font>
+      </Label>
+      <Label layoutX="80.0" layoutY="185.0" text="Nombre Completo:" />
+      <Label layoutX="470.0" layoutY="185.0" text="Cedula:" />
+      <Label layoutX="80.0" layoutY="240.0" text="Sexo:" />
+      <Label layoutX="470.0" layoutY="240.0" text="Dirección:" />
+      <Label layoutX="80.0" layoutY="295.0" text="Teléfono:" />
+      <Label layoutX="470.0" layoutY="295.0" text="Email:" />
+      <Label layoutX="80.0" layoutY="350.0" text="Username:" />
+      <Label layoutX="470.0" layoutY="350.0" text="Password:" />
+      <TextField fx:id="txtNombre" layoutX="189.0" layoutY="181.0" />
+      <TextField fx:id="txtCedula" layoutX="545.0" layoutY="181.0" />
+      <TextField fx:id="txtTelefono" layoutX="189.0" layoutY="291.0" />
+      <TextField fx:id="txtDireccion" layoutX="545.0" layoutY="236.0" />
+      <TextField fx:id="txtEmail" layoutX="545.0" layoutY="291.0" />
+      <TextField fx:id="txtUsername" layoutX="189.0" layoutY="346.0" />
+      <TextField fx:id="txtPassword" layoutX="547.0" layoutY="346.0" />
+      <RadioButton fx:id="rbFemenino" layoutX="182.0" layoutY="240.0" mnemonicParsing="false" text="Femenino">
+         <toggleGroup>
+            <ToggleGroup fx:id="sexoGroup" />
+         </toggleGroup></RadioButton>
+      <RadioButton fx:id="rbMasculino" layoutX="283.0" layoutY="240.0" mnemonicParsing="false" text="Masculino" toggleGroup="$sexoGroup" />
+      <ComboBox fx:id="cbTypeUser" layoutX="188.0" layoutY="401.0" prefWidth="150.0" />
+      <Label layoutX="80.0" layoutY="405.0" text="Tipo de usuario:" />
    </children>
 </AnchorPane>

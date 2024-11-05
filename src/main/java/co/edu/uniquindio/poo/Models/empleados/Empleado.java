@@ -16,6 +16,8 @@ public class Empleado {
     private StringProperty email;
     private StringProperty address;
     private StringProperty telephone;
+    private StringProperty password;
+    private StringProperty userType;
 
     // Constructor vacío
     public Empleado() {
@@ -29,9 +31,35 @@ public class Empleado {
         this.email = new SimpleStringProperty();
         this.address = new SimpleStringProperty();
         this.telephone = new SimpleStringProperty();
+        this.password = new SimpleStringProperty();
+        this.userType = new SimpleStringProperty(); {
+            
+        };
     }
 
     // Getters y Setters para las propiedades
+    public StringProperty userTypeProperty() {
+        return userType;
+    }
+
+    public void setUserType(String userType) {
+        this.userType.set(userType);
+    }
+
+    public String getUserType() {
+        return userType.get();
+    }
+    public StringProperty passwordProperty() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password.set(password);
+    }
+
+    public String getPassword() {
+        return password.get();
+    }
 
     public IntegerProperty idProperty() {
         return id;
