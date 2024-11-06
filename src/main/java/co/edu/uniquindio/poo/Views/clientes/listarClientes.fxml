@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Menu?>
+<?import javafx.scene.control.MenuBar?>
+<?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="co.edu.uniquindio.poo.Controllers.empleados.ListarEmpleado">
+   <children>
+      <MenuBar fx:id="MBMain" layoutY="1.0" prefHeight="26.0" prefWidth="900.0">
+        <menus>
+          <Menu fx:id="MEmpleados" mnemonicParsing="false" text="Empleados">
+               <items>
+                  <MenuItem mnemonicParsing="false" text="Listar Empleados" />
+                  <MenuItem mnemonicParsing="false" text="Editar Empleados" />
+                  <MenuItem mnemonicParsing="false" text="Eliminar Empleados" />
+                  <MenuItem mnemonicParsing="false" onAction="#OnRegistrarEmpleados" text="Registrar Empleados" />
+               </items>
+          </Menu>
+          <Menu fx:id="MClientes" mnemonicParsing="false" text="Clientes">
+            <items>
+              <MenuItem mnemonicParsing="false" text="Registrar Clientes" />
+                  <MenuItem mnemonicParsing="false" text="Eliminar Clientes" />
+                  <MenuItem mnemonicParsing="false" text="Listar Clientes" />
+                  <MenuItem mnemonicParsing="false" text="Editar Clientes" />
+            </items>
+          </Menu>
+          <Menu fx:id="MVehiculos" mnemonicParsing="false" text="Vehículos">
+            <items>
+                  <MenuItem mnemonicParsing="false" text="Eliminar Vehiculos" />
+              <MenuItem mnemonicParsing="false" text="Registrar Vehiculos" />
+                  <MenuItem mnemonicParsing="false" text="Alquilar Vehiculos" />
+                  <MenuItem mnemonicParsing="false" text="Comprar Vehiculos" />
+                  <MenuItem mnemonicParsing="false" text="Vender Vehiculos" />
+                  <MenuItem mnemonicParsing="false" text="Listar Vehiculos" />
+                  <MenuItem mnemonicParsing="false" text="Editar Vehiculos" />
+            </items>
+          </Menu>
+            <Menu fx:id="MReportes" mnemonicParsing="false" text="Reportes">
+              <items>
+                <MenuItem mnemonicParsing="false" text="Action 1" />
+              </items>
+            </Menu>
+            <Menu fx:id="MUsuarios" mnemonicParsing="false" text="Usuarios">
+              <items>
+                <MenuItem mnemonicParsing="false" text="Registrar Usuarios" />
+                  <MenuItem mnemonicParsing="false" text="Eliminar Usuarios" />
+                  <MenuItem mnemonicParsing="false" text="Editar Usuarios" />
+                  <MenuItem mnemonicParsing="false" text="Listar Usuarios" />
+              </items>
+            </Menu>
+            <Menu fx:id="MMiCuenta" mnemonicParsing="false" text="Mi Cuenta">
+               <items>
+                  <MenuItem mnemonicParsing="false" onAction="#OnCloseSesion" text="Cerrar Sesion" />
+                  <MenuItem mnemonicParsing="false" onAction="#OnLeave" text="Salir" />
+               </items></Menu>
+        </menus>
+      </MenuBar>
+      <TableView fx:id="TVEmpleados" layoutY="27.0" prefHeight="600.0" prefWidth="900.0">
+        <columns>
+          <TableColumn fx:id="TCId" prefWidth="75.0" text="Id" />
+          <TableColumn fx:id="TCIdUser" prefWidth="75.0" text="IdUser" />
+          <TableColumn fx:id="TCUsername" prefWidth="107.20001220703125" text="Username" />
+          <TableColumn fx:id="TCNombreCompleto" prefWidth="131.20001220703125" text="Nombre Completo" />
+          <TableColumn fx:id="TCNumeroId" prefWidth="88.0" text="Numero Id" />
+          <TableColumn fx:id="TCGenero" prefWidth="58.399993896484375" text="Genero" />
+          <TableColumn fx:id="TCCorreo" prefWidth="91.20001220703125" text="Correo" />
+          <TableColumn fx:id="TCDireccion" prefWidth="136.800048828125" text="Direccion" />
+          <TableColumn fx:id="TCTelefono" prefWidth="134.4000244140625" text="Telefono" />
+        </columns>
+      </TableView>
+   </children>
+</AnchorPane>
