@@ -16,7 +16,7 @@
                   <MenuItem mnemonicParsing="false" text="Listar Empleados" />
                   <MenuItem mnemonicParsing="false" text="Editar Empleados" />
                   <MenuItem mnemonicParsing="false" text="Eliminar Empleados" />
-                  <MenuItem mnemonicParsing="false" text="Registrar Empleados" />
+                  <MenuItem mnemonicParsing="false" onAction="#OnRegistrarEmpleados" text="Registrar Empleados" />
                </items>
           </Menu>
           <Menu fx:id="MClientes" mnemonicParsing="false" text="Clientes">

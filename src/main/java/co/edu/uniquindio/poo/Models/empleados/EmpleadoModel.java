@@ -27,19 +27,21 @@ public class EmpleadoModel {
     }
 
     public boolean crearEmpleado(Empleado empleado) {
-        String sql = "INSERT INTO employee (username, full_name, id_number, gender, email, address, telephone, created_at) "
-                   + "VALUES (?, ?, ?, ?, ?, ?, ?, NOW())";
+        String sql = "INSERT INTO employee (id_user, username, password, full_name, id_number, gender, address, telephone, email, status, created_at) " 
+                   + "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, 1, NOW())";
 
         try (Connection conn = DatabaseConnection.getConnection();
              PreparedStatement pstmt = conn.prepareStatement(sql)) {
 
-            pstmt.setString(1, empleado.getUsername());
-            pstmt.setString(2, empleado.getFullName());
-            pstmt.setString(3, empleado.getIdNumber());
-            pstmt.setString(4, empleado.getGender());
-            pstmt.setString(5, empleado.getEmail());
-            pstmt.setString(6, empleado.getAddress());
-            pstmt.setString(7, empleado.getTelephone());
+                pstmt.setInt(1, empleado.getUserType());
+                pstmt.setString(2, empleado.getUsername());
+                pstmt.setString(3, empleado.getPassword());
+                pstmt.setString(4, empleado.getFullName()); 
+                pstmt.setString(5, empleado.getIdNumber());
+                pstmt.setString(6, empleado.getGender());
+                pstmt.setString(7, empleado.getAddress());
+                pstmt.setString(8, empleado.getTelephone());
+                pstmt.setString(9, empleado.getEmail()); 
 
             int filasInsertadas = pstmt.executeUpdate();
             return filasInsertadas > 0;
@@ -68,7 +70,7 @@ public class EmpleadoModel {
             while (rs.next()) {
                 Empleado empleado = new Empleado();
                 empleado.setId(rs.getInt("id"));
-                empleado.setIdUser(rs.getInt("id_user")); // Asegúrate de tener esta columna en la consulta SQL
+                empleado.setUserType(rs.getInt("id_user")); // Asegúrate de tener esta columna en la consulta SQL
                 empleado.setUsername(rs.getString("username"));
                 empleado.setFullName(rs.getString("full_name"));
                 empleado.setIdNumber(rs.getString("id_number"));

@@ -8,7 +8,7 @@ import javafx.beans.property.SimpleStringProperty;
 public class Empleado {
 
     private IntegerProperty id;
-    private IntegerProperty id_user;
+    private IntegerProperty userType;
     private StringProperty username;
     private StringProperty fullName;
     private StringProperty idNumber;
@@ -17,13 +17,12 @@ public class Empleado {
     private StringProperty address;
     private StringProperty telephone;
     private StringProperty password;
-    private StringProperty userType;
 
     // Constructor vacío
     public Empleado() {
         // Inicialización de las propiedades
         this.id = new SimpleIntegerProperty();
-        this.id_user = new SimpleIntegerProperty();
+        this.userType = new SimpleIntegerProperty();
         this.username = new SimpleStringProperty();
         this.fullName = new SimpleStringProperty();
         this.idNumber = new SimpleStringProperty();
@@ -32,35 +31,9 @@ public class Empleado {
         this.address = new SimpleStringProperty();
         this.telephone = new SimpleStringProperty();
         this.password = new SimpleStringProperty();
-        this.userType = new SimpleStringProperty(); {
-            
-        };
     }
 
     // Getters y Setters para las propiedades
-    public StringProperty userTypeProperty() {
-        return userType;
-    }
-
-    public void setUserType(String userType) {
-        this.userType.set(userType);
-    }
-
-    public String getUserType() {
-        return userType.get();
-    }
-    public StringProperty passwordProperty() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password.set(password);
-    }
-
-    public String getPassword() {
-        return password.get();
-    }
-
     public IntegerProperty idProperty() {
         return id;
     }
@@ -73,18 +46,18 @@ public class Empleado {
         return id.get();
     }
 
-    public IntegerProperty idUserProperty() {
-        return id_user;
+    public IntegerProperty userTypeProperty() {
+        return userType;
     }
 
-    public void setIdUser(int id_user) {
-        this.id_user.set(id_user);
+    public void setUserType(int userType) {
+        this.userType.set(userType);
     }
 
-    public int getIdUser() {
-        return id_user.get();
+    public int getUserType() {
+        return userType.get();
     }
-
+    
     public StringProperty usernameProperty() {
         return username;
     }
@@ -95,6 +68,18 @@ public class Empleado {
 
     public String getUsername() {
         return username.get();
+    }
+    
+    public StringProperty passwordProperty() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password.set(password);
+    }
+
+    public String getPassword() {
+        return password.get();
     }
 
     public StringProperty fullNameProperty() {
@@ -133,18 +118,6 @@ public class Empleado {
         return gender.get();
     }
 
-    public StringProperty emailProperty() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email.set(email);
-    }
-
-    public String getEmail() {
-        return email.get();
-    }
-
     public StringProperty addressProperty() {
         return address;
     }
@@ -168,6 +141,18 @@ public class Empleado {
     public String getTelephone() {
         return telephone.get();
     }
+
+    public StringProperty emailProperty() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email.set(email);
+    }
+
+    public String getEmail() {
+        return email.get();
+    }    
 }
 
 

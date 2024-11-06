@@ -85,7 +85,7 @@ public class ListarEmpleado{
     public void initialize() {
         // Inicializa las columnas del TableView para que se vinculen con las propiedades de Empleado
         TCId.setCellValueFactory(cellData -> cellData.getValue().idProperty().asObject());
-        TCIdUser.setCellValueFactory(cellData -> cellData.getValue().idUserProperty().asObject());
+        TCIdUser.setCellValueFactory(cellData -> cellData.getValue().userTypeProperty().asObject());
         TCUsername.setCellValueFactory(cellData -> cellData.getValue().usernameProperty());
         TCNombreCompleto.setCellValueFactory(cellData -> cellData.getValue().fullNameProperty());
         TCNumeroId.setCellValueFactory(cellData -> cellData.getValue().idNumberProperty());
@@ -142,5 +142,24 @@ public class ListarEmpleado{
         alert.setHeaderText(null);
         alert.setContentText(mensaje);
         alert.showAndWait();
+    }
+    
+    @FXML
+    void OnRegistrarEmpleados(ActionEvent event) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getClassLoader().getResource("co/edu/uniquindio/poo/Views/empleados/registrarEmpleado.fxml"));
+            Parent registerRoot = loader.load();
+            
+            // Obtener la escena actual y el Stage
+            Stage stage = (Stage) MBMain.getScene().getWindow();
+            
+            // Configurar la nueva escena con la pantalla de login
+            Scene registerScene = new Scene(registerRoot);
+            stage.setScene(registerScene);
+            stage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
     }
 }
