@@ -1,4 +1,4 @@
-package co.edu.uniquindio.poo.Controllers.empleados;
+package co.edu.uniquindio.poo.Controllers.clientes;
 
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
@@ -25,7 +25,7 @@ import java.util.ResourceBundle;
 import co.edu.uniquindio.poo.Models.empleados.Empleado;
 import co.edu.uniquindio.poo.Models.empleados.EmpleadoModel;
 
-public class RegistrarEmpleado {   
+public class RegistrarCliente {   
     @FXML
     private MenuBar MBMain;
 
@@ -153,19 +153,16 @@ public class RegistrarEmpleado {
 
     }
 
-    public RegistrarEmpleado() {
+    public RegistrarCliente() {
         empleadoModel = new EmpleadoModel();
     }
     
 
     @FXML
-    public void crearEmpleado(ActionEvent event) {
+    public void crearCliente(ActionEvent event) {
         try {
-        // Crear un objeto Empleado y llenarlo con los datos de la vista
-        Empleado nuevoEmpleado = new Empleado();
-        nuevoEmpleado.setUserType(cbTypeUser.getValue()); 
-        nuevoEmpleado.setUsername(txtUsername.getText());
-        nuevoEmpleado.setPassword(txtPassword.getText());         
+        // Crear un objeto Cliente y llenarlo con los datos de la vista
+        Empleado nuevoEmpleado = new Empleado();        
         nuevoEmpleado.setFullName(txtNombre.getText());
         nuevoEmpleado.setIdNumber(txtCedula.getText());
         // Obtener el género seleccionado
@@ -173,16 +170,15 @@ public class RegistrarEmpleado {
         nuevoEmpleado.setGender(generoSeleccionado);
         nuevoEmpleado.setAddress(txtDireccion.getText());
         nuevoEmpleado.setTelephone(txtTelefono.getText());
-        nuevoEmpleado.setEmail(txtEmail.getText());
         
-        // Intentar guardar el empleado en la base de datos
+        // Intentar guardar el cliente en la base de datos
         boolean creado = empleadoModel.crearEmpleado(nuevoEmpleado);
-        mostrarAlerta(creado ? "Empleado creado correctamente." : "Error al crear el empleado.");
+        mostrarAlerta(creado ? "Empleado creado correctamente." : "Error al crear el cliente.");
         } catch (NullPointerException e) {
         mostrarAlerta("Error: Hay campos obligatorios sin completar.");
         } catch (Exception e) {
         e.printStackTrace();
-        mostrarAlerta("Ocurrió un error al intentar crear el empleado.");
+        mostrarAlerta("Ocurrió un error al intentar crear el cliente.");
         }
     }
 
@@ -194,15 +190,15 @@ public class RegistrarEmpleado {
         alert.showAndWait();
     }
     @FXML
-    void OnListarEmpleado (ActionEvent event) {
+    void OnListarCliente (ActionEvent event) {
         try {       
-            FXMLLoader loader = new FXMLLoader(getClass().getClassLoader().getResource("co/edu/uniquindio/poo/Views/empleados/listarEmpleado.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getClassLoader().getResource("co/edu/uniquindio/poo/Views/clientes/listarCliente.fxml"));
             Parent listRoot = loader.load();
 
-            ListarEmpleado controller = loader.getController();
+            ListarCliente controller = loader.getController();
         
             // Llamar al método para cargar los empleados
-            controller.obtenerEmpleados();
+            controller.obtenerClientes();
 
             // Obtener la escena actual y el Stage
             Stage stage = (Stage) MBMain.getScene().getWindow();

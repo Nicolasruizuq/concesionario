@@ -1,4 +1,4 @@
-package co.edu.uniquindio.poo.Models.empleados;
+package co.edu.uniquindio.poo.Models.clientes;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -6,42 +6,21 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.LinkedList;
 import co.edu.uniquindio.poo.Connection.DatabaseConnection;
+import co.edu.uniquindio.poo.Models.empleados.Empleado;
 
-public class EmpleadoModel {
-
-    public boolean verificarCredenciales(String username, String password) {
-        String sql = "SELECT * FROM employee WHERE username = ? AND password = ?";
-        
-        try (Connection conn = DatabaseConnection.getConnection();
-             PreparedStatement pstmt = conn.prepareStatement(sql)) {
-             
-            pstmt.setString(1, username);
-            pstmt.setString(2, password);
-            
-            ResultSet rs = pstmt.executeQuery();
-            return rs.next();
-        } catch (SQLException e) {
-            e.printStackTrace();
-            return false;
-        }
-    }
-
-    public boolean crearEmpleado(Empleado empleado) {
-        String sql = "INSERT INTO employee (id_user, username, password, full_name, id_number, gender, address, telephone, email, status, created_at) " 
-                   + "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, 1, NOW())";
+public class ClienteModel {
+    public boolean crearCliente(Cliente cliente) {
+        String sql = "INSERT INTO customer (full_name, id_number, gender, address, telephone, status, created_at) " 
+                   + "VALUES (?, ?, ?, ?, ?, 1, NOW())";
 
         try (Connection conn = DatabaseConnection.getConnection();
              PreparedStatement pstmt = conn.prepareStatement(sql)) {
 
-                pstmt.setInt(1, empleado.getUserType());
-                pstmt.setString(2, empleado.getUsername());
-                pstmt.setString(3, empleado.getPassword());
-                pstmt.setString(4, empleado.getFullName()); 
-                pstmt.setString(5, empleado.getIdNumber());
-                pstmt.setString(6, empleado.getGender());
-                pstmt.setString(7, empleado.getAddress());
-                pstmt.setString(8, empleado.getTelephone());
-                pstmt.setString(9, empleado.getEmail()); 
+                pstmt.setString(1, cliente.getFullname());
+                pstmt.setString(2, cliente.getIdNumber());
+                pstmt.setString(3, cliente.getGender());
+                pstmt.setString(4, cliente.getAddress());
+                pstmt.setString(5, cliente.getTelephone());
 
             int filasInsertadas = pstmt.executeUpdate();
             return filasInsertadas > 0;
@@ -52,52 +31,44 @@ public class EmpleadoModel {
         }
     }
 
-    public LinkedList<Empleado> obtenerEmpleados() {
-        String sql = "SELECT id, id_user, username, full_name, id_number, gender, email, address, telephone FROM employee WHERE status = 1 AND deleted_at IS NULL";
-        LinkedList<Empleado> empleados = new LinkedList<>();
+    public LinkedList<Cliente> obtenerClientes() {
+        String sql = "SELECT id, full_name, id_number, gender, address, telephone FROM customer WHERE status = 1 AND deleted_at IS NULL";
+        LinkedList<Cliente> clientes = new LinkedList<>();
     
         try (Connection conn = DatabaseConnection.getConnection();
              PreparedStatement pstmt = conn.prepareStatement(sql);
              ResultSet rs = pstmt.executeQuery()) {
     
-            // Verificar si hay resultados
             if (!rs.isBeforeFirst()) {
-                System.out.println("No se encontraron empleados.");
-                return empleados; // Si no hay resultados, retornamos una lista vacía
+                System.out.println("No se encontraron clientes.");
+                return clientes;
             }
     
-            // Iterar por los resultados
             while (rs.next()) {
-                Empleado empleado = new Empleado();
-                empleado.setId(rs.getInt("id"));
-                empleado.setUserType(rs.getInt("id_user")); // Asegúrate de tener esta columna en la consulta SQL
-                empleado.setUsername(rs.getString("username"));
-                empleado.setFullName(rs.getString("full_name"));
-                empleado.setIdNumber(rs.getString("id_number"));
-                empleado.setGender(rs.getString("gender"));
-                empleado.setEmail(rs.getString("email"));
-                empleado.setAddress(rs.getString("address"));
-                empleado.setTelephone(rs.getString("telephone"));
-                empleados.add(empleado);
+                Cliente cliente = new Cliente();
+                cliente.setId(rs.getInt("id"));
+                cliente.setFullname(rs.getString("full_name"));
+                cliente.setIdNumber(rs.getString("id_number"));
+                cliente.setGender(rs.getString("gender"));
+                cliente.setAddress(rs.getString("address"));
+                cliente.setTelephone(rs.getString("telephone"));
+                clientes.add(cliente);
     
-                // Verifica que se recuperaron los datos
-                System.out.println("Empleado: " + empleado.getId() + ", " + empleado.getUsername());
+                System.out.println("Cliente: " + cliente.getId() + ", ");
             }
         } catch (SQLException e) {
             e.printStackTrace();
-            // Manejo de excepción
         }
     
-        // Verifica si la lista contiene elementos
-        System.out.println("Total de empleados encontrados: " + empleados.size());
-        return empleados;
+        System.out.println("Total de clientes encontrados: " + clientes.size());
+        return clientes;
     }
     
     
 
-    public Empleado obtenerEmpleadoPorId(int id) {
-        String sql = "SELECT id, username, full_name, id_number, gender, email, address, telephone FROM employee WHERE id = ? AND status = 1 AND deleted_at IS NULL";
-        Empleado empleado = null;
+    public Cliente obtenerClientePorId(int id) {
+        String sql = "SELECT id, full_name, id_number, gender, address, telephone FROM customer WHERE id = ? AND status = 1 AND deleted_at IS NULL";
+        Cliente cliente = null;
 
         try (Connection conn = DatabaseConnection.getConnection();
              PreparedStatement pstmt = conn.prepareStatement(sql)) {
@@ -106,15 +77,13 @@ public class EmpleadoModel {
 
             try (ResultSet rs = pstmt.executeQuery()) {
                 if (rs.next()) {
-                    empleado = new Empleado();
-                    empleado.setId(rs.getInt("id"));
-                    empleado.setUsername(rs.getString("username"));
-                    empleado.setFullName(rs.getString("full_name"));
-                    empleado.setIdNumber(rs.getString("id_number"));
-                    empleado.setGender(rs.getString("gender"));
-                    empleado.setEmail(rs.getString("email"));
-                    empleado.setAddress(rs.getString("address")); // Agrega address
-                    empleado.setTelephone(rs.getString("telephone")); // Agrega telephone
+                    cliente = new Cliente();
+                    cliente.setId(rs.getInt("id"));
+                    cliente.setFullname(rs.getString("full_name"));
+                    cliente.setIdNumber(rs.getString("id_number"));
+                    cliente.setGender(rs.getString("gender"));
+                    cliente.setAddress(rs.getString("address"));
+                    cliente.setTelephone(rs.getString("telephone"));
                 }
             }
         } catch (SQLException e) {
@@ -122,23 +91,21 @@ public class EmpleadoModel {
             // Manejo de excepción
         }
 
-        return empleado;
+        return cliente;
     }
 
-    public boolean actualizarEmpleado(Empleado empleado) {
-        String sql = "UPDATE employee SET username = ?, full_name = ?, id_number = ?, gender = ?, address = ?, telephone = ?, email = ? WHERE id = ? AND status = 1 AND deleted_at IS NULL";
+    public boolean actualizarCliente(Cliente cliente) {
+        String sql = "UPDATE customer SET full_name = ?, id_number = ?, gender = ?, address = ?, telephone = ? WHERE id = ? AND status = 1 AND deleted_at IS NULL";
 
         try (Connection conn = DatabaseConnection.getConnection();
              PreparedStatement pstmt = conn.prepareStatement(sql)) {
 
-            pstmt.setString(1, empleado.getUsername());
-            pstmt.setString(2, empleado.getFullName());
-            pstmt.setString(3, empleado.getIdNumber());
-            pstmt.setString(4, empleado.getGender());
-            pstmt.setString(5, empleado.getAddress());
-            pstmt.setString(6, empleado.getTelephone());
-            pstmt.setString(7, empleado.getEmail());
-            pstmt.setInt(8, empleado.getId()); // Asegúrate de que tengas un método getId en Empleado
+            pstmt.setString(1, cliente.getFullname());
+            pstmt.setString(2, cliente.getIdNumber());
+            pstmt.setString(3, cliente.getGender());
+            pstmt.setString(4, cliente.getAddress());
+            pstmt.setString(5, cliente.getTelephone());            
+            pstmt.setInt(6, cliente.getId());
 
             int filasActualizadas = pstmt.executeUpdate();
             return filasActualizadas > 0;
@@ -148,8 +115,8 @@ public class EmpleadoModel {
         }
     }
 
-    public boolean eliminarEmpleado(int id) {
-        String sql = "UPDATE employee SET deleted_at = NOW() WHERE id = ? AND status = 1 AND deleted_at IS NULL";
+    public boolean eliminarCliente(int id) {
+        String sql = "UPDATE customer SET deleted_at = NOW() WHERE id = ? AND status = 1 AND deleted_at IS NULL";
 
         try (Connection conn = DatabaseConnection.getConnection();
              PreparedStatement pstmt = conn.prepareStatement(sql)) {

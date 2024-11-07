@@ -18,9 +18,7 @@ public class Empleado {
     private StringProperty telephone;
     private StringProperty password;
 
-    // Constructor vacío
     public Empleado() {
-        // Inicialización de las propiedades
         this.id = new SimpleIntegerProperty();
         this.userType = new SimpleIntegerProperty();
         this.username = new SimpleStringProperty();
@@ -154,96 +152,3 @@ public class Empleado {
         return email.get();
     }    
 }
-
-
-/*package co.edu.uniquindio.poo.Models.empleados;
-
-public class Empleado {
-    private int id;
-    private int id_user;
-    private String username;
-    private String fullName;
-    private String idNumber;
-    private String gender;
-    private String email;
-    private String address;
-    private String telephone;
-
-    // Constructor vacío
-    
-    public Empleado() {
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public int getIdUser() {
-        return id_user;
-    }
-
-    public void setIdUser(int id_user) {
-        this.id_user = id_user;
-    }
-
-    public String getUsername() {
-        return username;
-    }
-
-    public void setUsername(String username) {
-        this.username = username;
-    }
-
-    public String getFullName() {
-        return fullName;
-    }
-
-    public void setFullName(String fullName) {
-        this.fullName = fullName;
-    }
-
-    public String getIdNumber() {
-        return idNumber;
-    }
-
-    public void setIdNumber(String idNumber) {
-        this.idNumber = idNumber;
-    }
-
-    public String getGender() {
-        return gender;
-    }
-
-    public void setGender(String gender) {
-        this.gender = gender;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public String getAddress() {
-        return address;
-    }
-
-    public void setAddress(String address) {
-        this.address = address;
-    }
-
-    public String getTelephone() {
-        return telephone;
-    }
-
-    public void setTelephone(String telephone) {
-        this.telephone = telephone;
-    }
-}
-*/

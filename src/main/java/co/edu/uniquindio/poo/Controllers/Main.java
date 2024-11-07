@@ -1,7 +1,6 @@
 package co.edu.uniquindio.poo.Controllers;
 
 import java.io.IOException;
-
 import co.edu.uniquindio.poo.Controllers.empleados.ListarEmpleado;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
@@ -36,7 +35,7 @@ public class Main {
     @FXML
     private Menu MVehiculos;
 
-    private ListarEmpleado listarEmpleado;
+     private ListarEmpleado listarEmpleado;
 
     @FXML
     void OnCloseSesion(ActionEvent event) {

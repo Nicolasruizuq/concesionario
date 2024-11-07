@@ -1,10 +1,10 @@
-package co.edu.uniquindio.poo.Controllers.empleados;
+package co.edu.uniquindio.poo.Controllers.clientes;
 
 import java.io.IOException;
 import java.util.LinkedList;
 
-import co.edu.uniquindio.poo.Models.empleados.Empleado;
-import co.edu.uniquindio.poo.Models.empleados.EmpleadoModel;
+import co.edu.uniquindio.poo.Models.clientes.Cliente;
+import co.edu.uniquindio.poo.Models.clientes.ClienteModel;
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -23,36 +23,31 @@ import javafx.stage.Stage;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 
-public class ListarEmpleado{
+public class ListarCliente{
+    
     @FXML
-    private TableColumn<Empleado, String> TCCorreo;
+    private TableColumn<Cliente, String> TCDireccion;
 
     @FXML
-    private TableColumn<Empleado, String> TCDireccion;
+    private TableColumn<Cliente, String> TCGenero;
 
     @FXML
-    private TableColumn<Empleado, String> TCGenero;
+    private TableColumn<Cliente, Integer> TCId;
 
     @FXML
-    private TableColumn<Empleado, Integer> TCId;
+    private TableColumn<Cliente, Integer> TCIdUser;
 
     @FXML
-    private TableColumn<Empleado, Integer> TCIdUser;
+    private TableColumn<Cliente, String> TCNombreCompleto;
 
     @FXML
-    private TableColumn<Empleado, String> TCNombreCompleto;
+    private TableColumn<Cliente, String> TCNumeroId;
 
     @FXML
-    private TableColumn<Empleado, String> TCNumeroId;
+    private TableColumn<Cliente, String> TCTelefono;
 
     @FXML
-    private TableColumn<Empleado, String> TCTelefono;
-
-    @FXML
-    private TableColumn<Empleado, String> TCUsername;
-
-    @FXML
-    private TableView<Empleado> TVEmpleados;
+    private TableView<Cliente> TVClientes;
 
     @FXML
     private MenuBar MBMain;
@@ -75,22 +70,19 @@ public class ListarEmpleado{
     @FXML
     private Menu MVehiculos;
 
-    private EmpleadoModel empleadoModel;
+    private ClienteModel clienteModel;
 
-    public ListarEmpleado() {
-        empleadoModel = new EmpleadoModel();
+    public ListarCliente() {
+        clienteModel = new ClienteModel();
     }
 
     @FXML
     public void initialize() {
         // Inicializa las columnas del TableView para que se vinculen con las propiedades de Empleado
         TCId.setCellValueFactory(cellData -> cellData.getValue().idProperty().asObject());
-        TCIdUser.setCellValueFactory(cellData -> cellData.getValue().userTypeProperty().asObject());
-        TCUsername.setCellValueFactory(cellData -> cellData.getValue().usernameProperty());
-        TCNombreCompleto.setCellValueFactory(cellData -> cellData.getValue().fullNameProperty());
+        TCNombreCompleto.setCellValueFactory(cellData -> cellData.getValue().fullnameProperty());
         TCNumeroId.setCellValueFactory(cellData -> cellData.getValue().idNumberProperty());
         TCGenero.setCellValueFactory(cellData -> cellData.getValue().genderProperty());
-        TCCorreo.setCellValueFactory(cellData -> cellData.getValue().emailProperty());
         TCDireccion.setCellValueFactory(cellData -> cellData.getValue().addressProperty());
         TCTelefono.setCellValueFactory(cellData -> cellData.getValue().telephoneProperty());    
     }
@@ -120,19 +112,18 @@ public class ListarEmpleado{
     }
     
     @FXML
-    public void obtenerEmpleados() {
-        // Llamamos al modelo para obtener los empleados
-        LinkedList<Empleado> empleados = empleadoModel.obtenerEmpleados();
+    public void obtenerClientes() {
+        // Llamamos al modelo para obtener los clientes
+        LinkedList<Cliente> clientes = clienteModel.obtenerClientes();
 
-        // Crear un ObservableList a partir de los empleados obtenidos
-        if (empleados != null && !empleados.isEmpty()) {
-            ObservableList<Empleado> empleadosObservableList = FXCollections.observableArrayList(empleados);
+        if (clientes != null && !clientes.isEmpty()) {
+            ObservableList<Cliente> clientesObservableList = FXCollections.observableArrayList(clientes);
 
-            // Agregar los empleados al TableView
-            TVEmpleados.setItems(empleadosObservableList);
+            // Agregar los clientes al TableView
+            TVClientes.setItems(clientesObservableList);
         } else {
-            // Mostrar una alerta si no se encontraron empleados
-            mostrarAlerta("No se encontraron empleados.");
+            // Mostrar una alerta si no se encontraron clientes
+            mostrarAlerta("No se encontraron clientes.");
         }
     }
 
@@ -145,9 +136,9 @@ public class ListarEmpleado{
     }
     
     @FXML
-    void OnRegistrarEmpleados(ActionEvent event) {
+    void OnRegistrarClientes(ActionEvent event) {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getClassLoader().getResource("co/edu/uniquindio/poo/Views/empleados/registrarEmpleado.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getClassLoader().getResource("co/edu/uniquindio/poo/Views/clientes/registrarCliente.fxml"));
             Parent registerRoot = loader.load();
             
             // Obtener la escena actual y el Stage

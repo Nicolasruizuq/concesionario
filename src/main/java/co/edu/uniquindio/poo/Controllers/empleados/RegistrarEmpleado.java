@@ -17,11 +17,8 @@ import javafx.scene.control.ToggleGroup;
 import javafx.stage.Stage;
 import javafx.util.StringConverter;
 import java.io.IOException;
-import java.net.URL;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
-import java.util.ResourceBundle;
 import co.edu.uniquindio.poo.Models.empleados.Empleado;
 import co.edu.uniquindio.poo.Models.empleados.EmpleadoModel;
 
