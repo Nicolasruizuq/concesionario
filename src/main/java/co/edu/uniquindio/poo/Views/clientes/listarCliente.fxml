@@ -66,8 +66,8 @@
           <TableColumn fx:id="TCGenero" prefWidth="68.79998779296875" text="Género" />
           <TableColumn fx:id="TCDireccion" prefWidth="125.60000610351562" text="Dirección" />
           <TableColumn fx:id="TCTelefono" prefWidth="115.20001220703125" text="Teléfono" />
-            <TableColumn minWidth="0.0" prefWidth="110.39996337890625" text="Editar" />
-            <TableColumn minWidth="5.0" prefWidth="136.7999267578125" text="Eliminar" />
+          <TableColumn fx:id="TCEditar" minWidth="0.0" prefWidth="110.39996337890625" text="Editar" />
+          <TableColumn fx:id="TCEliminar" minWidth="5.0" prefWidth="136.7999267578125" text="Eliminar" />
         </columns>
       </TableView>
    </children>

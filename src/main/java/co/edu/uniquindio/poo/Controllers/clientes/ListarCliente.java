@@ -2,9 +2,9 @@ package co.edu.uniquindio.poo.Controllers.clientes;
 
 import java.io.IOException;
 import java.util.LinkedList;
-
 import co.edu.uniquindio.poo.Models.clientes.Cliente;
 import co.edu.uniquindio.poo.Models.clientes.ClienteModel;
+import co.edu.uniquindio.poo.Models.empleados.Empleado;
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -14,11 +14,15 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
+import javafx.scene.control.Button;
 import javafx.scene.control.Menu;
 import javafx.scene.control.MenuBar;
 import javafx.stage.Stage;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.control.TableCell;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 
 public class ListarCliente{
     
@@ -45,6 +49,12 @@ public class ListarCliente{
 
     @FXML
     private TableView<Cliente> TVClientes;
+
+    @FXML
+    private TableColumn<Cliente, Void> TCEditar;
+
+    @FXML
+    private TableColumn<Cliente, Void> TCEliminar;
 
     @FXML
     private MenuBar MBMain;
@@ -81,7 +91,50 @@ public class ListarCliente{
         TCNumeroId.setCellValueFactory(cellData -> cellData.getValue().idNumberProperty());
         TCGenero.setCellValueFactory(cellData -> cellData.getValue().genderProperty());
         TCDireccion.setCellValueFactory(cellData -> cellData.getValue().addressProperty());
-        TCTelefono.setCellValueFactory(cellData -> cellData.getValue().telephoneProperty());    
+        TCTelefono.setCellValueFactory(cellData -> cellData.getValue().telephoneProperty());
+
+        TCEditar.setCellFactory(param -> new TableCell<Cliente, Void>() {
+            private final ImageView editIcon = new ImageView(new Image(getClass().getResourceAsStream("/co/edu/uniquindio/poo/Resources/img/editar.png")));
+    
+            @Override
+            public void updateItem(Void item, boolean empty) {
+                super.updateItem(item, empty);
+                if (empty) {
+                    setGraphic(null);
+                } else {
+                    editIcon.setFitWidth(30);
+                    editIcon.setFitHeight(30);
+                    setGraphic(editIcon);
+                    editIcon.setOnMouseClicked(event -> {
+                        Cliente cliente = getTableView().getItems().get(getIndex());
+                        // Lógica para editar el cliente
+                        System.out.println("Editar cliente: " + cliente.getFullname());
+                    });
+                }
+            }
+        });
+    
+        // Configuración de la columna de Eliminar con un icono
+        TCEliminar.setCellFactory(param -> new TableCell<Cliente, Void>() {
+            private final ImageView deleteIcon = new ImageView(new Image(getClass().getResourceAsStream("/co/edu/uniquindio/poo/Resources/img/borrar.png")));
+    
+            @Override
+            public void updateItem(Void item, boolean empty) {
+                super.updateItem(item, empty);
+                if (empty) {
+                    setGraphic(null);
+                } else {
+                    deleteIcon.setFitWidth(30);
+                    deleteIcon.setFitHeight(30); 
+                    setGraphic(deleteIcon);
+                    deleteIcon.setOnMouseClicked(event -> {
+                        Cliente cliente = getTableView().getItems().get(getIndex());
+                        // Lógica para eliminar el cliente
+                        System.out.println("Eliminar cliente: " + cliente.getFullname());
+                    });
+                }
+            }
+        });
     }
 
     @FXML
