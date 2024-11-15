@@ -99,15 +99,15 @@ public class Cliente {
         return telephone.get();
     }
 
-    public IntegerProperty userTypeProperty() {
+    public IntegerProperty EmpleadoIdProperty() {
         return id_employee;
     }
 
-    public void setUserType(int id_employee) {
+    public void setEmpleadoId(int id_employee) {
         this.id_employee.set(id_employee);
     }
 
-    public int getUserType() {
+    public int getEmpleadoId() {
         return id_employee.get();
     }
 }

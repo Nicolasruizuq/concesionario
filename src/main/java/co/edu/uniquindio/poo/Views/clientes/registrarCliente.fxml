@@ -12,8 +12,8 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="co.edu.uniquindio.poo.Controllers.empleados.RegistrarEmpleado">
-   <children>
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="co.edu.uniquindio.poo.Controllers.clientes.RegistrarCliente">
+   <children> 
       <MenuBar fx:id="MBMain" layoutY="1.0" prefHeight="26.0" prefWidth="900.0">
         <menus>
           <Menu fx:id="MEmpleados" mnemonicParsing="false" text="Empleados">
@@ -21,14 +21,14 @@
                   <MenuItem mnemonicParsing="false" onAction="#OnListarEmpleado" text="Listar Empleados" />
                   <MenuItem mnemonicParsing="false" text="Editar Empleados" />
                   <MenuItem mnemonicParsing="false" text="Eliminar Empleados" />
-                  <MenuItem mnemonicParsing="false" text="Registrar Empleados" />
+                  <MenuItem mnemonicParsing="false" onAction="#OnRegistrarEmpleado" text="Registrar Empleados" />
                </items>
           </Menu>
           <Menu fx:id="MClientes" mnemonicParsing="false" text="Clientes">
             <items>
-              <MenuItem mnemonicParsing="false" text="Registrar Clientes" />
+                  <MenuItem mnemonicParsing="false" text="Registrar Clientes" />
                   <MenuItem mnemonicParsing="false" text="Eliminar Clientes" />
-                  <MenuItem mnemonicParsing="false" text="Listar Clientes" />
+                  <MenuItem mnemonicParsing="false" onAction="#OnListarCliente" text="Listar Clientes" />
                   <MenuItem mnemonicParsing="false" text="Editar Clientes" />
             </items>
           </Menu>
@@ -41,13 +41,10 @@
                   <MenuItem mnemonicParsing="false" text="Vender Vehiculos" />
                   <MenuItem mnemonicParsing="false" text="Listar Vehiculos" />
                   <MenuItem mnemonicParsing="false" text="Editar Vehiculos" />
+                <MenuItem mnemonicParsing="false" text="Action 1" />
             </items>
           </Menu>
-            <Menu fx:id="MReportes" mnemonicParsing="false" text="Reportes">
-              <items>
-                <MenuItem mnemonicParsing="false" text="Action 1" />
-              </items>
-            </Menu>
+            <Menu fx:id="MReportes" mnemonicParsing="false" text="Reportes" />
             <Menu fx:id="MUsuarios" mnemonicParsing="false" text="Usuarios">
               <items>
                 <MenuItem mnemonicParsing="false" text="Registrar Usuarios" />
@@ -63,7 +60,7 @@
                </items></Menu>
         </menus>
       </MenuBar>
-      <Label alignment="CENTER" contentDisplay="CENTER" layoutX="320.0" layoutY="63.0" prefHeight="60.0" prefWidth="227.0" text="REGISTRAR EMPLEADO" textAlignment="CENTER" wrapText="true">
+      <Label alignment="CENTER" contentDisplay="CENTER" layoutX="320.0" layoutY="63.0" prefHeight="60.0" prefWidth="227.0" text="REGISTRAR CLIENTE" textAlignment="CENTER" wrapText="true">
          <font>
             <Font name="System Bold" size="20.0" />
          </font>
@@ -73,23 +70,17 @@
       <Label layoutX="80.0" layoutY="240.0" text="Sexo:" />
       <Label layoutX="470.0" layoutY="240.0" text="Dirección:" />
       <Label layoutX="80.0" layoutY="295.0" text="Teléfono:" />
-      <Label layoutX="470.0" layoutY="295.0" text="Email:" />
-      <Label layoutX="80.0" layoutY="350.0" text="Username:" />
-      <Label layoutX="470.0" layoutY="350.0" text="Password:" />
       <TextField fx:id="txtNombre" layoutX="189.0" layoutY="181.0" />
       <TextField fx:id="txtCedula" layoutX="545.0" layoutY="181.0" />
       <TextField fx:id="txtTelefono" layoutX="189.0" layoutY="291.0" />
       <TextField fx:id="txtDireccion" layoutX="545.0" layoutY="236.0" />
-      <TextField fx:id="txtEmail" layoutX="545.0" layoutY="291.0" />
-      <TextField fx:id="txtUsername" layoutX="189.0" layoutY="346.0" />
-      <TextField fx:id="txtPassword" layoutX="547.0" layoutY="346.0" />
       <RadioButton fx:id="rbFemenino" layoutX="182.0" layoutY="240.0" mnemonicParsing="false" text="Femenino">
          <toggleGroup>
             <ToggleGroup fx:id="sexoGroup" />
          </toggleGroup></RadioButton>
       <RadioButton fx:id="rbMasculino" layoutX="283.0" layoutY="240.0" mnemonicParsing="false" text="Masculino" toggleGroup="$sexoGroup" />
-      <ComboBox fx:id="cbTypeUser" layoutX="188.0" layoutY="401.0" prefWidth="150.0" />
-      <Label layoutX="80.0" layoutY="405.0" text="Tipo de usuario:" />
-      <Button fx:id="btnRegistrarEmpleado" layoutX="374.0" layoutY="511.0" mnemonicParsing="false" onAction="#crearEmpleado" text="Registrar Empleado" />
+      <Button fx:id="btnRegistrarCliente" layoutX="404.0" layoutY="513.0" mnemonicParsing="false" onAction="#crearCliente" text="Guardar" />
+      <ComboBox fx:id="cbEmpleados" layoutX="544.0" layoutY="291.0" prefWidth="150.0" />
+      <Label layoutX="463.0" layoutY="295.0" text="Empleado" />
    </children>
 </AnchorPane>

@@ -13,15 +13,15 @@
         <menus>
           <Menu fx:id="MEmpleados" mnemonicParsing="false" text="Empleados">
                <items>
-                  <MenuItem mnemonicParsing="false" text="Listar Empleados" />
+                  <MenuItem mnemonicParsing="false" onAction="#OnRegistrarEmpleado" text="Listar Empleados" />
                   <MenuItem mnemonicParsing="false" text="Editar Empleados" />
                   <MenuItem mnemonicParsing="false" text="Eliminar Empleados" />
-                  <MenuItem mnemonicParsing="false" onAction="#OnRegistrarEmpleados" text="Registrar Empleados" />
+                  <MenuItem mnemonicParsing="false" onAction="#OnRegistrarEmpleado" text="Registrar Empleados" />
                </items>
           </Menu>
           <Menu fx:id="MClientes" mnemonicParsing="false" text="Clientes">
             <items>
-              <MenuItem mnemonicParsing="false" text="Registrar Clientes" />
+                  <MenuItem mnemonicParsing="false" text="Registrar Clientes" />
                   <MenuItem mnemonicParsing="false" text="Eliminar Clientes" />
                   <MenuItem mnemonicParsing="false" text="Listar Clientes" />
                   <MenuItem mnemonicParsing="false" text="Editar Clientes" />

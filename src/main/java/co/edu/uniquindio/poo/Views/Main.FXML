@@ -10,19 +10,19 @@
       <MenuBar fx:id="MBMain" layoutY="1.0" prefHeight="26.0" prefWidth="900.0">
         <menus>
           <Menu fx:id="MEmpleados" mnemonicParsing="false" text="Empleados">
-               <items>
-                  <MenuItem mnemonicParsing="false" onAction="#OnListarEmpleado" text="Listar Empleados" />
-                  <MenuItem mnemonicParsing="false" text="Editar Empleados" />
-                  <MenuItem mnemonicParsing="false" text="Eliminar Empleados" />
-                  <MenuItem mnemonicParsing="false" onAction="#OnRegistrarEmpleados" text="Registrar Empleados" />
-               </items>
+            <items>
+              <MenuItem mnemonicParsing="false" onAction="#OnListarEmpleado" text="Listar Empleados" />
+              <MenuItem mnemonicParsing="false" text="Editar Empleados" />
+              <MenuItem mnemonicParsing="false" text="Eliminar Empleados" />
+              <MenuItem mnemonicParsing="false" onAction="#OnRegistrarEmpleado" text="Registrar Empleados" />
+            </items>
           </Menu>
           <Menu fx:id="MClientes" mnemonicParsing="false" text="Clientes">
             <items>
-              <MenuItem mnemonicParsing="false" text="Registrar Clientes" />
-                  <MenuItem mnemonicParsing="false" text="Eliminar Clientes" />
-                  <MenuItem mnemonicParsing="false" text="Listar Clientes" />
-                  <MenuItem mnemonicParsing="false" text="Editar Clientes" />
+              <MenuItem mnemonicParsing="false" onAction="#OnRegistrarCliente" text="Registrar Clientes" />
+              <MenuItem mnemonicParsing="false" text="Eliminar Clientes" />
+              <MenuItem mnemonicParsing="false" onAction="#OnListarCliente" text="Listar Clientes" />
+              <MenuItem mnemonicParsing="false" text="Editar Clientes" />
             </items>
           </Menu>
           <Menu fx:id="MVehiculos" mnemonicParsing="false" text="Vehículos">

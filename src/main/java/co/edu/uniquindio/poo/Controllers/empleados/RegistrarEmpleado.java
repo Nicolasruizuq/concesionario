@@ -19,6 +19,8 @@ import javafx.util.StringConverter;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
+
+import co.edu.uniquindio.poo.Controllers.clientes.ListarCliente;
 import co.edu.uniquindio.poo.Models.empleados.Empleado;
 import co.edu.uniquindio.poo.Models.empleados.EmpleadoModel;
 
@@ -116,44 +118,6 @@ public class RegistrarEmpleado {
         rbFemenino.setToggleGroup(sexoGroup);
         rbMasculino.setToggleGroup(sexoGroup);
     }
-    public int obtenerValorSeleccionado() {
-        return cbTypeUser.getValue(); // Obtiene el valor entero directamente
-    }
-    
-
-    
-
-    @FXML
-    void OnCloseSesion(ActionEvent event) {
-        try {
-            // Cargar la pantalla de login
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/co/edu/uniquindio/poo/Views/login.fxml"));
-            Parent loginRoot = loader.load();
-            
-            // Obtener la escena actual y el Stage
-            Stage stage = (Stage) MBMain.getScene().getWindow();
-            
-            // Configurar la nueva escena con la pantalla de login
-            Scene loginScene = new Scene(loginRoot);
-            stage.setScene(loginScene);
-            stage.show();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
-    
-
-    @FXML
-    void OnLeave(ActionEvent event) {
-        Platform.exit();
-
-    }
-
-    public RegistrarEmpleado() {
-        empleadoModel = new EmpleadoModel();
-    }
-    
 
     @FXML
     public void crearEmpleado(ActionEvent event) {
@@ -182,7 +146,7 @@ public class RegistrarEmpleado {
         mostrarAlerta("Ocurrió un error al intentar crear el empleado.");
         }
     }
-
+    
     private void mostrarAlerta(String mensaje) {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle("Resultado");
@@ -190,6 +154,82 @@ public class RegistrarEmpleado {
         alert.setContentText(mensaje);
         alert.showAndWait();
     }
+
+    public int obtenerValorSeleccionado() {
+        return cbTypeUser.getValue(); // Obtiene el valor entero directamente
+    }
+    
+    @FXML
+    void OnCloseSesion(ActionEvent event) {
+        try {
+            // Cargar la pantalla de login
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/co/edu/uniquindio/poo/Views/login.fxml"));
+            Parent loginRoot = loader.load();
+            
+            // Obtener la escena actual y el Stage
+            Stage stage = (Stage) MBMain.getScene().getWindow();
+            
+            // Configurar la nueva escena con la pantalla de login
+            Scene loginScene = new Scene(loginRoot);
+            stage.setScene(loginScene);
+            stage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+  
+    @FXML
+    void OnLeave(ActionEvent event) {
+        Platform.exit();
+
+    }
+
+    public RegistrarEmpleado() {
+        empleadoModel = new EmpleadoModel();
+    }
+
+    @FXML
+    void OnRegistrarCliente (ActionEvent event) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getClassLoader().getResource("co/edu/uniquindio/poo/Views/clientes/registrarCliente.fxml"));
+            Parent registerRoot = loader.load();
+            
+            // Obtener la escena actual y el Stage
+            Stage stage = (Stage) MBMain.getScene().getWindow();
+            
+            // Configurar la nueva escena con la pantalla de login
+            Scene registerScene = new Scene(registerRoot);
+            stage.setScene(registerScene);
+            stage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+    }
+    
+    @FXML
+    void OnListarCliente (ActionEvent event) {
+        try {       
+            FXMLLoader loader = new FXMLLoader(getClass().getClassLoader().getResource("co/edu/uniquindio/poo/Views/clientes/listarCliente.fxml"));
+            Parent listRoot = loader.load();
+
+            ListarCliente controller = loader.getController();
+        
+            // Llamar al método para cargar los empleados
+            controller.obtenerClientes();
+
+            // Obtener la escena actual y el Stage
+            Stage stage = (Stage) MBMain.getScene().getWindow();
+
+            // Configurar la nueva escena con la pantalla de login
+            Scene listScene = new Scene(listRoot);
+            stage.setScene(listScene);
+            stage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
     @FXML
     void OnListarEmpleado (ActionEvent event) {
         try {       
@@ -212,5 +252,4 @@ public class RegistrarEmpleado {
             e.printStackTrace();
         }
     }
-    
 }

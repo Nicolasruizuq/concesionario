@@ -6,12 +6,11 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.LinkedList;
 import co.edu.uniquindio.poo.Connection.DatabaseConnection;
-import co.edu.uniquindio.poo.Models.empleados.Empleado;
 
 public class ClienteModel {
     public boolean crearCliente(Cliente cliente) {
-        String sql = "INSERT INTO customer (full_name, id_number, gender, address, telephone, status, created_at) " 
-                   + "VALUES (?, ?, ?, ?, ?, 1, NOW())";
+        String sql = "INSERT INTO customer (full_name, id_number, gender, address, telephone, id_employee, status, created_at) " 
+                   + "VALUES (?, ?, ?, ?, ?, ?, 1, NOW())";
 
         try (Connection conn = DatabaseConnection.getConnection();
              PreparedStatement pstmt = conn.prepareStatement(sql)) {
@@ -21,6 +20,7 @@ public class ClienteModel {
                 pstmt.setString(3, cliente.getGender());
                 pstmt.setString(4, cliente.getAddress());
                 pstmt.setString(5, cliente.getTelephone());
+                pstmt.setInt(6, cliente.getEmpleadoId());
 
             int filasInsertadas = pstmt.executeUpdate();
             return filasInsertadas > 0;
@@ -54,7 +54,7 @@ public class ClienteModel {
                 cliente.setTelephone(rs.getString("telephone"));
                 clientes.add(cliente);
     
-                System.out.println("Cliente: " + cliente.getId() + ", ");
+                System.out.println("Cliente: " + cliente.getId() + ", " + ", " + cliente.getFullname());
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -62,9 +62,7 @@ public class ClienteModel {
     
         System.out.println("Total de clientes encontrados: " + clientes.size());
         return clientes;
-    }
-    
-    
+    }   
 
     public Cliente obtenerClientePorId(int id) {
         String sql = "SELECT id, full_name, id_number, gender, address, telephone FROM customer WHERE id = ? AND status = 1 AND deleted_at IS NULL";
