@@ -1,0 +1,141 @@
+package co.edu.uniquindio.poo.Models.vehiculos;
+
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.LinkedList;
+import co.edu.uniquindio.poo.Connection.DatabaseConnection;
+
+public class VehiculoModel {
+
+    public boolean crearVehiculo(Vehiculo vehiculo) {
+        String sql = "INSERT INTO vehicle (id_brand, id_model, id_vehicle_type, id_motor_type, status, created_at) " 
+                   + "VALUES (?, ?, ?, ?, 1, NOW())";
+
+        try (Connection conn = DatabaseConnection.getConnection();
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+
+                pstmt.setInt(1, vehiculo.getIdBrand());
+                pstmt.setInt(2, vehiculo.getIdModel());
+                pstmt.setInt(3, vehiculo.getIdVehicleType());
+                pstmt.setInt(4, vehiculo.getIdMotorType());
+
+            int filasInsertadas = pstmt.executeUpdate();
+            return filasInsertadas > 0;
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    public LinkedList<Vehiculo> obtenerVehiculo() {        
+        String sql = "SELECT ve.id, br.brand, mo.model, vt.type, mt.motor, ve.status "
+                   + "FROM vehicle as ve "
+                   + "INNER JOIN brand as br ON ve.id_brand = br.id"
+                   + "INNER JOIN model as mo ON ve.id_model = mo.id"
+                   + "INNER JOIN vehicle_type as vt ON ve.id_vehicle_type = vt.id"
+                   + "INNER JOIN motor_type as mt ON  ve.id_motor_type = mt.id"
+                   + "WHERE ve.deleted_at IS NULL";
+
+        LinkedList<Vehiculo> vehiculos = new LinkedList<>();
+    
+        try (Connection conn = DatabaseConnection.getConnection();
+             PreparedStatement pstmt = conn.prepareStatement(sql);
+             ResultSet rs = pstmt.executeQuery()) {    
+            
+            if (!rs.isBeforeFirst()) {
+                System.out.println("No se encontraron vehículos.");
+                return vehiculos;
+            }
+                
+            while (rs.next()) {
+                Vehiculo vehiculo = new Vehiculo();
+                vehiculo.setId(rs.getInt("id"));
+                vehiculo.setIdBrand(rs.getInt("id_brand"));
+                vehiculo.setIdModel(rs.getInt("id_model"));
+                vehiculo.setIdVehicleType(rs.getInt("id_vehicle_type"));
+                vehiculo.setIdMotorType(rs.getInt("id_motor_type"));
+                vehiculos.add(vehiculo);    
+                
+                System.out.println("Empleado: " + vehiculo.getId() + ", " + vehiculo.getIdBrand());
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    
+        System.out.println("Total de vehículos encontrados: " + vehiculos.size());
+        return vehiculos;
+    }
+    
+    
+
+    public Vehiculo obtenerVehiculoPorId(int id) {
+        String sql = "SELECT ve.id, br.brand, mo.model, vt.type, mt.motor, ve.status "
+                   + "FROM vehicle as ve "
+                   + "INNER JOIN brand as br ON ve.id_brand = br.id"
+                   + "INNER JOIN model as mo ON ve.id_model = mo.id"
+                   + "INNER JOIN vehicle_type as vt ON ve.id_vehicle_type = vt.id"
+                   + "INNER JOIN motor_type as mt ON  ve.id_motor_type = mt.id"
+                   + "WHERE ve.id = ? AND ve.deleted_at IS NULL";
+
+        Vehiculo vehiculo = null;
+
+        try (Connection conn = DatabaseConnection.getConnection();
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+
+            pstmt.setInt(1, id);
+
+            try (ResultSet rs = pstmt.executeQuery()) {
+                if (rs.next()) {
+                    vehiculo = new Vehiculo();
+                    vehiculo.setId(rs.getInt("id"));
+                    vehiculo.setIdBrand(rs.getInt("id_brand"));
+                    vehiculo.setIdModel(rs.getInt("id_model"));
+                    vehiculo.setIdVehicleType(rs.getInt("id_vehicle_type"));
+                    vehiculo.setIdMotorType(rs.getInt("id_motor_type"));
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return vehiculo;
+    }
+
+    public boolean actualizarVehiculo(Vehiculo vehiculo) {
+        String sql = "UPDATE vehicle SET id_brand = ?, id_model = ?, id_vehicle_type = ?, id_motor_type = ? WHERE id = ? AND status = 1 AND deleted_at IS NULL";
+
+        try (Connection conn = DatabaseConnection.getConnection();
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+
+            pstmt.setInt(1, vehiculo.getIdBrand());
+            pstmt.setInt(2, vehiculo.getIdModel());
+            pstmt.setInt(3, vehiculo.getIdVehicleType());
+            pstmt.setInt(4, vehiculo.getIdMotorType());
+
+            int filasActualizadas = pstmt.executeUpdate();
+            return filasActualizadas > 0;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    public boolean eliminarVehiculo(int id) {
+        String sql = "UPDATE vehicle SET deleted_at = NOW() WHERE id = ? AND status = 1 AND deleted_at IS NULL";
+
+        try (Connection conn = DatabaseConnection.getConnection();
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+
+            pstmt.setInt(1, id);
+
+            int filasActualizadas = pstmt.executeUpdate();
+            return filasActualizadas > 0;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }  
+}
