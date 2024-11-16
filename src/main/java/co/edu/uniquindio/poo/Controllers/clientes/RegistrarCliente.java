@@ -145,7 +145,7 @@ public class RegistrarCliente {
         rbFemenino.setToggleGroup(sexoGroup);
         rbMasculino.setToggleGroup(sexoGroup);
     }
-
+    
     @FXML
     public void crearCliente(ActionEvent event) {
         try {
@@ -277,6 +277,25 @@ public class RegistrarCliente {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    @FXML
+    void OnRegistrarCliente (ActionEvent event) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getClassLoader().getResource("co/edu/uniquindio/poo/Views/clientes/registrarCliente.fxml"));
+            Parent registerRoot = loader.load();
+            
+            // Obtener la escena actual y el Stage
+            Stage stage = (Stage) MBMain.getScene().getWindow();
+            
+            // Configurar la nueva escena con la pantalla de login
+            Scene registerScene = new Scene(registerRoot);
+            stage.setScene(registerScene);
+            stage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
     }
     
 }

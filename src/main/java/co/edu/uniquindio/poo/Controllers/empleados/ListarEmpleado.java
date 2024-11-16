@@ -3,7 +3,9 @@ package co.edu.uniquindio.poo.Controllers.empleados;
 import java.io.IOException;
 import java.util.LinkedList;
 
+import co.edu.uniquindio.poo.Controllers.clientes.EditarCliente;
 import co.edu.uniquindio.poo.Controllers.clientes.ListarCliente;
+import co.edu.uniquindio.poo.Models.clientes.Cliente;
 import co.edu.uniquindio.poo.Models.empleados.Empleado;
 import co.edu.uniquindio.poo.Models.empleados.EmpleadoModel;
 import javafx.application.Platform;
@@ -15,11 +17,16 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.Menu;
 import javafx.scene.control.MenuBar;
+import javafx.scene.control.TableCell;
 import javafx.stage.Stage;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.scene.layout.StackPane;
 
 public class ListarEmpleado{
     @FXML
@@ -48,6 +55,12 @@ public class ListarEmpleado{
 
     @FXML
     private TableColumn<Empleado, String> TCUsername;
+
+    @FXML
+    private TableColumn<Empleado, Void> TCEditar;
+
+    @FXML
+    private TableColumn<Empleado, Void> TCEliminar;
 
     @FXML
     private TableView<Empleado> TVEmpleados;
@@ -90,7 +103,126 @@ public class ListarEmpleado{
         TCGenero.setCellValueFactory(cellData -> cellData.getValue().genderProperty());
         TCCorreo.setCellValueFactory(cellData -> cellData.getValue().emailProperty());
         TCDireccion.setCellValueFactory(cellData -> cellData.getValue().addressProperty());
-        TCTelefono.setCellValueFactory(cellData -> cellData.getValue().telephoneProperty());    
+        TCTelefono.setCellValueFactory(cellData -> cellData.getValue().telephoneProperty()); 
+        
+        TCEditar.setCellFactory(param -> new TableCell<Empleado, Void>() {
+            private final ImageView editIcon = new ImageView(new Image(getClass().getResourceAsStream("/co/edu/uniquindio/poo/Resources/img/editar.png")));
+            private final StackPane container = new StackPane(editIcon);
+    
+            @Override
+            public void updateItem(Void item, boolean empty) {
+                super.updateItem(item, empty);
+                if (empty) {
+                    setGraphic(null);
+                } else {
+                    editIcon.setFitWidth(30);
+                    editIcon.setFitHeight(30);
+                    editIcon.setPreserveRatio(true);
+                    setAlignment(javafx.geometry.Pos.CENTER);
+                    setGraphic(container);
+                    editIcon.setOnMouseClicked(event -> {
+                        Empleado empleado = getTableView().getItems().get(getIndex());
+                        System.out.println("Clic en editar empleado: " + empleado.getFullName());
+                        if (empleado != null) {
+                            OnEditarEmpleado(empleado);
+                        }
+                    });
+                }
+            }
+        });
+    
+        // Configuración de la columna de Eliminar con un icono
+        TCEliminar.setCellFactory(param -> new TableCell<Empleado, Void>() {
+            private final ImageView deleteIcon = new ImageView(new Image(getClass().getResourceAsStream("/co/edu/uniquindio/poo/Resources/img/borrar.png")));
+            private final StackPane container = new StackPane(deleteIcon);
+        
+            @Override
+            public void updateItem(Void item, boolean empty) {
+                super.updateItem(item, empty);
+                if (empty) {
+                    setGraphic(null);
+                } else {
+                    deleteIcon.setFitWidth(30);
+                    deleteIcon.setFitHeight(30); 
+                    deleteIcon.setPreserveRatio(true);
+                    setAlignment(javafx.geometry.Pos.CENTER);
+                    setGraphic(container);
+        
+                    deleteIcon.setOnMouseClicked(event -> {
+                        System.out.println("Evento de clic en ícono de eliminación activado");
+                        Empleado empleado = getTableView().getItems().get(getIndex());
+                        if (empleado != null) {
+                            System.out.println("Empleado seleccionado para eliminar: " + empleado.getFullName());
+                            mostrarConfirmacionEliminar(empleado);  // Llama a tu función de confirmación
+                        }
+                    });
+                }
+            }
+        });
+    }
+
+    private void mostrarConfirmacionEliminar (Empleado empleado) {
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setTitle("Confirmación de eliminación");
+        alert.setHeaderText("¿Está seguro que desea eliminar este empleado?");
+        alert.setContentText("Esta acción no se puede deshacer.");
+
+        // Mostrar los botones de "Sí" y "No"
+        alert.showAndWait().ifPresent(response -> {
+            if (response == ButtonType.OK) {
+                // Si el usuario confirma, proceder con la eliminación
+                eliminarEmpleado(empleado);
+            } else {
+                // Si el usuario cancela, no hacer nada
+                System.out.println("Eliminación cancelada");
+            }
+        });
+    }
+
+    private void eliminarEmpleado (Empleado empleado) {
+        // Llamar al método eliminarEmpleado del modelo
+        boolean eliminado = empleadoModel.eliminarEmpleado(empleado.getId());
+    
+        if (eliminado) {
+            // Si la eliminación fue exitosa, actualizar la lista de empleados
+            obtenerEmpleados();
+            
+            // Mostrar un mensaje de éxito
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("Empleado Eliminado");
+            alert.setHeaderText(null);
+            alert.setContentText("El empleado ha sido marcado como eliminado.");
+            alert.showAndWait();
+        } else {
+            // Si no se pudo eliminar el empleado
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Error de Eliminación");
+            alert.setHeaderText(null);
+            alert.setContentText("No se pudo eliminar al empleado.");
+            alert.showAndWait();
+        }
+    }
+
+    private void OnEditarEmpleado (Empleado empleado) {
+        try {
+            // Cargar la vista de editar cliente
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/co/edu/uniquindio/poo/Views/empleados/editarEmpleado.fxml"));
+            Parent editarRoot = loader.load();
+    
+            // Obtener el controlador de la vista editarCliente.fxml
+            EditarEmpleado controller = loader.getController();
+    
+            // Pasar el cliente al controlador
+            controller.setEmpleado(empleado);
+    
+            // Configurar la nueva escena
+            Stage stage = (Stage) MBMain.getScene().getWindow();
+            Scene editarScene = new Scene(editarRoot);
+            stage.setScene(editarScene);
+            stage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } // Esta llave cierra el bloque `catch`
     }
 
     @FXML
@@ -118,21 +250,17 @@ public class ListarEmpleado{
     }
     
     @FXML
-    public void obtenerEmpleados() {
-        // Llamamos al modelo para obtener los empleados
-        LinkedList<Empleado> empleados = empleadoModel.obtenerEmpleados();
+public void obtenerEmpleados() {
+    LinkedList<Empleado> empleados = empleadoModel.obtenerEmpleados();
 
-        // Crear un ObservableList a partir de los empleados obtenidos
-        if (empleados != null && !empleados.isEmpty()) {
-            ObservableList<Empleado> empleadosObservableList = FXCollections.observableArrayList(empleados);
-
-            // Agregar los empleados al TableView
-            TVEmpleados.setItems(empleadosObservableList);
-        } else {
-            // Mostrar una alerta si no se encontraron empleados
-            mostrarAlerta("No se encontraron empleados.");
-        }
+    if (empleados != null && !empleados.isEmpty()) {
+        ObservableList<Empleado> empleadosObservableList = FXCollections.observableArrayList(empleados);
+        TVEmpleados.setItems(empleadosObservableList);
+        System.out.println("Empleados cargados en el TableView");
+    } else {
+        mostrarAlerta("No se encontraron empleados.");
     }
+}
 
     private void mostrarAlerta(String mensaje) {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
@@ -202,4 +330,28 @@ public class ListarEmpleado{
             e.printStackTrace();
         }
     }
+
+    @FXML
+    void OnListarEmpleado (ActionEvent event) {
+        try {       
+            FXMLLoader loader = new FXMLLoader(getClass().getClassLoader().getResource("co/edu/uniquindio/poo/Views/empleados/listarEmpleado.fxml"));
+            Parent listRoot = loader.load();
+
+            ListarEmpleado controller = loader.getController();
+        
+            // Llamar al método para cargar los empleados
+            controller.obtenerEmpleados();
+
+            // Obtener la escena actual y el Stage
+            Stage stage = (Stage) MBMain.getScene().getWindow();
+
+            // Configurar la nueva escena con la pantalla de login
+            Scene listScene = new Scene(listRoot);
+            stage.setScene(listScene);
+            stage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 }
+

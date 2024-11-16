@@ -2,6 +2,8 @@ package co.edu.uniquindio.poo.Controllers.clientes;
 
 import java.io.IOException;
 import java.util.LinkedList;
+
+import co.edu.uniquindio.poo.Controllers.empleados.ListarEmpleado;
 import co.edu.uniquindio.poo.Models.clientes.Cliente;
 import co.edu.uniquindio.poo.Models.clientes.ClienteModel;
 import co.edu.uniquindio.poo.Models.empleados.Empleado;
@@ -15,6 +17,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.Menu;
 import javafx.scene.control.MenuBar;
 import javafx.stage.Stage;
@@ -23,6 +26,7 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TableCell;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.StackPane;
 
 public class ListarCliente{
     
@@ -95,6 +99,7 @@ public class ListarCliente{
 
         TCEditar.setCellFactory(param -> new TableCell<Cliente, Void>() {
             private final ImageView editIcon = new ImageView(new Image(getClass().getResourceAsStream("/co/edu/uniquindio/poo/Resources/img/editar.png")));
+            private final StackPane container = new StackPane(editIcon);
     
             @Override
             public void updateItem(Void item, boolean empty) {
@@ -104,11 +109,15 @@ public class ListarCliente{
                 } else {
                     editIcon.setFitWidth(30);
                     editIcon.setFitHeight(30);
-                    setGraphic(editIcon);
+                    editIcon.setPreserveRatio(true);
+                    setAlignment(javafx.geometry.Pos.CENTER);
+                    setGraphic(container);
                     editIcon.setOnMouseClicked(event -> {
                         Cliente cliente = getTableView().getItems().get(getIndex());
-                        // Lógica para editar el cliente
-                        System.out.println("Editar cliente: " + cliente.getFullname());
+                        System.out.println("Clic en editar cliente: " + cliente.getFullname());
+                        if (cliente != null) {
+                            OnEditarCliente(cliente);
+                        }
                     });
                 }
             }
@@ -117,6 +126,8 @@ public class ListarCliente{
         // Configuración de la columna de Eliminar con un icono
         TCEliminar.setCellFactory(param -> new TableCell<Cliente, Void>() {
             private final ImageView deleteIcon = new ImageView(new Image(getClass().getResourceAsStream("/co/edu/uniquindio/poo/Resources/img/borrar.png")));
+            private final StackPane container = new StackPane(deleteIcon);
+            
     
             @Override
             public void updateItem(Void item, boolean empty) {
@@ -126,16 +137,87 @@ public class ListarCliente{
                 } else {
                     deleteIcon.setFitWidth(30);
                     deleteIcon.setFitHeight(30); 
-                    setGraphic(deleteIcon);
+                    deleteIcon.setPreserveRatio(true);
+                    setAlignment(javafx.geometry.Pos.CENTER);
+                    setGraphic(container);
+        
                     deleteIcon.setOnMouseClicked(event -> {
+                        System.out.println("Evento de clic en ícono de eliminación activado");
                         Cliente cliente = getTableView().getItems().get(getIndex());
-                        // Lógica para eliminar el cliente
-                        System.out.println("Eliminar cliente: " + cliente.getFullname());
+                        if (cliente != null) {
+                            System.out.println("Cliente seleccionado para eliminar: " + cliente.getFullname());
+                            mostrarConfirmacionEliminar(cliente);  // Llama a tu función de confirmación
+                        }
                     });
                 }
             }
         });
     }
+
+    private void mostrarConfirmacionEliminar (Cliente cliente) {
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setTitle("Confirmación de eliminación");
+        alert.setHeaderText("¿Está seguro que desea eliminar este cliente?");
+        alert.setContentText("Esta acción no se puede deshacer.");
+
+        // Mostrar los botones de "Sí" y "No"
+        alert.showAndWait().ifPresent(response -> {
+            if (response == ButtonType.OK) {
+                // Si el usuario confirma, proceder con la eliminación
+                eliminarCliente(cliente);
+            } else {
+                // Si el usuario cancela, no hacer nada
+                System.out.println("Eliminación cancelada");
+            }
+        });
+    }
+
+    private void eliminarCliente (Cliente cliente) {
+        // Llamar al método eliminarEmpleado del modelo
+        boolean eliminado = clienteModel.eliminarCliente(cliente.getId());
+    
+        if (eliminado) {
+            // Si la eliminación fue exitosa, actualizar la lista de empleados
+            obtenerClientes();
+            
+            // Mostrar un mensaje de éxito
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("Cliente Eliminado");
+            alert.setHeaderText(null);
+            alert.setContentText("El cliente ha sido marcado como eliminado.");
+            alert.showAndWait();
+        } else {
+            // Si no se pudo eliminar el empleado
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Error de Eliminación");
+            alert.setHeaderText(null);
+            alert.setContentText("No se pudo eliminar al cliente.");
+            alert.showAndWait();
+        }
+    }
+
+    private void OnEditarCliente(Cliente cliente) {
+        try {
+            // Cargar la vista de editar cliente
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/co/edu/uniquindio/poo/Views/clientes/editarCliente.fxml"));
+            Parent editarRoot = loader.load();
+    
+            // Obtener el controlador de la vista editarCliente.fxml
+            EditarCliente controller = loader.getController();
+    
+            // Pasar el cliente al controlador
+            controller.setCliente(cliente);
+    
+            // Configurar la nueva escena
+            Stage stage = (Stage) MBMain.getScene().getWindow();
+            Scene editarScene = new Scene(editarRoot);
+            stage.setScene(editarScene);
+            stage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } // Esta llave cierra el bloque `catch`
+    }
+    
 
     @FXML
     void OnCloseSesion(ActionEvent event) {
@@ -223,9 +305,49 @@ public class ListarCliente{
 
     }
 
-    
+    @FXML
+    void OnListarEmpleado (ActionEvent event) {
+        try {       
+            FXMLLoader loader = new FXMLLoader(getClass().getClassLoader().getResource("co/edu/uniquindio/poo/Views/empleados/listarEmpleado.fxml"));
+            Parent listRoot = loader.load();
 
-    
+            ListarEmpleado controller = loader.getController();
+        
+            // Llamar al método para cargar los empleados
+            controller.obtenerEmpleados();
 
-    
+            // Obtener la escena actual y el Stage
+            Stage stage = (Stage) MBMain.getScene().getWindow();
+
+            // Configurar la nueva escena con la pantalla de login
+            Scene listScene = new Scene(listRoot);
+            stage.setScene(listScene);
+            stage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @FXML
+    void OnListarCliente (ActionEvent event) {
+        try {       
+            FXMLLoader loader = new FXMLLoader(getClass().getClassLoader().getResource("co/edu/uniquindio/poo/Views/clientes/listarCliente.fxml"));
+            Parent listRoot = loader.load();
+
+            ListarCliente controller = loader.getController();
+        
+            // Llamar al método para cargar los empleados
+            controller.obtenerClientes();
+
+            // Obtener la escena actual y el Stage
+            Stage stage = (Stage) MBMain.getScene().getWindow();
+
+            // Configurar la nueva escena con la pantalla de login
+            Scene listScene = new Scene(listRoot);
+            stage.setScene(listScene);
+            stage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }  
 }

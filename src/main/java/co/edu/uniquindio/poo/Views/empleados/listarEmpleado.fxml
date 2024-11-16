@@ -12,30 +12,24 @@
       <MenuBar fx:id="MBMain" layoutY="1.0" prefHeight="26.0" prefWidth="900.0">
         <menus>
           <Menu fx:id="MEmpleados" mnemonicParsing="false" text="Empleados">
-               <items>
-                  <MenuItem mnemonicParsing="false" onAction="#OnRegistrarEmpleado" text="Listar Empleados" />
-                  <MenuItem mnemonicParsing="false" text="Editar Empleados" />
-                  <MenuItem mnemonicParsing="false" text="Eliminar Empleados" />
-                  <MenuItem mnemonicParsing="false" onAction="#OnRegistrarEmpleado" text="Registrar Empleados" />
-               </items>
+            <items>
+              <MenuItem mnemonicParsing="false" onAction="#OnListarEmpleado" text="Listar Empleados" />
+              <MenuItem mnemonicParsing="false" onAction="#OnRegistrarEmpleado" text="Registrar Empleados" />
+            </items>
           </Menu>
           <Menu fx:id="MClientes" mnemonicParsing="false" text="Clientes">
             <items>
-                  <MenuItem mnemonicParsing="false" text="Registrar Clientes" />
-                  <MenuItem mnemonicParsing="false" text="Eliminar Clientes" />
-                  <MenuItem mnemonicParsing="false" text="Listar Clientes" />
-                  <MenuItem mnemonicParsing="false" text="Editar Clientes" />
+              <MenuItem mnemonicParsing="false" onAction="#OnRegistrarCliente" text="Registrar Clientes" />
+              <MenuItem mnemonicParsing="false" onAction="#OnListarCliente" text="Listar Clientes" />
             </items>
           </Menu>
           <Menu fx:id="MVehiculos" mnemonicParsing="false" text="Vehículos">
             <items>
-                  <MenuItem mnemonicParsing="false" text="Eliminar Vehiculos" />
               <MenuItem mnemonicParsing="false" text="Registrar Vehiculos" />
                   <MenuItem mnemonicParsing="false" text="Alquilar Vehiculos" />
                   <MenuItem mnemonicParsing="false" text="Comprar Vehiculos" />
                   <MenuItem mnemonicParsing="false" text="Vender Vehiculos" />
                   <MenuItem mnemonicParsing="false" text="Listar Vehiculos" />
-                  <MenuItem mnemonicParsing="false" text="Editar Vehiculos" />
             </items>
           </Menu>
             <Menu fx:id="MReportes" mnemonicParsing="false" text="Reportes">
@@ -46,8 +40,6 @@
             <Menu fx:id="MUsuarios" mnemonicParsing="false" text="Usuarios">
               <items>
                 <MenuItem mnemonicParsing="false" text="Registrar Usuarios" />
-                  <MenuItem mnemonicParsing="false" text="Eliminar Usuarios" />
-                  <MenuItem mnemonicParsing="false" text="Editar Usuarios" />
                   <MenuItem mnemonicParsing="false" text="Listar Usuarios" />
               </items>
             </Menu>
@@ -61,14 +53,16 @@
       <TableView fx:id="TVEmpleados" layoutY="27.0" prefHeight="600.0" prefWidth="900.0">
         <columns>
           <TableColumn fx:id="TCId" prefWidth="75.0" text="Id" />
-          <TableColumn fx:id="TCIdUser" prefWidth="75.0" text="IdUser" />
-          <TableColumn fx:id="TCUsername" prefWidth="107.20001220703125" text="Username" />
-          <TableColumn fx:id="TCNombreCompleto" prefWidth="131.20001220703125" text="Nombre Completo" />
-          <TableColumn fx:id="TCNumeroId" prefWidth="88.0" text="Numero Id" />
-          <TableColumn fx:id="TCGenero" prefWidth="58.399993896484375" text="Genero" />
-          <TableColumn fx:id="TCCorreo" prefWidth="91.20001220703125" text="Correo" />
-          <TableColumn fx:id="TCDireccion" prefWidth="136.800048828125" text="Direccion" />
-          <TableColumn fx:id="TCTelefono" prefWidth="134.4000244140625" text="Telefono" />
+          <TableColumn fx:id="TCIdUser" prefWidth="63.99999237060547" text="IdUser" />
+          <TableColumn fx:id="TCUsername" prefWidth="75.99996948242188" text="Username" />
+          <TableColumn fx:id="TCNombreCompleto" prefWidth="133.60003662109375" text="Nombre Completo" />
+          <TableColumn fx:id="TCNumeroId" prefWidth="74.39996337890625" text="Numero Id" />
+          <TableColumn fx:id="TCGenero" prefWidth="78.39996337890625" text="Genero" />
+          <TableColumn fx:id="TCCorreo" prefWidth="74.40005493164062" text="Correo" />
+          <TableColumn fx:id="TCDireccion" prefWidth="100.79998779296875" text="Direccion" />
+          <TableColumn fx:id="TCTelefono" prefWidth="75.20001220703125" text="Telefono" />
+            <TableColumn fx:id="TCEditar" prefWidth="70.4000244140625" text="Editar" />
+            <TableColumn fx:id="TCEliminar" prefWidth="73.5999755859375" text="Eliminar" />
         </columns>
       </TableView>
    </children>

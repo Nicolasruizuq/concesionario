@@ -18,13 +18,17 @@ import javafx.stage.Stage;
 import javafx.util.StringConverter;
 import java.io.IOException;
 import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.Map;
-
-import co.edu.uniquindio.poo.Controllers.clientes.ListarCliente;
+import co.edu.uniquindio.poo.Models.clientes.Cliente;
+import co.edu.uniquindio.poo.Models.clientes.ClienteModel;
 import co.edu.uniquindio.poo.Models.empleados.Empleado;
 import co.edu.uniquindio.poo.Models.empleados.EmpleadoModel;
+import co.edu.uniquindio.poo.Controllers.clientes.ListarCliente;
+import co.edu.uniquindio.poo.Controllers.empleados.ListarEmpleado;
 
-public class RegistrarEmpleado {   
+public class EditarEmpleado {
+    
     @FXML
     private MenuBar MBMain;
 
@@ -47,6 +51,21 @@ public class RegistrarEmpleado {
     private Menu MVehiculos;
 
     @FXML
+    private Button btnGuardar;
+
+    @FXML
+    private ComboBox<Integer> cbTypeUser;
+
+    @FXML
+    private RadioButton rbFemenino;
+
+    @FXML
+    private RadioButton rbMasculino;
+
+    @FXML
+    private ToggleGroup sexoGroup;
+
+    @FXML
     private TextField txtCedula;
 
     @FXML
@@ -67,98 +86,95 @@ public class RegistrarEmpleado {
     @FXML
     private TextField txtUsername;
 
-    @FXML
-    private ToggleGroup sexoGroup;
+    private Empleado empleadoActual;
 
-    @FXML
-    private ComboBox<Integer> cbTypeUser;
-
-    @FXML
-    private RadioButton rbFemenino;
-
-    @FXML
-    private RadioButton rbMasculino;
-
-    @FXML
-    private Button btnRegistrarEmpleado;
+    private ClienteModel clienteModel;
 
     private EmpleadoModel empleadoModel;
-    private final Map<String, Integer> rolValores = new HashMap<>();
-    
-    @FXML
-    public void initialize() {
-        // Configura los valores del mapa antes de añadir al ComboBox
-        rolValores.put("Administrador", 1);
-        rolValores.put("Empleado", 2);
-    
-        cbTypeUser.getItems().addAll(1, 2);
-    
-        cbTypeUser.setConverter(new StringConverter<>() {
-            @Override
-            public String toString(Integer value) {
-                // Muestra la etiqueta correspondiente al valor Integer
-                return rolValores.entrySet()
-                        .stream()
-                        .filter(entry -> entry.getValue().equals(value))
-                        .map(Map.Entry::getKey)
-                        .findFirst()
-                        .orElse("");
+
+    public EditarEmpleado() {
+        clienteModel = new ClienteModel();
+        empleadoModel = new EmpleadoModel();
+    }
+
+    public void setEmpleado (Empleado empleado) {
+        this.empleadoActual = empleado;
+        rellenarCampos();
+    }
+
+    private void rellenarCampos() {
+        if (empleadoActual != null) {
+            txtUsername.setText(empleadoActual.getUsername());
+            txtEmail.setText(empleadoActual.getEmail());
+            cbTypeUser.setValue(empleadoActual.getUserType());
+            txtPassword.setText(empleadoActual.getPassword());
+            txtNombre.setText(empleadoActual.getFullName());
+            txtCedula.setText(empleadoActual.getIdNumber());
+            txtDireccion.setText(empleadoActual.getAddress());
+            txtTelefono.setText(empleadoActual.getTelephone());
+
+            // Seleccionar el género
+            if ("Femenino".equals(empleadoActual.getGender())) {
+                rbFemenino.setSelected(true);
+            } else {
+                rbMasculino.setSelected(true);
             }
-    
-            @Override
-            public Integer fromString(String label) {
-                // Convierte la etiqueta de texto a su valor Integer correspondiente
-                return rolValores.get(label);
-            }
-        });
-    
-        cbTypeUser.setValue(1); // Selecciona "Administrador" por defecto
-    
-        // Asigna el grupo de selección de sexo a los RadioButtons
-        rbFemenino.setToggleGroup(sexoGroup);
-        rbMasculino.setToggleGroup(sexoGroup);
+        }
     }
 
     @FXML
-    public void crearEmpleado(ActionEvent event) {
-        try {
-            // Crear un objeto Empleado y llenarlo con los datos de la vista
-            Empleado nuevoEmpleado = new Empleado();
-            nuevoEmpleado.setUserType(cbTypeUser.getValue()); 
-            nuevoEmpleado.setUsername(txtUsername.getText());
-            nuevoEmpleado.setPassword(txtPassword.getText());         
-            nuevoEmpleado.setFullName(txtNombre.getText());
-            nuevoEmpleado.setIdNumber(txtCedula.getText());
-            // Obtener el género seleccionado
-            String generoSeleccionado = ((RadioButton) sexoGroup.getSelectedToggle()).getText();
-            nuevoEmpleado.setGender(generoSeleccionado);
-            nuevoEmpleado.setAddress(txtDireccion.getText());
-            nuevoEmpleado.setTelephone(txtTelefono.getText());
-            nuevoEmpleado.setEmail(txtEmail.getText());
-            
-            // Intentar guardar el empleado en la base de datos
-            boolean creado = empleadoModel.crearEmpleado(nuevoEmpleado);
-            mostrarAlerta(creado ? "Empleado creado correctamente." : "Error al crear el empleado.");
-        } catch (NullPointerException e) {
-            mostrarAlerta("Error: Hay campos obligatorios sin completar.");
-        } catch (Exception e) {
-            e.printStackTrace();
-            mostrarAlerta("Ocurrió un error al intentar crear el empleado.");
+    void editarEmpleado (ActionEvent event) {
+        if (empleadoActual != null) {
+            empleadoActual.setEmail(txtEmail.getText());
+            empleadoActual.setPassword(txtPassword.getText());
+            empleadoActual.setUsername(txtUsername.getText());
+            empleadoActual.setUserType(cbTypeUser.getValue());
+            empleadoActual.setFullName(txtNombre.getText());
+            empleadoActual.setIdNumber(txtCedula.getText());
+            empleadoActual.setAddress(txtDireccion.getText());
+            empleadoActual.setTelephone(txtTelefono.getText());
+            empleadoActual.setGender(rbFemenino.isSelected() ? "Femenino" : "Masculino");
+
+            boolean actualizado = empleadoModel.actualizarEmpleado(empleadoActual);
+            if (actualizado) {
+                mostrarAlerta("Empleado actualizado correctamente.", Alert.AlertType.INFORMATION);
+                volverAListarEmpleados();
+            } else {
+                mostrarAlerta("Error al actualizar el empleado.", Alert.AlertType.ERROR);
+            }
         }
     }
-    
-    private void mostrarAlerta(String mensaje) {
-        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+
+    private void mostrarAlerta(String mensaje, Alert.AlertType tipo) {
+        Alert alert = new Alert(tipo);
         alert.setTitle("Resultado");
         alert.setHeaderText(null);
         alert.setContentText(mensaje);
         alert.showAndWait();
     }
 
-    public int obtenerValorSeleccionado() {
-        return cbTypeUser.getValue(); // Obtiene el valor entero directamente
+    private void volverAListarEmpleados () {
+        try {       
+            FXMLLoader loader = new FXMLLoader(getClass().getClassLoader().getResource("co/edu/uniquindio/poo/Views/empleados/listarEmpleado.fxml"));
+            Parent listRoot = loader.load();
+
+            ListarEmpleado controller = loader.getController();
+        
+            // Llamar al método para cargar los empleados
+            controller.obtenerEmpleados();
+
+            // Obtener la escena actual y el Stage
+            Stage stage = (Stage) MBMain.getScene().getWindow();
+
+            // Configurar la nueva escena con la pantalla de login
+            Scene listScene = new Scene(listRoot);
+            stage.setScene(listScene);
+            stage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
-    
+
     @FXML
     void OnCloseSesion(ActionEvent event) {
         try {
@@ -177,15 +193,29 @@ public class RegistrarEmpleado {
             e.printStackTrace();
         }
     }
-  
+
     @FXML
     void OnLeave(ActionEvent event) {
         Platform.exit();
-
     }
 
-    public RegistrarEmpleado() {
-        empleadoModel = new EmpleadoModel();
+    @FXML
+    void OnRegistrarEmpleado (ActionEvent event) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getClassLoader().getResource("co/edu/uniquindio/poo/Views/empleados/registrarEmpleado.fxml"));
+            Parent registerRoot = loader.load();
+            
+            // Obtener la escena actual y el Stage
+            Stage stage = (Stage) MBMain.getScene().getWindow();
+            
+            // Configurar la nueva escena con la pantalla de login
+            Scene registerScene = new Scene(registerRoot);
+            stage.setScene(registerScene);
+            stage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
     }
 
     @FXML
@@ -206,7 +236,7 @@ public class RegistrarEmpleado {
         }
 
     }
-    
+
     @FXML
     void OnListarCliente (ActionEvent event) {
         try {       
@@ -253,22 +283,4 @@ public class RegistrarEmpleado {
         }
     }
 
-    @FXML
-    void OnRegistrarEmpleado (ActionEvent event) {
-        try {
-            FXMLLoader loader = new FXMLLoader(getClass().getClassLoader().getResource("co/edu/uniquindio/poo/Views/empleados/registrarEmpleado.fxml"));
-            Parent registerRoot = loader.load();
-            
-            // Obtener la escena actual y el Stage
-            Stage stage = (Stage) MBMain.getScene().getWindow();
-            
-            // Configurar la nueva escena con la pantalla de login
-            Scene registerScene = new Scene(registerRoot);
-            stage.setScene(registerScene);
-            stage.show();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-    }
 }

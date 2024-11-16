@@ -12,7 +12,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="co.edu.uniquindio.poo.Controllers.empleados.RegistrarEmpleado">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="co.edu.uniquindio.poo.Controllers.empleados.EditarEmpleado">
    <children>
       <MenuBar fx:id="MBMain" layoutY="1.0" prefHeight="26.0" prefWidth="900.0">
         <menus>
@@ -55,7 +55,7 @@
                </items></Menu>
         </menus>
       </MenuBar>
-      <Label alignment="CENTER" contentDisplay="CENTER" layoutX="320.0" layoutY="63.0" prefHeight="60.0" prefWidth="227.0" text="REGISTRAR EMPLEADO" textAlignment="CENTER" wrapText="true">
+      <Label alignment="CENTER" contentDisplay="CENTER" layoutX="320.0" layoutY="63.0" prefHeight="60.0" prefWidth="227.0" text="EDITAR EMPLEADO" textAlignment="CENTER" wrapText="true">
          <font>
             <Font name="System Bold" size="20.0" />
          </font>
@@ -73,7 +73,7 @@
       <TextField fx:id="txtTelefono" layoutX="189.0" layoutY="291.0" />
       <TextField fx:id="txtDireccion" layoutX="545.0" layoutY="236.0" />
       <TextField fx:id="txtEmail" layoutX="545.0" layoutY="291.0" />
-      <TextField fx:id="txtUsername" layoutX="189.0" layoutY="346.0" />
+      <TextField fx:id="txtUsername" editable="false" layoutX="189.0" layoutY="346.0" />
       <TextField fx:id="txtPassword" layoutX="547.0" layoutY="346.0" />
       <RadioButton fx:id="rbFemenino" layoutX="182.0" layoutY="240.0" mnemonicParsing="false" text="Femenino">
          <toggleGroup>
@@ -82,6 +82,6 @@
       <RadioButton fx:id="rbMasculino" layoutX="283.0" layoutY="240.0" mnemonicParsing="false" text="Masculino" toggleGroup="$sexoGroup" />
       <ComboBox fx:id="cbTypeUser" layoutX="188.0" layoutY="401.0" prefWidth="150.0" />
       <Label layoutX="80.0" layoutY="405.0" text="Tipo de usuario:" />
-      <Button fx:id="btnRegistrarEmpleado" layoutX="374.0" layoutY="511.0" mnemonicParsing="false" onAction="#crearEmpleado" text="Registrar Empleado" />
+      <Button fx:id="btnGuardar" layoutX="402.0" layoutY="510.0" mnemonicParsing="false" onAction="#editarEmpleado" text=" Guardar" />
    </children>
 </AnchorPane>
