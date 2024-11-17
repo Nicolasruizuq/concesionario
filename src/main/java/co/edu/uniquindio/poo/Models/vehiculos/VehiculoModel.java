@@ -30,8 +30,8 @@ public class VehiculoModel {
         }
     }
 
-    public LinkedList<Vehiculo> obtenerVehiculo() {        
-        String sql = "SELECT ve.id, br.brand, mo.model, vt.type, mt.motor, ve.status "
+    public LinkedList<Vehiculo> obtenerVehiculos() {        
+        String sql = "SELECT ve.id, br.brand, mo.model, vt.type, mt.motor, mt.plug_in, ve.status "
                    + "FROM vehicle as ve "
                    + "INNER JOIN brand as br ON ve.id_brand = br.id"
                    + "INNER JOIN model as mo ON ve.id_model = mo.id"
@@ -72,7 +72,7 @@ public class VehiculoModel {
     
 
     public Vehiculo obtenerVehiculoPorId(int id) {
-        String sql = "SELECT ve.id, br.brand, mo.model, vt.type, mt.motor, ve.status "
+        String sql = "SELECT ve.id, br.brand, mo.model, vt.type, mt.motor, mt.plug_in, ve.status "
                    + "FROM vehicle as ve "
                    + "INNER JOIN brand as br ON ve.id_brand = br.id"
                    + "INNER JOIN model as mo ON ve.id_model = mo.id"

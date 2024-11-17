@@ -48,7 +48,7 @@ public class ModeloModel {
                 Modelo modelo = new Modelo();
                 modelo.setId(rs.getInt("id"));
                 modelo.setIdBrand(rs.getInt("id_brand"));
-                modelo.setModel(rs.getString("model"));              
+                modelo.setModel(rs.getString("model"));          
                 modelos.add(modelo);    
                 
                 System.out.println("Modelo: " + modelo.getId() + ", " + modelo.getModel());
@@ -116,7 +116,7 @@ public class ModeloModel {
              PreparedStatement pstmt = conn.prepareStatement(sql)) {            
                 
             pstmt.setString(1, modelo.getModel());
-            pstmt.setInt(2, modelo.getIdBrand());  
+            pstmt.setInt(2, modelo.getIdBrand());            
 
             int filasActualizadas = pstmt.executeUpdate();
             return filasActualizadas > 0;

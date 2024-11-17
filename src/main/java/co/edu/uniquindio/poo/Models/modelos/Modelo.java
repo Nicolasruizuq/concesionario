@@ -14,7 +14,7 @@ public class Modelo {
     public Modelo () {
         this.id = new SimpleIntegerProperty();
         this.idBrand = new SimpleIntegerProperty();
-        this.model = new SimpleStringProperty();
+        this.model = new SimpleStringProperty();        
     }
 
     // Getters y Setters para las propiedades
@@ -52,5 +52,5 @@ public class Modelo {
 
     public String getModel() {
         return model.get();
-    }
+    }    
 }

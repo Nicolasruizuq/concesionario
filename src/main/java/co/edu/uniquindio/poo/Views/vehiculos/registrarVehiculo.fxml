@@ -1,11 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
 <?import javafx.scene.control.Menu?>
 <?import javafx.scene.control.MenuBar?>
 <?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="co.edu.uniquindio.poo.Controllers.Main">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="co.edu.uniquindio.poo.Controllers.vehiculos.RegistrarVehiculo">
    <children>
       <MenuBar fx:id="MBMain" layoutY="1.0" prefHeight="26.0" prefWidth="900.0">
         <menus>
@@ -48,5 +53,73 @@
                </items></Menu>
         </menus>
       </MenuBar>
+      <Label alignment="CENTER" contentDisplay="CENTER" layoutX="336.0" layoutY="50.0" prefHeight="60.0" prefWidth="227.0" text="REGISTRAR VEHÍCULO" textAlignment="CENTER" wrapText="true">
+         <font>
+            <Font name="System Bold" size="20.0" />
+         </font>
+      </Label>
+      <Label layoutX="15.0" layoutY="130.0" text="Marca:" />
+      <Label layoutX="330.0" layoutY="130.0" text="Modelo:" />
+      <Label layoutX="330.0" layoutY="180.0" text="Tipo De Vehiculo:" />
+      <Label layoutX="15.0" layoutY="180.0" text="Tipo De Motor:" />
+      <Label layoutX="330.0" layoutY="230.0" text="Numero De Puertas:" />
+      <Label layoutX="15.0" layoutY="230.0" text="Cilindraje:" />
+      <Label layoutX="330.0" layoutY="280.0" text="Numero De Pasajeros:" />
+      <Label layoutX="15.0" layoutY="280.0" text="Cambios:" />
+      <Button fx:id="btnRegistrarVehículo" layoutX="759.0" layoutY="626.0" mnemonicParsing="false" onAction="#crearEmpleado" text="Registrar Vehículo" />
+      <ComboBox fx:id="cbMarca" layoutX="180.0" layoutY="125.0" prefHeight="26.0" prefWidth="130.0" />
+      <Label layoutX="330.0" layoutY="330.0" text="Numero De Airbags:" />
+      <Label layoutX="15.0" layoutY="330.0" text="Numero De Ejes:" />
+      <Label layoutX="15.0" layoutY="580.0" text="N° Salidas Emergencia:" />
+      <Label layoutX="330.0" layoutY="380.0" text="Caballos De Fuerza:" />
+      <Label layoutX="15.0" layoutY="430.0" text="Velocidad Maxima:" />
+      <Label layoutX="330.0" layoutY="430.0" text="Capacidad Del Maletero:" />
+      <Label layoutX="15.0" layoutY="480.0" text="De 0 a 100km/h en:" />
+      <Label layoutX="330.0" layoutY="480.0" text="Capacidad de Caja De Carga:" />
+      <Label layoutX="635.0" layoutY="130.0" text="Tipo De Camion:" />
+      <Label layoutX="635.0" layoutY="180.0" text="Aire Acondicionado:" />
+      <Label layoutX="635.0" layoutY="230.0" text="Camara De Reversa:" />
+      <Label layoutX="635.0" layoutY="280.0" text="Velocidad Crucero:" />
+      <Label layoutX="635.0" layoutY="330.0" text="Frenos ABS:" />
+      <Label layoutX="635.0" layoutY="380.0" text="Frenos De Aire:" />
+      <Label layoutX="635.0" layoutY="430.0" text="Sensor De Colision:" />
+      <Label layoutX="635.0" layoutY="480.0" text="Traccion 4X4:" />
+      <Label layoutX="15.0" layoutY="380.0" text="Sensor De Trafico Cruzado:" />
+      <Label layoutX="330.0" layoutY="580.0" text="Asistente Perm Carril:" />
+      <ComboBox fx:id="cbTipoCamion" layoutX="750.0" layoutY="125.0" prefHeight="26.0" prefWidth="130.0" />
+      <ComboBox fx:id="cbAireAcondicionado" layoutX="750.0" layoutY="175.0" prefHeight="26.0" prefWidth="130.0" />
+      <ComboBox fx:id="cbCamaraReversa" layoutX="750.0" layoutY="225.0" prefHeight="26.0" prefWidth="130.0" />
+      <ComboBox fx:id="cbVelocidadCrucero" layoutX="750.0" layoutY="275.0" prefHeight="26.0" prefWidth="130.0" />
+      <ComboBox fx:id="cbFrenosABS" layoutX="750.0" layoutY="325.0" prefHeight="26.0" prefWidth="130.0" />
+      <ComboBox fx:id="cbFrenosDeAire" layoutX="750.0" layoutY="375.0" prefHeight="26.0" prefWidth="130.0" />
+      <ComboBox fx:id="cbSensorColision" layoutX="750.0" layoutY="425.0" prefHeight="26.0" prefWidth="130.0" />
+      <ComboBox fx:id="cbTraccion4X4" layoutX="750.0" layoutY="475.0" prefHeight="26.0" prefWidth="130.0" />
+      <TextField fx:id="txtNumeroAirBags" layoutX="490.0" layoutY="325.0" prefHeight="26.0" prefWidth="130.0" />
+      <TextField fx:id="txtNumeroPasajeros" layoutX="490.0" layoutY="275.0" prefHeight="26.0" prefWidth="130.0" />
+      <TextField fx:id="txtNumeroPuertas" layoutX="490.0" layoutY="225.0" prefHeight="26.0" prefWidth="130.0" />
+      <TextField fx:id="txtPotencia" layoutX="490.0" layoutY="375.0" prefHeight="26.0" prefWidth="130.0" />
+      <TextField fx:id="txtCapacidadMaletero" layoutX="490.0" layoutY="425.0" prefHeight="26.0" prefWidth="130.0" />
+      <TextField fx:id="txtCapacidadCajaCarga" layoutX="490.0" layoutY="475.0" prefHeight="26.0" prefWidth="130.0" />
+      <ComboBox fx:id="cbModelo" layoutX="490.0" layoutY="125.0" prefHeight="26.0" prefWidth="130.0" />
+      <TextField fx:id="txCilindraje" layoutX="180.0" layoutY="225.0" prefHeight="26.0" prefWidth="130.0" />
+      <TextField fx:id="txtCambios" layoutX="180.0" layoutY="275.0" prefHeight="26.0" prefWidth="130.0" />
+      <TextField fx:id="txtNumeroEjes" layoutX="180.0" layoutY="325.0" prefHeight="26.0" prefWidth="130.0" />
+      <TextField fx:id="txtVelocidadMaxima" layoutX="180.0" layoutY="425.0" prefHeight="26.0" prefWidth="130.0" />
+      <TextField fx:id="txtAceleracion" layoutX="180.0" layoutY="475.0" prefHeight="26.0" prefWidth="130.0" />
+      <ComboBox fx:id="cbSensorTrafico" layoutX="180.0" layoutY="375.0" prefHeight="26.0" prefWidth="130.0" />
+      <TextField fx:id="txtNumeroSalidasEmergencia" layoutX="180.0" layoutY="575.0" prefHeight="26.0" prefWidth="130.0" />
+      <ComboBox fx:id="cbAsistentePermanencia" layoutX="490.0" layoutY="575.0" prefHeight="26.0" prefWidth="130.0" />
+      <ComboBox fx:id="cbTipoVehiculo" layoutX="490.0" layoutY="175.0" prefHeight="26.0" prefWidth="130.0" />
+      <ComboBox fx:id="cbTipoMotor" layoutX="180.0" layoutY="175.0" prefHeight="26.0" prefWidth="130.0" />
+      <Label layoutX="15.0" layoutY="530.0" text="Precio De Compra:" />
+      <Label layoutX="330.0" layoutY="530.0" text="Precio De Venta:" />
+      <TextField fx:id="txtPrecioCompra" layoutX="180.0" layoutY="525.0" prefHeight="26.0" prefWidth="130.0" />
+      <TextField fx:id="txtPrecioVenta" layoutX="490.0" layoutY="525.0" prefHeight="26.0" prefWidth="130.0" />
+      <Label layoutX="635.0" layoutY="530.0" text="Tipo de Servicio:" />
+      <ComboBox fx:id="cbTipoServicio" layoutX="750.0" layoutY="525.0" prefHeight="26.0" prefWidth="130.0" />
+      <Label layoutX="635.0" layoutY="580.0" text="Color:" />
+      <ComboBox fx:id="cbColor" layoutX="750.0" layoutY="575.0" prefHeight="26.0" prefWidth="130.0" />
+      <Label layoutX="15.0" layoutY="630.0" text="Tipo Transmisión:" />
+      <ComboBox fx:id="cbTipoTransmision" layoutX="180.0" layoutY="625.0" prefHeight="26.0" prefWidth="130.0" />
    </children>
 </AnchorPane>

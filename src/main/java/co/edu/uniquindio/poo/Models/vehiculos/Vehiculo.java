@@ -1,6 +1,8 @@
 package co.edu.uniquindio.poo.Models.vehiculos;
 
+import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.IntegerProperty;
+import javafx.beans.property.SimpleDoubleProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.StringProperty;
 import javafx.beans.property.SimpleStringProperty;
@@ -12,6 +14,10 @@ public class Vehiculo {
     private IntegerProperty idModel;
     private IntegerProperty idVehicleType;
     private IntegerProperty idMotorType;
+    private DoubleProperty valorVenta;
+    private DoubleProperty valorCompra;
+    private StringProperty tipoServicio;
+
 
     public Vehiculo () {
         this.id = new SimpleIntegerProperty();
@@ -19,6 +25,9 @@ public class Vehiculo {
         this.idModel = new SimpleIntegerProperty();
         this.idVehicleType = new SimpleIntegerProperty();
         this.idMotorType = new SimpleIntegerProperty();
+        this.valorVenta = new SimpleDoubleProperty();
+        this.valorCompra = new SimpleDoubleProperty();
+        this.tipoServicio = new SimpleStringProperty();
         
     }
 
@@ -82,4 +91,42 @@ public class Vehiculo {
     public int getIdMotorType() {
         return idMotorType.get();
     }
+
+    public DoubleProperty valorVenta() {
+        return valorVenta;
+    }
+
+    public void setValorVenta (Double valorVenta) {
+        this.valorVenta.set(valorVenta);
+    }
+
+    public Double getValorVenta() {
+        return valorVenta.get();
+    }
+
+    public DoubleProperty valorCompra() {
+        return valorCompra;
+    }
+
+    public void setValorCompra (Double valorCompra) {
+        this.valorCompra.set(valorCompra);
+    }
+
+    public Double getValorCompra() {
+        return valorCompra.get();
+    }
+
+    public StringProperty tipoServicio() {
+        return tipoServicio;
+    }
+
+    public void setTipoServicio(String tipoServicio) {
+        this.tipoServicio.set(tipoServicio);
+    }
+
+    public String getTipoServicio() {
+        return tipoServicio.get();
+    }
+
+    
 }

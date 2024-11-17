@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Menu?>
+<?import javafx.scene.control.MenuBar?>
+<?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="co.edu.uniquindio.poo.Controllers.vehiculos.AlquilarVehiculo">
+   <children>
+      <MenuBar fx:id="MBMain" layoutY="1.0" prefHeight="26.0" prefWidth="900.0">
+        <menus>
+          <Menu fx:id="MEmpleados" mnemonicParsing="false" text="Empleados">
+            <items>
+              <MenuItem mnemonicParsing="false" onAction="#OnListarEmpleado" text="Listar Empleados" />
+              <MenuItem mnemonicParsing="false" onAction="#OnRegistrarEmpleado" text="Registrar Empleados" />
+            </items>
+          </Menu>
+          <Menu fx:id="MClientes" mnemonicParsing="false" text="Clientes">
+            <items>
+              <MenuItem mnemonicParsing="false" onAction="#OnRegistrarCliente" text="Registrar Clientes" />
+              <MenuItem mnemonicParsing="false" onAction="#OnListarCliente" text="Listar Clientes" />
+            </items>
+          </Menu>
+          <Menu fx:id="MVehiculos" mnemonicParsing="false" text="Vehículos">
+            <items>
+              <MenuItem mnemonicParsing="false" text="Registrar Vehiculos" />
+                  <MenuItem mnemonicParsing="false" text="Alquilar Vehiculos" />
+                  <MenuItem mnemonicParsing="false" text="Comprar Vehiculos" />
+                  <MenuItem mnemonicParsing="false" text="Vender Vehiculos" />
+                  <MenuItem mnemonicParsing="false" text="Listar Vehiculos" />
+            </items>
+          </Menu>
+            <Menu fx:id="MReportes" mnemonicParsing="false" text="Reportes">
+              <items>
+                <MenuItem mnemonicParsing="false" text="Action 1" />
+              </items>
+            </Menu>
+            <Menu fx:id="MUsuarios" mnemonicParsing="false" text="Usuarios">
+              <items>
+                <MenuItem mnemonicParsing="false" text="Registrar Usuarios" />
+                  <MenuItem mnemonicParsing="false" text="Listar Usuarios" />
+              </items>
+            </Menu>
+            <Menu fx:id="MMiCuenta" mnemonicParsing="false" text="Mi Cuenta">
+               <items>
+                  <MenuItem mnemonicParsing="false" onAction="#OnCloseSesion" text="Cerrar Sesion" />
+                  <MenuItem mnemonicParsing="false" onAction="#OnLeave" text="Salir" />
+               </items></Menu>
+        </menus>
+      </MenuBar>
+      <Label alignment="CENTER" contentDisplay="CENTER" layoutX="320.0" layoutY="63.0" prefHeight="60.0" prefWidth="227.0" text="ALQUILER DE VEHÍCULO" textAlignment="CENTER" wrapText="true">
+         <font>
+            <Font name="System Bold" size="20.0" />
+         </font>
+      </Label>
+      <Label layoutX="80.0" layoutY="180.0" text="Cliente:" />
+      <Label layoutX="80.0" layoutY="240.0" text="Empleado:" />
+      <Label layoutX="470.0" layoutY="240.0" text="Valor Total:" />
+      <TextField fx:id="txtValorTotal" layoutX="545.0" layoutY="235.0" />
+      <ComboBox fx:id="cbVehiculo" layoutX="545.0" layoutY="175.0" prefWidth="150.0" />
+      <Label layoutX="470.0" layoutY="180.0" text="Vehiculo:" />
+      <Button fx:id="btnAlquilar" layoutX="406.0" layoutY="511.0" mnemonicParsing="false" onAction="#crearEmpleado" text="Alquilar" />
+      <ComboBox fx:id="cbEmpleado" layoutX="190.0" layoutY="235.0" prefWidth="150.0" />
+      <ComboBox fx:id="cbCliente" layoutX="190.0" layoutY="175.0" prefWidth="150.0" />
+   </children>
+</AnchorPane>

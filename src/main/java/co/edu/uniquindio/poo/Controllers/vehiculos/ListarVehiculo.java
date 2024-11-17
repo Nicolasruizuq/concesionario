@@ -1,13 +1,26 @@
-package co.edu.uniquindio.poo.Controllers.empleados;
+package co.edu.uniquindio.poo.Controllers.vehiculos;
 
 import java.io.IOException;
 import java.util.LinkedList;
 
 import co.edu.uniquindio.poo.Controllers.clientes.EditarCliente;
 import co.edu.uniquindio.poo.Controllers.clientes.ListarCliente;
+import co.edu.uniquindio.poo.Controllers.empleados.ListarEmpleado;
 import co.edu.uniquindio.poo.Models.clientes.Cliente;
 import co.edu.uniquindio.poo.Models.empleados.Empleado;
 import co.edu.uniquindio.poo.Models.empleados.EmpleadoModel;
+import co.edu.uniquindio.poo.Models.vehiculos.Vehiculo;
+import co.edu.uniquindio.poo.Models.vehiculos.VehiculoModel;
+import co.edu.uniquindio.poo.Models.motores.Motor;
+import co.edu.uniquindio.poo.Models.motores.MotorModel;
+import co.edu.uniquindio.poo.Models.modelos.Modelo;
+import co.edu.uniquindio.poo.Models.modelos.ModeloModel;
+import co.edu.uniquindio.poo.Models.marcas.Marca;
+import co.edu.uniquindio.poo.Models.marcas.MarcaModel;
+import co.edu.uniquindio.poo.Models.tipovehiculos.TipoVehiculo;
+import co.edu.uniquindio.poo.Models.tipovehiculos.TipoVehiculoModel;
+import co.edu.uniquindio.poo.Models.propiedades.Propiedad;
+import co.edu.uniquindio.poo.Models.propiedades.PropiedadModel;
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -28,42 +41,46 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.StackPane;
 
-public class ListarEmpleado{
-    @FXML
-    private TableColumn<Empleado, String> TCCorreo;
+public class ListarVehiculo {
 
     @FXML
-    private TableColumn<Empleado, String> TCDireccion;
+    private TableColumn<Vehiculo, Integer> TCId;
 
     @FXML
-    private TableColumn<Empleado, String> TCGenero;
+    private TableColumn<Marca, String> TCMarca;
 
     @FXML
-    private TableColumn<Empleado, Integer> TCId;
+    private TableColumn<Modelo, String> TCModelo;
 
     @FXML
-    private TableColumn<Empleado, Integer> TCIdUser;
+    private TableColumn<Propiedad, String> TCColor;    
 
     @FXML
-    private TableColumn<Empleado, String> TCNombreCompleto;
+    private TableColumn<TipoVehiculo, String> TCType;
 
     @FXML
-    private TableColumn<Empleado, String> TCNumeroId;
+    private TableColumn<Motor, String> TCMotor;
 
     @FXML
-    private TableColumn<Empleado, String> TCTelefono;
+    private TableColumn<Propiedad, Integer> TCNumeroPuestos;
 
     @FXML
-    private TableColumn<Empleado, String> TCUsername;
+    private TableColumn<Vehiculo, Double> TCValorCompra;
 
     @FXML
-    private TableColumn<Empleado, Void> TCEditar;
+    private TableColumn<Vehiculo, Double> TCValorVenta;
 
     @FXML
-    private TableColumn<Empleado, Void> TCEliminar;
+    private TableColumn<Vehiculo, String> TCTipoServicio;
 
     @FXML
-    private TableView<Empleado> TVEmpleados;
+    private TableColumn<Vehiculo, Void> TCEditar;
+
+    @FXML
+    private TableColumn<Vehiculo, Void> TCEliminar;
+
+    @FXML
+    private TableView<Vehiculo> TVVehiculos;
 
     @FXML
     private MenuBar MBMain;
@@ -88,24 +105,43 @@ public class ListarEmpleado{
 
     private EmpleadoModel empleadoModel;
 
-    public ListarEmpleado() {
+    private VehiculoModel vehiculoModel;
+
+    private MotorModel motorModel;
+
+    private TipoVehiculoModel tipovehiculoModel;
+
+    private PropiedadModel propiedadModel;
+
+    private MarcaModel marcaModel;
+
+    private ModeloModel modeloModel;
+
+    public ListarVehiculo () {
         empleadoModel = new EmpleadoModel();
+        vehiculoModel = new VehiculoModel();
+        motorModel = new MotorModel();
+        tipovehiculoModel = new TipoVehiculoModel();
+        propiedadModel = new PropiedadModel();
+        marcaModel = new MarcaModel();
+        modeloModel = new ModeloModel();
+        
     }
 
     @FXML
     public void initialize() {
-        // Inicializa las columnas del TableView para que se vinculen con las propiedades de Empleado
+        // Inicializa las columnas del TableView para que se vinculen con las propiedades del vehículo
         TCId.setCellValueFactory(cellData -> cellData.getValue().idProperty().asObject());
-        TCIdUser.setCellValueFactory(cellData -> cellData.getValue().userTypeProperty().asObject());
-        TCUsername.setCellValueFactory(cellData -> cellData.getValue().usernameProperty());
-        TCNombreCompleto.setCellValueFactory(cellData -> cellData.getValue().fullNameProperty());
-        TCNumeroId.setCellValueFactory(cellData -> cellData.getValue().idNumberProperty());
-        TCGenero.setCellValueFactory(cellData -> cellData.getValue().genderProperty());
-        TCCorreo.setCellValueFactory(cellData -> cellData.getValue().emailProperty());
-        TCDireccion.setCellValueFactory(cellData -> cellData.getValue().addressProperty());
-        TCTelefono.setCellValueFactory(cellData -> cellData.getValue().telephoneProperty()); 
-        
-        TCEditar.setCellFactory(param -> new TableCell<Empleado, Void>() {
+        TCMarca.setCellValueFactory(cellData -> cellData.getValue().brandProperty());
+        TCModelo.setCellValueFactory(cellData -> cellData.getValue().modelProperty());
+        TCColor.setCellValueFactory(cellData -> cellData.getValue().colorProperty());
+        TCType.setCellValueFactory(cellData -> cellData.getValue().typeProperty());
+        TCMotor.setCellValueFactory(cellData -> cellData.getValue().motorProperty());
+        TCNumeroPuestos.setCellValueFactory(cellData -> cellData.getValue().numPassengersProperty().asObject());
+        TCValorCompra.setCellValueFactory(cellData -> cellData.getValue().valorCompra().asObject());
+        TCValorVenta.setCellValueFactory(cellData -> cellData.getValue().valorVenta().asObject()); 
+        TCTipoServicio.setCellValueFactory(cellData -> cellData.getValue().tipoServicio()); 
+        TCEditar.setCellFactory(param -> new TableCell<Vehiculo, Void>() {
             private final ImageView editIcon = new ImageView(new Image(getClass().getResourceAsStream("/co/edu/uniquindio/poo/Resources/img/editar.png")));
             private final StackPane container = new StackPane(editIcon);
     
@@ -121,10 +157,10 @@ public class ListarEmpleado{
                     setAlignment(javafx.geometry.Pos.CENTER);
                     setGraphic(container);
                     editIcon.setOnMouseClicked(event -> {
-                        Empleado empleado = getTableView().getItems().get(getIndex());
-                        System.out.println("Clic en editar empleado: " + empleado.getFullName());
-                        if (empleado != null) {
-                            OnEditarEmpleado(empleado);
+                        Vehiculo vehiculo = getTableView().getItems().get(getIndex());
+                        System.out.println("Clic en editar vehículo: " + vehiculo.getId());
+                        if (vehiculo != null) {
+                            OnEditarVehiculo(vehiculo);
                         }
                     });
                 }
@@ -132,7 +168,7 @@ public class ListarEmpleado{
         });
     
         // Configuración de la columna de Eliminar con un icono
-        TCEliminar.setCellFactory(param -> new TableCell<Empleado, Void>() {
+        TCEliminar.setCellFactory(param -> new TableCell<Vehiculo, Void>() {
             private final ImageView deleteIcon = new ImageView(new Image(getClass().getResourceAsStream("/co/edu/uniquindio/poo/Resources/img/borrar.png")));
             private final StackPane container = new StackPane(deleteIcon);
         
@@ -150,10 +186,10 @@ public class ListarEmpleado{
         
                     deleteIcon.setOnMouseClicked(event -> {
                         System.out.println("Evento de clic en ícono de eliminación activado");
-                        Empleado empleado = getTableView().getItems().get(getIndex());
-                        if (empleado != null) {
-                            System.out.println("Empleado seleccionado para eliminar: " + empleado.getFullName());
-                            mostrarConfirmacionEliminar(empleado);  // Llama a tu función de confirmación
+                        Vehiculo vehiculo = getTableView().getItems().get(getIndex());
+                        if (vehiculo != null) {
+                            System.out.println("Vehículo seleccionado para eliminar: " + vehiculo.getId());
+                            mostrarConfirmacionEliminar(vehiculo);
                         }
                     });
                 }
@@ -161,17 +197,17 @@ public class ListarEmpleado{
         });
     }
 
-    private void mostrarConfirmacionEliminar (Empleado empleado) {
+    private void mostrarConfirmacionEliminar (Vehiculo vehiculo) {
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         alert.setTitle("Confirmación de eliminación");
-        alert.setHeaderText("¿Está seguro que desea eliminar este empleado?");
+        alert.setHeaderText("¿Está seguro que desea eliminar este vehículo?");
         alert.setContentText("Esta acción no se puede deshacer.");
 
         // Mostrar los botones de "Sí" y "No"
         alert.showAndWait().ifPresent(response -> {
             if (response == ButtonType.OK) {
                 // Si el usuario confirma, proceder con la eliminación
-                eliminarEmpleado(empleado);
+                eliminarVehiculo(vehiculo);
             } else {
                 // Si el usuario cancela, no hacer nada
                 System.out.println("Eliminación cancelada");
@@ -179,41 +215,40 @@ public class ListarEmpleado{
         });
     }
 
-    private void eliminarEmpleado (Empleado empleado) {
-        // Llamar al método eliminarEmpleado del modelo
-        boolean eliminado = empleadoModel.eliminarEmpleado(empleado.getId());
+    private void eliminarVehiculo (Vehiculo vehiculo) {
+        boolean eliminado = vehiculoModel.eliminarVehiculo(vehiculo.getId());
     
         if (eliminado) {
             // Si la eliminación fue exitosa, actualizar la lista de empleados
-            obtenerEmpleados();
+            obtenerVehiculos();
             
             // Mostrar un mensaje de éxito
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
-            alert.setTitle("Empleado Eliminado");
+            alert.setTitle("Vehiculo Eliminado");
             alert.setHeaderText(null);
-            alert.setContentText("El empleado ha sido marcado como eliminado.");
+            alert.setContentText("El vehículo ha sido marcado como eliminado.");
             alert.showAndWait();
         } else {
             // Si no se pudo eliminar el empleado
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Error de Eliminación");
             alert.setHeaderText(null);
-            alert.setContentText("No se pudo eliminar al empleado.");
+            alert.setContentText("No se pudo eliminar el vehículo.");
             alert.showAndWait();
         }
     }
 
-    private void OnEditarEmpleado (Empleado empleado) {
+    private void OnEditarVehiculo (Vehiculo vehiculo) {
         try {
             // Cargar la vista de editar cliente
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/co/edu/uniquindio/poo/Views/empleados/editarEmpleado.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/co/edu/uniquindio/poo/Views/vehiculos/editarvehiculo.fxml"));
             Parent editarRoot = loader.load();
     
             // Obtener el controlador de la vista editarCliente.fxml
-            EditarEmpleado controller = loader.getController();
+            EditarVehiculo controller = loader.getController();
     
             // Pasar el cliente al controlador
-            controller.setEmpleado(empleado);
+            controller.setVehiculo(vehiculo);
     
             // Configurar la nueva escena
             Stage stage = (Stage) MBMain.getScene().getWindow();
@@ -250,15 +285,15 @@ public class ListarEmpleado{
     }
     
     @FXML
-public void obtenerEmpleados() {
-    LinkedList<Empleado> empleados = empleadoModel.obtenerEmpleados();
+public void obtenerVehiculos() {
+    LinkedList<Vehiculo> vehiculos = vehiculoModel.obtenerVehiculos();
 
-    if (empleados != null && !empleados.isEmpty()) {
-        ObservableList<Empleado> empleadosObservableList = FXCollections.observableArrayList(empleados);
-        TVEmpleados.setItems(empleadosObservableList);
-        System.out.println("Empleados cargados en el TableView");
+    if (vehiculos != null && !vehiculos.isEmpty()) {
+        ObservableList<Vehiculo> vehiculosObservableList = FXCollections.observableArrayList(vehiculos);
+        TVVehiculos.setItems(vehiculosObservableList);
+        System.out.println("Vehículos cargados en el TableView");
     } else {
-        mostrarAlerta("No se encontraron empleados.");
+        mostrarAlerta("No se encontraron vehículos.");
     }
 }
 

@@ -1,4 +1,4 @@
-package co.edu.uniquindio.poo.Controllers.empleados;
+package co.edu.uniquindio.poo.Controllers.vehiculos;
 
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
@@ -24,10 +24,13 @@ import co.edu.uniquindio.poo.Models.clientes.Cliente;
 import co.edu.uniquindio.poo.Models.clientes.ClienteModel;
 import co.edu.uniquindio.poo.Models.empleados.Empleado;
 import co.edu.uniquindio.poo.Models.empleados.EmpleadoModel;
+import co.edu.uniquindio.poo.Models.vehiculos.Vehiculo;
+import co.edu.uniquindio.poo.Models.vehiculos.VehiculoModel;
 import co.edu.uniquindio.poo.Controllers.clientes.ListarCliente;
 import co.edu.uniquindio.poo.Controllers.empleados.ListarEmpleado;
+import co.edu.uniquindio.poo.Controllers.vehiculos.ListarVehiculo;
 
-public class EditarEmpleado {
+public class EditarVehiculo {
     
     @FXML
     private MenuBar MBMain;
@@ -51,96 +54,136 @@ public class EditarEmpleado {
     private Menu MVehiculos;
 
     @FXML
-    private Button btnGuardar;
+    private Button btnRegistrarVehículo;
 
     @FXML
-    private ComboBox<Integer> cbTypeUser;
+    private ComboBox<Integer> cbAireAcondicionado;
 
     @FXML
-    private RadioButton rbFemenino;
+    private ComboBox<Integer> cbTipoServicio;
 
     @FXML
-    private RadioButton rbMasculino;
+    private ComboBox<Integer> cbAsistentePermanencia;
 
     @FXML
-    private ToggleGroup sexoGroup;
+    private ComboBox<Integer> cbCamaraReversa;
 
     @FXML
-    private TextField txtCedula;
+    private ComboBox<Integer> cbFrenosABS;
 
     @FXML
-    private TextField txtDireccion;
+    private ComboBox<Integer> cbFrenosDeAire;
 
     @FXML
-    private TextField txtEmail;
+    private ComboBox<Integer> cbMarca;
 
     @FXML
-    private TextField txtNombre;
+    private ComboBox<Integer> cbModelo;
 
     @FXML
-    private TextField txtPassword;
+    private ComboBox<Integer> cbSensorColision;
 
     @FXML
-    private TextField txtTelefono;
+    private ComboBox<Integer> cbSensorTrafico;
 
     @FXML
-    private TextField txtUsername;
+    private ComboBox<Integer> cbTipoCamion;
 
-    private Empleado empleadoActual;
+    @FXML
+    private ComboBox<Integer> cbTipoMotor;
 
-    private ClienteModel clienteModel;
+    @FXML
+    private ComboBox<Integer> cbTipoVehiculo;
 
-    private EmpleadoModel empleadoModel;
+    @FXML
+    private ComboBox<Integer> cbTraccion4X4;
 
-    public EditarEmpleado() {
-        clienteModel = new ClienteModel();
-        empleadoModel = new EmpleadoModel();
+    @FXML
+    private ComboBox<Integer> cbVelocidadCrucero;
+
+    @FXML
+    private TextField txCilindraje;
+
+    @FXML
+    private TextField txtAceleracion;
+
+    @FXML
+    private TextField txtCapacidadCajaCarga;
+
+    @FXML
+    private TextField txtCapacidadMaletero;
+
+    @FXML
+    private TextField txtNumeroAirBags;
+
+    @FXML
+    private TextField txtNumeroEjes;
+
+    @FXML
+    private TextField txtNumeroPasajeros;
+
+    @FXML
+    private TextField txtNumeroPuertas;
+
+    @FXML
+    private TextField txtNumeroSalidasEmergencia;
+
+    @FXML
+    private TextField txtPotencia;
+
+    @FXML
+    private TextField txtVelocidadMaxima;
+
+    @FXML
+    private TextField txtPrecioCompra;
+
+    @FXML
+    private TextField txtPrecioVenta;
+
+    private VehiculoModel vehiculoModel;
+
+    private Vehiculo vehiculoActual;
+
+    private final Map<String, Integer> rolValores = new HashMap<>();
+
+    public EditarVehiculo () {
+        vehiculoModel = new VehiculoModel();
     }
 
-    public void setEmpleado (Empleado empleado) {
-        this.empleadoActual = empleado;
+    public void setVehiculo (Vehiculo vehiculo) {
+        this.vehiculoActual = vehiculo;
         rellenarCampos();
     }
 
     private void rellenarCampos() {
-        if (empleadoActual != null) {
-            txtUsername.setText(empleadoActual.getUsername());
-            txtEmail.setText(empleadoActual.getEmail());
-            cbTypeUser.setValue(empleadoActual.getUserType());
-            txtPassword.setText(empleadoActual.getPassword());
-            txtNombre.setText(empleadoActual.getFullName());
-            txtCedula.setText(empleadoActual.getIdNumber());
-            txtDireccion.setText(empleadoActual.getAddress());
-            txtTelefono.setText(empleadoActual.getTelephone());
-
-            // Seleccionar el género
-            if ("Femenino".equals(empleadoActual.getGender())) {
-                rbFemenino.setSelected(true);
-            } else {
-                rbMasculino.setSelected(true);
-            }
+        if (vehiculoActual != null) {
+            cbTipoVehiculo.setValue(vehiculoActual.getClass());
+            txtEmail.setText(vehiculoActual.getId());
+            cbMarca.setValue(vehiculoActual.getIdBrand());
+            cbModelo.setValue(vehiculoActual.getIdModel());
+            cbTipoMotor.setValue(vehiculoActual.getIdMotorType());
+            cbTipoVehiculo.setValue(vehiculoActual.getIdVehicleType());
         }
     }
 
     @FXML
-    void editarEmpleado (ActionEvent event) {
-        if (empleadoActual != null) {
-            empleadoActual.setEmail(txtEmail.getText());
-            empleadoActual.setPassword(txtPassword.getText());
-            empleadoActual.setUsername(txtUsername.getText());
-            empleadoActual.setUserType(cbTypeUser.getValue());
-            empleadoActual.setFullName(txtNombre.getText());
-            empleadoActual.setIdNumber(txtCedula.getText());
-            empleadoActual.setAddress(txtDireccion.getText());
-            empleadoActual.setTelephone(txtTelefono.getText());
-            empleadoActual.setGender(rbFemenino.isSelected() ? "Femenino" : "Masculino");
+    void EditarVehiculo (ActionEvent event) {
+        if (vehiculoActual != null) {
+            vehiculoActual.setClass(txtEmail.getText());
+            vehiculoActual.setPassword(txtPassword.getText());
+            vehiculoActual.setUsername(txtUsername.getText());
+            vehiculoActual.setUserType(cbTypeUser.getValue());
+            vehiculoActual.setFullName(txtNombre.getText());
+            vehiculoActual.setIdNumber(txtCedula.getText());
+            vehiculoActual.setAddress(txtDireccion.getText());
+            vehiculoActual.setTelephone(txtTelefono.getText());
 
-            boolean actualizado = empleadoModel.actualizarEmpleado(empleadoActual);
+            boolean actualizado = vehiculoModel.actualizarVehiculo(vehiculoActual);
             if (actualizado) {
-                mostrarAlerta("Empleado actualizado correctamente.", Alert.AlertType.INFORMATION);
+                mostrarAlerta("Vehiculo actualizado correctamente.", Alert.AlertType.INFORMATION);
                 volverAListarEmpleados();
             } else {
-                mostrarAlerta("Error al actualizar el empleado.", Alert.AlertType.ERROR);
+                mostrarAlerta("Error al actualizar el vehiculo.", Alert.AlertType.ERROR);
             }
         }
     }
@@ -153,9 +196,9 @@ public class EditarEmpleado {
         alert.showAndWait();
     }
 
-    private void volverAListarEmpleados () {
+    private void volverAListarVehiculos () {
         try {       
-            FXMLLoader loader = new FXMLLoader(getClass().getClassLoader().getResource("co/edu/uniquindio/poo/Views/empleados/listarEmpleado.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getClassLoader().getResource("co/edu/uniquindio/poo/Views/vehiculos/listarVehiculo.fxml"));
             Parent listRoot = loader.load();
 
             ListarEmpleado controller = loader.getController();

@@ -1,5 +1,23 @@
 package co.edu.uniquindio.poo.Controllers.vehiculos;
 
+import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
+
+import co.edu.uniquindio.poo.Controllers.clientes.ListarCliente;
+import co.edu.uniquindio.poo.Controllers.empleados.ListarEmpleado;
+import co.edu.uniquindio.poo.Models.vehiculos.Vehiculo;
+import co.edu.uniquindio.poo.Models.vehiculos.VehiculoModel;
+import co.edu.uniquindio.poo.Models.motores.Motor;
+import co.edu.uniquindio.poo.Models.motores.MotorModel;
+import co.edu.uniquindio.poo.Models.modelos.Modelo;
+import co.edu.uniquindio.poo.Models.modelos.ModeloModel;
+import co.edu.uniquindio.poo.Models.marcas.Marca;
+import co.edu.uniquindio.poo.Models.marcas.MarcaModel;
+import co.edu.uniquindio.poo.Models.tipovehiculos.TipoVehiculo;
+import co.edu.uniquindio.poo.Models.tipovehiculos.TipoVehiculoModel;
+import co.edu.uniquindio.poo.Models.propiedades.Propiedad;
+import co.edu.uniquindio.poo.Models.propiedades.PropiedadModel;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -13,19 +31,10 @@ import javafx.scene.control.Menu;
 import javafx.scene.control.MenuBar;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextField;
-import javafx.scene.control.ToggleGroup;
 import javafx.stage.Stage;
-import javafx.util.StringConverter;
-import java.io.IOException;
-import java.util.HashMap;
-import java.util.Map;
 
-import co.edu.uniquindio.poo.Controllers.clientes.ListarCliente;
-import co.edu.uniquindio.poo.Controllers.empleados.ListarEmpleado;
-import co.edu.uniquindio.poo.Models.vehiculos.Vehiculo;
-import co.edu.uniquindio.poo.Models.vehiculos.VehiculoModel;
+public class RegistrarVehiculo {
 
-public class RegistrarVehiculo {   
     @FXML
     private MenuBar MBMain;
 
@@ -48,42 +57,103 @@ public class RegistrarVehiculo {
     private Menu MVehiculos;
 
     @FXML
-    private TextField txtCedula;
+    private Button btnRegistrarVehículo;
 
     @FXML
-    private TextField txtDireccion;
+    private ComboBox<Integer> cbAireAcondicionado;
 
     @FXML
-    private TextField txtEmail;
+    private ComboBox<Integer> cbTipoServicio;
 
     @FXML
-    private TextField txtNombre;
+    private ComboBox<Integer> cbAsistentePermanencia;
 
     @FXML
-    private TextField txtPassword;
+    private ComboBox<Integer> cbCamaraReversa;
 
     @FXML
-    private TextField txtTelefono;
+    private ComboBox<String> cbColor;
 
     @FXML
-    private TextField txtUsername;
+    private ComboBox<Integer> cbFrenosABS;
 
     @FXML
-    private ToggleGroup sexoGroup;
+    private ComboBox<Integer> cbFrenosDeAire;
 
     @FXML
-    private ComboBox<Integer> cbTypeUser;
+    private ComboBox<Integer> cbMarca;
 
     @FXML
-    private RadioButton rbFemenino;
+    private ComboBox<Integer> cbModelo;
 
     @FXML
-    private RadioButton rbMasculino;
+    private ComboBox<Integer> cbSensorColision;
 
     @FXML
-    private Button btnRegistrarVehiculo;
+    private ComboBox<Integer> cbSensorTrafico;
+
+    @FXML
+    private ComboBox<Integer> cbTipoCamion;
+
+    @FXML
+    private ComboBox<Integer> cbTipoMotor;
+
+    @FXML
+    private ComboBox<Integer> cbTipoVehiculo;
+
+    @FXML
+    private ComboBox<Integer> cbTraccion4X4;
+
+    @FXML
+    private ComboBox<Integer> cbVelocidadCrucero;
+
+    @FXML
+    private ComboBox<Integer> cbTipoTransmision;
+
+    @FXML
+    private TextField txCilindraje;
+
+    @FXML
+    private TextField txtCambios;
+
+    @FXML
+    private TextField txtAceleracion;
+
+    @FXML
+    private TextField txtCapacidadCajaCarga;
+
+    @FXML
+    private TextField txtCapacidadMaletero;
+
+    @FXML
+    private TextField txtNumeroAirBags;
+
+    @FXML
+    private TextField txtNumeroEjes;
+
+    @FXML
+    private TextField txtNumeroPasajeros;
+
+    @FXML
+    private TextField txtNumeroPuertas;
+
+    @FXML
+    private TextField txtNumeroSalidasEmergencia;
+
+    @FXML
+    private TextField txtPotencia;
+
+    @FXML
+    private TextField txtVelocidadMaxima;
+
+    @FXML
+    private TextField txtPrecioCompra;
+
+    @FXML
+    private TextField txtPrecioVenta;
 
     private VehiculoModel vehiculoModel;
+
     private final Map<String, Integer> rolValores = new HashMap<>();
     
     @FXML
@@ -114,10 +184,6 @@ public class RegistrarVehiculo {
         });
     
         cbTypeUser.setValue(1); // Selecciona "Administrador" por defecto
-    
-        // Asigna el grupo de selección de sexo a los RadioButtons
-        rbFemenino.setToggleGroup(sexoGroup);
-        rbMasculino.setToggleGroup(sexoGroup);
     }
 
     @FXML
@@ -130,9 +196,6 @@ public class RegistrarVehiculo {
             nuevoVehiculo.setPassword(txtPassword.getText());         
             nuevoVehiculo.setFullName(txtNombre.getText());
             nuevoVehiculo.setIdNumber(txtCedula.getText());
-            // Obtener el género seleccionado
-            String generoSeleccionado = ((RadioButton) sexoGroup.getSelectedToggle()).getText();
-            nuevoVehiculo.setGender(generoSeleccionado);
             nuevoVehiculo.setAddress(txtDireccion.getText());
             nuevoVehiculo.setTelephone(txtTelefono.getText());
             nuevoVehiculo.setEmail(txtEmail.getText());
