@@ -31,6 +31,7 @@ import javafx.scene.control.Menu;
 import javafx.scene.control.MenuBar;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextField;
+import javafx.util.StringConverter;
 import javafx.stage.Stage;
 
 public class RegistrarVehiculo {
@@ -102,7 +103,7 @@ public class RegistrarVehiculo {
     private ComboBox<Integer> cbTipoVehiculo;
 
     @FXML
-    private ComboBox<Integer> cbTraccion4X4;
+    private ComboBox<Integer> cbTraccionCuatroXcuatro;
 
     @FXML
     private ComboBox<Integer> cbVelocidadCrucero;
@@ -152,23 +153,93 @@ public class RegistrarVehiculo {
     @FXML
     private TextField txtPrecioVenta;
 
-    private VehiculoModel vehiculoModel;
 
-    private final Map<String, Integer> rolValores = new HashMap<>();
+    private VehiculoModel vehiculoModel;
+    private PropiedadModel propiedadModel;
+
+    private final Map<String, Integer> tipoSerVal = new HashMap<>();
+    private final Map<String, Integer> asisPermVal = new HashMap<>();
+    private final Map<String, Integer> camaraReversaVal = new HashMap<>();
+    private final Map<String, String> colorVal = new HashMap<>();
+    private final Map<String, Integer> absFrenosVal = new HashMap<>();
+    private final Map<String, Integer> aireFrenosVal = new HashMap<>();
+    private final Map<String, Integer> sensorColisionVal = new HashMap<>(); 
+    private final Map<String, Integer> sensorTraficoVal = new HashMap<>();
+    private final Map<String, String> tipoCamionVal = new HashMap<>();
+    private final Map<String, Integer> traCuatroXcuatroVal = new HashMap<>();
+    private final Map<String, Integer> velCruceroVal = new HashMap<>();
+    private final Map<String, Integer> tipoTransVal = new HashMap<>();
+    private final Map<String, Integer> aireAcondVal = new HashMap<>();
     
     @FXML
     public void initialize() {
         // Configura los valores del mapa antes de añadir al ComboBox
-        rolValores.put("Administrador", 1);
-        rolValores.put("Empleado", 2);
+        tipoSerVal.put("Venta", 1);
+        tipoSerVal.put("Renta", 2);
+        asisPermVal.put("Si", 1);
+        asisPermVal.put("No", 0);
+        camaraReversaVal.put("Si", 1);
+        camaraReversaVal.put("No", 0);
+        colorVal.put("Azul", "Azul");
+        colorVal.put("Rojo", "Rojo");
+        colorVal.put("Gris", "Gris");
+        colorVal.put("Plata", "Plata");
+        colorVal.put("Café", "Café");
+        colorVal.put("Negro", "Negro");
+        colorVal.put("Blanco", "Blanco");
+        absFrenosVal.put("Si", 1);
+        absFrenosVal.put("No", 0);
+        aireFrenosVal.put("Si", 1);
+        aireFrenosVal.put("No", 0);        
+        sensorColisionVal.put("Si", 1);
+        sensorColisionVal.put("No", 0);
+        sensorTraficoVal.put("Si", 1);
+        sensorTraficoVal.put("No", 0);
+        tipoCamionVal.put("Furgón", "Furgón");
+        tipoCamionVal.put("Volqueta", "Volqueta");
+        traCuatroXcuatroVal.put("Si", 1);
+        traCuatroXcuatroVal.put("No", 0);
+        aireAcondVal.put("Si", 1);
+        aireAcondVal.put("No", 0);
+        velCruceroVal.put("Si", 1);
+        velCruceroVal.put("No", 0);
+        tipoTransVal.put("Automática", 1);
+        tipoTransVal.put("Mecánica", 2);
+
+        // Configura los ComboBox con el método genérico
+        configurarComboBox(cbTipoServicio, tipoSerVal);
+        configurarComboBox(cbAsistentePermanencia, asisPermVal);
+        configurarComboBox(cbCamaraReversa, camaraReversaVal);
+        //configurarComboBox(cbColor, colorVal);
+        configurarComboBox(cbFrenosABS, absFrenosVal);
+        configurarComboBox(cbFrenosDeAire, aireFrenosVal);
+        configurarComboBox(cbSensorColision, sensorColisionVal);
+        configurarComboBox(cbSensorTrafico, sensorTraficoVal);
+        //configurarComboBox(cbTipoCamion, tipoCamionVal);
+        configurarComboBox(cbTraccionCuatroXcuatro, traCuatroXcuatroVal);
+        configurarComboBox(cbVelocidadCrucero, velCruceroVal);
+        configurarComboBox(cbTipoTransmision, tipoTransVal);
+        configurarComboBox(cbAireAcondicionado, aireAcondVal);                     
+        
+        // Establecer valores iniciales
+        cbTipoServicio.setValue(1);
+        cbAsistentePermanencia.setValue(1);
+        cbCamaraReversa.setValue(1);
+        cbFrenosABS.setValue(1);
+        cbFrenosDeAire.setValue(1);
+        cbSensorColision.setValue(1);
+        cbSensorTrafico.setValue(1);
+        cbAireAcondicionado.setValue(1);
+        cbTraccionCuatroXcuatro.setValue(1);
+        cbVelocidadCrucero.setValue(1);
+        cbTipoTransmision.setValue(1);
     
-        cbTypeUser.getItems().addAll(1, 2);
-    
-        cbTypeUser.setConverter(new StringConverter<>() {
+        /*cbCamaraReversa.getItems().addAll(1, 0);    
+        cbCamaraReversa.setConverter(new StringConverter<>() {
             @Override
             public String toString(Integer value) {
                 // Muestra la etiqueta correspondiente al valor Integer
-                return rolValores.entrySet()
+                return camaraReversaVal.entrySet()
                         .stream()
                         .filter(entry -> entry.getValue().equals(value))
                         .map(Map.Entry::getKey)
@@ -179,35 +250,57 @@ public class RegistrarVehiculo {
             @Override
             public Integer fromString(String label) {
                 // Convierte la etiqueta de texto a su valor Integer correspondiente
-                return rolValores.get(label);
+                return camaraReversaVal.get(label);
             }
         });
-    
-        cbTypeUser.setValue(1); // Selecciona "Administrador" por defecto
+
+        cbSensorColision.setValue(1);
+        cbCamaraReversa.setValue(1);*/
     }
 
     @FXML
     public void crearVehiculo(ActionEvent event) {
         try {
-            // Crear un objeto Empleado y llenarlo con los datos de la vista
+            // Crear un objeto Propiedad y llenarlo con los datos de la vista
+            Propiedad nuevaPropiedad = new Propiedad();
+            nuevaPropiedad.setIdMotorType(cbTipoMotor.getValue()); 
+            nuevaPropiedad.setColor(cbColor.getValue());
+            nuevaPropiedad.setCilindraje(txCilindraje.getText());         
+            nuevaPropiedad.setNumDoors(Integer.parseInt(txtNumeroPuertas.getText()));
+            nuevaPropiedad.setnumPassengers(Integer.parseInt(txtNumeroPasajeros.getText()));
+            nuevaPropiedad.setCambios(Integer.parseInt(txtCambios.getText()));
+            nuevaPropiedad.setNumAirbags(Integer.parseInt(txtNumeroAirBags.getText()));
+            nuevaPropiedad.setNumAxles(Integer.parseInt(txtNumeroEjes.getText()));
+            nuevaPropiedad.setNumEmergencyExits(Integer.parseInt(txtNumeroSalidasEmergencia.getText()));
+            nuevaPropiedad.setHorsePower(txtPotencia.getText());
+            nuevaPropiedad.setMaximumSpeed(txtVelocidadMaxima.getText());
+            nuevaPropiedad.setTrunkCapacity(Integer.parseInt(txtCapacidadMaletero.getText()));
+            nuevaPropiedad.setTime100Km(txtAceleracion.getText());
+            nuevaPropiedad.setLoadCapacity(txtCapacidadCajaCarga.getText());
+            nuevaPropiedad.setTypeTruck(cbTipoCamion.getText());
+
+            // Intentar guardar el empleado en la base de datos
+            boolean propiedadCreado = propiedadModel.crearPropiedad(nuevaPropiedad);
+            mostrarAlerta(propiedadCreado ? "Propiedad creado correctamente." : "Error al crear la Propiedad.");
+            // Crear un objeto Vehiculo y llenarlo con los datos de la vista
             Vehiculo nuevoVehiculo = new Vehiculo();
-            nuevoVehiculo.setUserType(cbTypeUser.getValue()); 
-            nuevoVehiculo.setUsername(txtUsername.getText());
-            nuevoVehiculo.setPassword(txtPassword.getText());         
-            nuevoVehiculo.setFullName(txtNombre.getText());
-            nuevoVehiculo.setIdNumber(txtCedula.getText());
-            nuevoVehiculo.setAddress(txtDireccion.getText());
-            nuevoVehiculo.setTelephone(txtTelefono.getText());
-            nuevoVehiculo.setEmail(txtEmail.getText());
-            
+            nuevoVehiculo.setIdBrand(cbMarca.getValue()); 
+            nuevoVehiculo.setIdModel(cbModelo.getValue());
+            nuevoVehiculo.setIdVehicleType(cbTipoVehiculo.getValue());         
+            nuevoVehiculo.setIdMotorType(cbTipoMotor.getValue());
+            //nuevoVehiculo.setIdProperty(idProperty.getValue()); // OJO ESTE ID VIENE DE INSERTAR LAS PROPIEDADES PRIMERO
+            nuevoVehiculo.setValorVenta(Double.parseDouble(txtPrecioVenta.getText()));    
+            nuevoVehiculo.setValorCompra(Double.parseDouble(txtPrecioCompra.getText()));
+            nuevoVehiculo.setTipoServicio(cbTipoServicio.getValue());
+
             // Intentar guardar el empleado en la base de datos
             boolean creado = vehiculoModel.crearVehiculo(nuevoVehiculo);
-            mostrarAlerta(creado ? "Empleado creado correctamente." : "Error al crear el empleado.");
+            mostrarAlerta(creado ? "Vehículo creado correctamente." : "Error al crear el Vehículo.");
         } catch (NullPointerException e) {
             mostrarAlerta("Error: Hay campos obligatorios sin completar.");
         } catch (Exception e) {
             e.printStackTrace();
-            mostrarAlerta("Ocurrió un error al intentar crear el empleado.");
+            mostrarAlerta("Ocurrió un error al intentar crear el Vehículo.");
         }
     }
     
@@ -219,9 +312,9 @@ public class RegistrarVehiculo {
         alert.showAndWait();
     }
 
-    public int obtenerValorSeleccionado() {
+    /*public int obtenerValorSeleccionado() {
         return cbTypeUser.getValue(); // Obtiene el valor entero directamente
-    }
+    }*/
     
     @FXML
     void OnCloseSesion(ActionEvent event) {
@@ -335,4 +428,26 @@ public class RegistrarVehiculo {
         }
 
     }
+
+    private void configurarComboBox(ComboBox<Integer> comboBox, Map<String, Integer> valoresMap) {
+        comboBox.getItems().addAll(valoresMap.values());
+        comboBox.setConverter(new StringConverter<>() {
+            @Override
+            public String toString(Integer value) {
+                // Convierte Integer a String basado en el mapa
+                return valoresMap.entrySet()
+                        .stream()
+                        .filter(entry -> entry.getValue().equals(value))
+                        .map(Map.Entry::getKey)
+                        .findFirst()
+                        .orElse("");
+            }
+    
+            @Override
+            public Integer fromString(String label) {
+                // Convierte String a Integer basado en el mapa
+                return valoresMap.get(label);
+            }
+        });
+    }    
 }

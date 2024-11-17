@@ -10,8 +10,8 @@ import co.edu.uniquindio.poo.Connection.DatabaseConnection;
 public class VehiculoModel {
 
     public boolean crearVehiculo(Vehiculo vehiculo) {
-        String sql = "INSERT INTO vehicle (id_brand, id_model, id_vehicle_type, id_motor_type, status, created_at) " 
-                   + "VALUES (?, ?, ?, ?, 1, NOW())";
+        String sql = "INSERT INTO vehicle (id_brand, id_model, id_vehicle_type, id_motor_type, id_property, sale_price, purchase_price, type_of_service, status, created_at) " 
+                   + "VALUES (?, ?, ?, ?, ?, ?, ?, ?, 1, NOW())";
 
         try (Connection conn = DatabaseConnection.getConnection();
              PreparedStatement pstmt = conn.prepareStatement(sql)) {
@@ -20,6 +20,10 @@ public class VehiculoModel {
                 pstmt.setInt(2, vehiculo.getIdModel());
                 pstmt.setInt(3, vehiculo.getIdVehicleType());
                 pstmt.setInt(4, vehiculo.getIdMotorType());
+                pstmt.setInt(5, vehiculo.getIdProperty());
+                pstmt.setDouble(6, vehiculo.getValorVenta());
+                pstmt.setDouble(7, vehiculo.getValorCompra());
+                pstmt.setInt(8, vehiculo.getTipoServicio());
 
             int filasInsertadas = pstmt.executeUpdate();
             return filasInsertadas > 0;
@@ -31,7 +35,7 @@ public class VehiculoModel {
     }
 
     public LinkedList<Vehiculo> obtenerVehiculos() {        
-        String sql = "SELECT ve.id, br.brand, mo.model, vt.type, mt.motor, mt.plug_in, ve.status "
+        String sql = "SELECT ve.id, br.brand, mo.model, vt.type, mt.motor, mt.plug_in, ve.id_property, ve.sale_price, ve.purchase_price, ve.type_of_service, ve.status "
                    + "FROM vehicle as ve "
                    + "INNER JOIN brand as br ON ve.id_brand = br.id"
                    + "INNER JOIN model as mo ON ve.id_model = mo.id"
@@ -57,6 +61,10 @@ public class VehiculoModel {
                 vehiculo.setIdModel(rs.getInt("id_model"));
                 vehiculo.setIdVehicleType(rs.getInt("id_vehicle_type"));
                 vehiculo.setIdMotorType(rs.getInt("id_motor_type"));
+                vehiculo.setIdProperty(rs.getInt("id_property"));
+                vehiculo.setValorVenta(rs.getDouble("sale_price"));
+                vehiculo.setValorCompra(rs.getDouble("purchase_price"));
+                vehiculo.setTipoServicio(rs.getInt("type_of_service"));
                 vehiculos.add(vehiculo);    
                 
                 System.out.println("Empleado: " + vehiculo.getId() + ", " + vehiculo.getIdBrand());
@@ -72,7 +80,7 @@ public class VehiculoModel {
     
 
     public Vehiculo obtenerVehiculoPorId(int id) {
-        String sql = "SELECT ve.id, br.brand, mo.model, vt.type, mt.motor, mt.plug_in, ve.status "
+        String sql = "SELECT ve.id, br.brand, mo.model, vt.type, mt.motor, mt.plug_in, ve.id_property, ve.sale_price, ve.purchase_price, ve.type_of_service,ve.status "
                    + "FROM vehicle as ve "
                    + "INNER JOIN brand as br ON ve.id_brand = br.id"
                    + "INNER JOIN model as mo ON ve.id_model = mo.id"
@@ -95,6 +103,10 @@ public class VehiculoModel {
                     vehiculo.setIdModel(rs.getInt("id_model"));
                     vehiculo.setIdVehicleType(rs.getInt("id_vehicle_type"));
                     vehiculo.setIdMotorType(rs.getInt("id_motor_type"));
+                    vehiculo.setIdProperty(rs.getInt("id_property"));
+                    vehiculo.setValorVenta(rs.getDouble("sale_price"));
+                    vehiculo.setValorCompra(rs.getDouble("purchase_price"));
+                    vehiculo.setTipoServicio(rs.getInt("type_of_service"));
                 }
             }
         } catch (SQLException e) {
@@ -105,7 +117,7 @@ public class VehiculoModel {
     }
 
     public boolean actualizarVehiculo(Vehiculo vehiculo) {
-        String sql = "UPDATE vehicle SET id_brand = ?, id_model = ?, id_vehicle_type = ?, id_motor_type = ? WHERE id = ? AND status = 1 AND deleted_at IS NULL";
+        String sql = "UPDATE vehicle SET id_brand = ?, id_model = ?, id_vehicle_type = ?, id_motor_type = ?, id_property = ?, sale_price = ?, purchase_price = ?, type_of_service = ? WHERE id = ? AND status = 1 AND deleted_at IS NULL";
 
         try (Connection conn = DatabaseConnection.getConnection();
              PreparedStatement pstmt = conn.prepareStatement(sql)) {
@@ -114,6 +126,10 @@ public class VehiculoModel {
             pstmt.setInt(2, vehiculo.getIdModel());
             pstmt.setInt(3, vehiculo.getIdVehicleType());
             pstmt.setInt(4, vehiculo.getIdMotorType());
+            pstmt.setInt(5, vehiculo.getIdProperty());
+            pstmt.setDouble(6, vehiculo.getValorVenta());
+            pstmt.setDouble(7, vehiculo.getValorCompra());
+            pstmt.setInt(8, vehiculo.getTipoServicio());
 
             int filasActualizadas = pstmt.executeUpdate();
             return filasActualizadas > 0;

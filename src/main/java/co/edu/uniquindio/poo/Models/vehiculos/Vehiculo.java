@@ -14,9 +14,10 @@ public class Vehiculo {
     private IntegerProperty idModel;
     private IntegerProperty idVehicleType;
     private IntegerProperty idMotorType;
+    private IntegerProperty idProperty;
     private DoubleProperty valorVenta;
     private DoubleProperty valorCompra;
-    private StringProperty tipoServicio;
+    private IntegerProperty tipoServicio;
 
 
     public Vehiculo () {
@@ -25,9 +26,10 @@ public class Vehiculo {
         this.idModel = new SimpleIntegerProperty();
         this.idVehicleType = new SimpleIntegerProperty();
         this.idMotorType = new SimpleIntegerProperty();
+        this.idProperty = new SimpleIntegerProperty();
         this.valorVenta = new SimpleDoubleProperty();
         this.valorCompra = new SimpleDoubleProperty();
-        this.tipoServicio = new SimpleStringProperty();
+        this.tipoServicio = new SimpleIntegerProperty();
         
     }
 
@@ -92,6 +94,18 @@ public class Vehiculo {
         return idMotorType.get();
     }
 
+    public IntegerProperty idPropertyProperty() {
+        return idProperty;
+    }
+
+    public void setIdProperty(int idProperty) {
+        this.idProperty.set(idProperty);
+    }
+
+    public int getIdProperty() {
+        return idProperty.get();
+    }
+
     public DoubleProperty valorVenta() {
         return valorVenta;
     }
@@ -116,15 +130,15 @@ public class Vehiculo {
         return valorCompra.get();
     }
 
-    public StringProperty tipoServicio() {
+    public IntegerProperty tipoServicio() {
         return tipoServicio;
     }
 
-    public void setTipoServicio(String tipoServicio) {
+    public void setTipoServicio(int tipoServicio) {
         this.tipoServicio.set(tipoServicio);
     }
 
-    public String getTipoServicio() {
+    public int getTipoServicio() {
         return tipoServicio.get();
     }
 
