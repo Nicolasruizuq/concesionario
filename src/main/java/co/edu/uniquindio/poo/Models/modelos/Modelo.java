@@ -17,6 +17,12 @@ public class Modelo {
         this.model = new SimpleStringProperty();        
     }
 
+    public Modelo (String modeloName) {
+        this.id = new SimpleIntegerProperty();
+        this.idBrand = new SimpleIntegerProperty();
+        this.model = new SimpleStringProperty(modeloName);
+    }
+
     // Getters y Setters para las propiedades
     public IntegerProperty idProperty() {
         return id;

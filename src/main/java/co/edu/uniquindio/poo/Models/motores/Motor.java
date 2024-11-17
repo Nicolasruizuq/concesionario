@@ -19,6 +19,13 @@ public class Motor {
         this.status = new SimpleIntegerProperty();
     }
 
+    public Motor (String motorName) {
+        this.id = new SimpleIntegerProperty();
+        this.motor = new SimpleStringProperty(motorName);
+        this.plug_in = new SimpleIntegerProperty();
+        this.status = new SimpleIntegerProperty();
+    }
+
     // Getters y Setters para las propiedades
     public IntegerProperty idProperty() {
         return id;

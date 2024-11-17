@@ -445,7 +445,7 @@ public class RegistrarVehiculo {
             int propiedadCreado = propiedadModel.crearPropiedad(nuevaPropiedad);
             mostrarAlerta(propiedadCreado > 0 ? "Propiedad creado correctamente." : "Error al crear la Propiedad.");
           
-            Vehiculo nuevoVehiculo = new Vehiculo(null);  
+            Vehiculo nuevoVehiculo = new Vehiculo(null, null, null, null, null);  
             nuevoVehiculo.setIdBrand(cbMarca.getValue()); 
             nuevoVehiculo.setIdModel(cbModelo.getValue());
             nuevoVehiculo.setIdVehicleType(cbTipoVehiculo.getValue());         

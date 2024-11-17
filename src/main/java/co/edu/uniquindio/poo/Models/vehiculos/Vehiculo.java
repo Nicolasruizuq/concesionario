@@ -1,6 +1,10 @@
 package co.edu.uniquindio.poo.Models.vehiculos;
 
 import co.edu.uniquindio.poo.Models.marcas.Marca;
+import co.edu.uniquindio.poo.Models.modelos.Modelo;
+import co.edu.uniquindio.poo.Models.motores.Motor;
+import co.edu.uniquindio.poo.Models.propiedades.Propiedad;
+import co.edu.uniquindio.poo.Models.tipovehiculos.TipoVehiculo;
 import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleDoubleProperty;
@@ -20,9 +24,13 @@ public class Vehiculo {
     private DoubleProperty valorCompra;
     private IntegerProperty tipoServicio;
     private Marca marca;
+    private Propiedad propiedad;
+    private Modelo modelo;
+    private Motor motor;
+    private TipoVehiculo tipoVehiculo;
 
 
-    public Vehiculo (Marca marca) {
+    public Vehiculo (Marca marca, Modelo modelo, Propiedad propiedad, Motor motor, TipoVehiculo tipoVehiculo) {
         this.id = new SimpleIntegerProperty();
         this.idBrand = new SimpleIntegerProperty();
         this.idModel = new SimpleIntegerProperty();
@@ -33,6 +41,10 @@ public class Vehiculo {
         this.valorCompra = new SimpleDoubleProperty();
         this.tipoServicio = new SimpleIntegerProperty();
         this.marca = marca;
+        this.propiedad = propiedad;
+        this.motor = motor;
+        this.modelo = modelo;
+        this.tipoVehiculo = tipoVehiculo;
         
     }
 
@@ -151,6 +163,42 @@ public class Vehiculo {
 
     public String getBrand() {
         return marca != null ? marca.getBrand() : "Desconocida";
+    }
+
+    public Modelo getModelo() {
+        return modelo;
+    }
+
+    public String getModel() {
+        return modelo != null ? modelo.getModel() : "Desconocida";
+    }
+
+    public TipoVehiculo getTipoVehiculo() {
+        return tipoVehiculo;
+    }
+
+    public String getType() {
+        return tipoVehiculo != null ? tipoVehiculo.getType() : "Desconocida";
+    }
+
+    public Propiedad getPropiedad() {
+        return propiedad;
+    }
+
+    public String getColor() {
+        return propiedad != null ? propiedad.getColor() : "Desconocida";
+    }
+
+    public int getnumPassengers() {
+        return propiedad != null ? propiedad.getnumPassengers() : 0;
+    }
+
+    public Motor getMMotor() {
+        return motor;
+    }
+
+    public String getMotor() {
+        return motor != null ? motor.getMotor() : "Desconocida";
     }
 
     

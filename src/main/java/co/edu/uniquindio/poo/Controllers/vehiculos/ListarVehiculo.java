@@ -23,6 +23,8 @@ import co.edu.uniquindio.poo.Models.tipovehiculos.TipoVehiculoModel;
 import co.edu.uniquindio.poo.Models.propiedades.Propiedad;
 import co.edu.uniquindio.poo.Models.propiedades.PropiedadModel;
 import javafx.application.Platform;
+import javafx.beans.property.SimpleIntegerProperty;
+import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -54,19 +56,19 @@ public class ListarVehiculo {
     private TableColumn<Vehiculo, String> TCMarca;
 
     @FXML
-    private TableColumn<Modelo, String> TCModelo;
+    private TableColumn<Vehiculo, String> TCModelo;
 
     @FXML
-    private TableColumn<Propiedad, String> TCColor;    
+    private TableColumn<Vehiculo, String> TCColor;    
 
     @FXML
-    private TableColumn<TipoVehiculo, String> TCType;
+    private TableColumn<Vehiculo, String> TCType;
 
     @FXML
-    private TableColumn<Motor, String> TCMotor;
+    private TableColumn<Vehiculo, String> TCMotor;
 
     @FXML
-    private TableColumn<Propiedad, Integer> TCNumeroPuestos;
+    private TableColumn<Vehiculo, Integer> TCNumeroPuestos;
 
     @FXML
     TableColumn<Vehiculo, Double> TCValorCompra = new TableColumn<>("Valor de Compra");
@@ -136,12 +138,12 @@ public class ListarVehiculo {
     public void initialize() {
         TCMarca.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getBrand()));
         // Inicializa las columnas del TableView para que se vinculen con las propiedades del vehículo
-        TCId.setCellValueFactory(cellData -> cellData.getValue().idProperty().asObject());      
-        /*TCModelo.setCellValueFactory(cellData -> cellData.getValue().modelProperty());
-        TCColor.setCellValueFactory(cellData -> cellData.getValue().colorProperty());
-        TCType.setCellValueFactory(cellData -> cellData.getValue().typeProperty());
-        TCMotor.setCellValueFactory(cellData -> cellData.getValue().motorProperty());
-        TCNumeroPuestos.setCellValueFactory(cellData -> cellData.getValue().numPassengersProperty().asObject());*/
+        TCId.setCellValueFactory(cellData -> cellData.getValue().idProperty().asObject());
+        TCModelo.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getModel()));
+        TCColor.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getColor()));
+        TCType.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getType()));
+        TCNumeroPuestos.setCellValueFactory(cellData -> new SimpleObjectProperty<>(cellData.getValue().getnumPassengers()));
+        TCMotor.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getMotor()));
         TCValorCompra.setCellValueFactory(new PropertyValueFactory<>("valorCompra"));
 
         TCValorCompra.setCellFactory(column -> {

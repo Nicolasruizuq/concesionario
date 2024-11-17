@@ -17,6 +17,12 @@ public class TipoVehiculo {
         this.status = new SimpleIntegerProperty();
     }
 
+    public TipoVehiculo (String tipoVehiculoName) {
+        this.id = new SimpleIntegerProperty();
+        this.type = new SimpleStringProperty(tipoVehiculoName);
+        this.status = new SimpleIntegerProperty();
+    }
+
     // Getters y Setters para las propiedades
     public IntegerProperty idProperty() {
         return id;

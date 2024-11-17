@@ -11,9 +11,15 @@ public class Marca {
     private StringProperty brand;
     private IntegerProperty status;
 
-    public Marca() {
+    public Marca() {        
         this.id = new SimpleIntegerProperty();
         this.brand = new SimpleStringProperty();
+        this.status = new SimpleIntegerProperty();
+    }
+
+    public Marca(String brandName) {
+        this.id = new SimpleIntegerProperty();
+        this.brand = new SimpleStringProperty(brandName);  // Asignar el nombre de la marca
         this.status = new SimpleIntegerProperty();
     }
 

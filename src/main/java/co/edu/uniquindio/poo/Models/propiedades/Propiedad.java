@@ -65,6 +65,35 @@ public class Propiedad {
         this.tipoTransmision = new SimpleIntegerProperty();    
     }
 
+    public Propiedad (String colorName, int numPassengersName) {
+        this.id = new SimpleIntegerProperty();
+        this.idMotorType = new SimpleIntegerProperty();
+        this.color = new SimpleStringProperty(colorName);
+        this.cilindraje = new SimpleStringProperty();
+        this.numDoors = new SimpleIntegerProperty(); 
+        this.numPassengers = new SimpleIntegerProperty(numPassengersName);
+        this.cambios = new SimpleIntegerProperty();
+        this.numAirbags = new SimpleIntegerProperty();
+        this.numAxles = new SimpleIntegerProperty();
+        this.numEmergencyExits = new SimpleIntegerProperty();
+        this.horsePower = new SimpleStringProperty();
+        this.maximumSpeed = new SimpleStringProperty();
+        this.trunkCapacity = new SimpleIntegerProperty();
+        this.time100Km = new SimpleStringProperty();
+        this.loadCapacity = new SimpleStringProperty();
+        this.typeTruck = new SimpleIntegerProperty();
+        this.airConditioning = new SimpleIntegerProperty();
+        this.reverseCamera = new SimpleIntegerProperty();
+        this.cruisingSpeed = new SimpleIntegerProperty();
+        this.absBrakes = new SimpleIntegerProperty();
+        this.airBrakes = new SimpleIntegerProperty();
+        this.collisionSensor = new SimpleIntegerProperty();
+        this.crossTrafficSensor = new SimpleIntegerProperty();
+        this.cuatroXcuatro = new SimpleIntegerProperty();
+        this.laneKeepingAssist = new SimpleIntegerProperty();
+        this.tipoTransmision = new SimpleIntegerProperty();
+    }
+
     // Getters y Setters para las propiedades
     public IntegerProperty idProperty() {
         return id;
