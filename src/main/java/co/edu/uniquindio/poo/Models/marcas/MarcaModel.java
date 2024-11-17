@@ -27,8 +27,8 @@ public class MarcaModel {
         }
     }
 
-    public LinkedList<Marca> obtenerEmpleados() {
-        String sql = "SELECT id, id_user, username, full_name, id_number, gender, email, address, telephone FROM employee WHERE status = 1 AND deleted_at IS NULL";
+    public LinkedList<Marca> obtenerMarcas() {
+        String sql = "SELECT id, brand FROM brand WHERE status = 1 AND deleted_at IS NULL";
         LinkedList<Marca> marcas = new LinkedList<>();
     
         try (Connection conn = DatabaseConnection.getConnection();

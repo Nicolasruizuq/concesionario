@@ -114,17 +114,17 @@ public class RegistrarCliente {
 
             // Usar StringConverter para mostrar el nombre pero usar el id como valor
             cbEmpleados.setConverter(new StringConverter<Integer>() {
-                @Override
-                public String toString(Integer idEmpleado) {
-                    // Buscar el empleado por id y mostrar su nombre
-                    Empleado empleado = empleados.stream()
-                            .filter(e -> e.getId() == idEmpleado)
-                            .findFirst()
-                            .orElse(null);
-                    return empleado != null ? empleado.getFullName() : "";
-                }
+            @Override
+            public String toString(Integer idEmpleado) {
+                // Buscar el empleado por id y mostrar su nombre
+                Empleado empleado = empleados.stream()
+                        .filter(e -> e.getId() == idEmpleado)
+                        .findFirst()
+                        .orElse(null);
+                return empleado != null ? empleado.getFullName() : "";
+            }
 
-                @Override
+            @Override
             public Integer fromString(String nombre) {
                 // Este método no se usa mucho porque el ComboBox ya está trabajando con ids, pero lo dejamos por si es necesario.
                 return empleados.stream()
@@ -139,9 +139,6 @@ public class RegistrarCliente {
             cbEmpleados.setValue(empleadosList.isEmpty() ? null : empleadosList.get(0));
         }
         
-        /*    
-        cbTypeUser.setValue(1); // Selecciona "Administrador" por defecto*/    
-        // Asigna el grupo de selección de sexo a los RadioButtons
         rbFemenino.setToggleGroup(sexoGroup);
         rbMasculino.setToggleGroup(sexoGroup);
     }

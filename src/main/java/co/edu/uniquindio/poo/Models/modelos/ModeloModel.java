@@ -30,7 +30,7 @@ public class ModeloModel {
     }
 
     public LinkedList<Modelo> obtenerModelos() {
-        String sql = "SELECT id_brand, model FROM model WHERE deleted_at IS NULL";
+        String sql = "SELECT id, id_brand, model FROM model WHERE deleted_at IS NULL";
         LinkedList<Modelo> modelos = new LinkedList<>();
     
         try (Connection conn = DatabaseConnection.getConnection();

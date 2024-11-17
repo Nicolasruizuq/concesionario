@@ -2,6 +2,7 @@ package co.edu.uniquindio.poo.Controllers.vehiculos;
 
 import java.io.IOException;
 import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.Map;
 
 import co.edu.uniquindio.poo.Controllers.clientes.ListarCliente;
@@ -12,6 +13,10 @@ import co.edu.uniquindio.poo.Models.motores.Motor;
 import co.edu.uniquindio.poo.Models.motores.MotorModel;
 import co.edu.uniquindio.poo.Models.modelos.Modelo;
 import co.edu.uniquindio.poo.Models.modelos.ModeloModel;
+import co.edu.uniquindio.poo.Models.clientes.Cliente;
+import co.edu.uniquindio.poo.Models.clientes.ClienteModel;
+import co.edu.uniquindio.poo.Models.empleados.Empleado;
+import co.edu.uniquindio.poo.Models.empleados.EmpleadoModel;
 import co.edu.uniquindio.poo.Models.marcas.Marca;
 import co.edu.uniquindio.poo.Models.marcas.MarcaModel;
 import co.edu.uniquindio.poo.Models.tipovehiculos.TipoVehiculo;
@@ -19,6 +24,8 @@ import co.edu.uniquindio.poo.Models.tipovehiculos.TipoVehiculoModel;
 import co.edu.uniquindio.poo.Models.propiedades.Propiedad;
 import co.edu.uniquindio.poo.Models.propiedades.PropiedadModel;
 import javafx.application.Platform;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -156,6 +163,10 @@ public class RegistrarVehiculo {
 
     private VehiculoModel vehiculoModel;
     private PropiedadModel propiedadModel;
+    private MarcaModel marcaModel;
+    private MotorModel motorModel;
+    private TipoVehiculoModel tipoVehiculoModel;
+    private ModeloModel modeloModel;
 
     private final Map<String, Integer> tipoSerVal = new HashMap<>();
     private final Map<String, Integer> asisPermVal = new HashMap<>();
@@ -165,12 +176,22 @@ public class RegistrarVehiculo {
     private final Map<String, Integer> aireFrenosVal = new HashMap<>();
     private final Map<String, Integer> sensorColisionVal = new HashMap<>(); 
     private final Map<String, Integer> sensorTraficoVal = new HashMap<>();
-    private final Map<String, String> tipoCamionVal = new HashMap<>();
+    private final Map<String, Integer> tipoCamionVal = new HashMap<>();
     private final Map<String, Integer> traCuatroXcuatroVal = new HashMap<>();
     private final Map<String, Integer> velCruceroVal = new HashMap<>();
     private final Map<String, Integer> tipoTransVal = new HashMap<>();
     private final Map<String, Integer> aireAcondVal = new HashMap<>();
     
+    public RegistrarVehiculo() {        
+        //empleadoModel = new EmpleadoModel();
+        vehiculoModel = new VehiculoModel();
+        propiedadModel = new PropiedadModel();
+        marcaModel = new MarcaModel();
+        modeloModel = new ModeloModel();
+        motorModel = new MotorModel();
+        tipoVehiculoModel = new TipoVehiculoModel();
+    }
+
     @FXML
     public void initialize() {
         // Configura los valores del mapa antes de añadir al ComboBox
@@ -195,8 +216,9 @@ public class RegistrarVehiculo {
         sensorColisionVal.put("No", 0);
         sensorTraficoVal.put("Si", 1);
         sensorTraficoVal.put("No", 0);
-        tipoCamionVal.put("Furgón", "Furgón");
-        tipoCamionVal.put("Volqueta", "Volqueta");
+        tipoCamionVal.put("No Aplica", 1);
+        tipoCamionVal.put("Furgón", 2);
+        tipoCamionVal.put("Volqueta", 3);
         traCuatroXcuatroVal.put("Si", 1);
         traCuatroXcuatroVal.put("No", 0);
         aireAcondVal.put("Si", 1);
@@ -215,7 +237,7 @@ public class RegistrarVehiculo {
         configurarComboBox(cbFrenosDeAire, aireFrenosVal);
         configurarComboBox(cbSensorColision, sensorColisionVal);
         configurarComboBox(cbSensorTrafico, sensorTraficoVal);
-        //configurarComboBox(cbTipoCamion, tipoCamionVal);
+        configurarComboBox(cbTipoCamion, tipoCamionVal);
         configurarComboBox(cbTraccionCuatroXcuatro, traCuatroXcuatroVal);
         configurarComboBox(cbVelocidadCrucero, velCruceroVal);
         configurarComboBox(cbTipoTransmision, tipoTransVal);
@@ -233,41 +255,168 @@ public class RegistrarVehiculo {
         cbTraccionCuatroXcuatro.setValue(1);
         cbVelocidadCrucero.setValue(1);
         cbTipoTransmision.setValue(1);
+        cbTipoCamion.setValue(1);
+
+        // Lista las marcas
+        LinkedList<Marca> marcas = marcaModel.obtenerMarcas();
+        ObservableList<Integer> marcasList = FXCollections.observableArrayList();
+
+        for (Marca marca : marcas) {
+            marcasList.add(marca.getId());
+        }
+        
+        if (marcasList != null) {            
+            cbMarca.setItems(marcasList);            
+            cbMarca.setConverter(new StringConverter<Integer>() {
+                @Override
+                public String toString(Integer id) {
+                    Marca marca = marcas.stream()
+                            .filter(e -> e.getId() == id)
+                            .findFirst()
+                            .orElse(null);
+                    return marca != null ? marca.getBrand() : "";
+                }
+
+                @Override
+            public Integer fromString(String nombre) {                
+                return marcas.stream()
+                        .filter(e -> e.getBrand().equals(nombre))
+                        .map(Marca::getId)
+                        .findFirst()
+                        .orElse(null);
+            }
+        });            
+            cbMarca.setValue(marcasList.isEmpty() ? null : marcasList.get(0));
+        }
+        
+        // Lista los modelos
+        LinkedList<Modelo> modelos = modeloModel.obtenerModelos();
+        ObservableList<Integer> modeloList = FXCollections.observableArrayList();
+
+        for (Modelo modelo : modelos) {
+            modeloList.add(modelo.getId());
+        }
+        
+        if (modeloList != null) {            
+            cbModelo.setItems(modeloList);            
+            cbModelo.setConverter(new StringConverter<Integer>() {
+                @Override
+                public String toString(Integer id) {
+                    Modelo modelo = modelos.stream()
+                            .filter(e -> e.getId() == id)
+                            .findFirst()
+                            .orElse(null);
+                    return modelo != null ? modelo.getModel() : "";
+                }
+
+                @Override
+            public Integer fromString(String nombre) {                
+                return modelos.stream()
+                        .filter(e -> e.getModel().equals(nombre))
+                        .map(Modelo::getId)
+                        .findFirst()
+                        .orElse(null);
+            }
+        });            
+            cbModelo.setValue(modeloList.isEmpty() ? null : modeloList.get(0));
+        }
+
+        // Lista los tipos de Motor
+        LinkedList<Motor> motores = motorModel.obtenerMotores();
+        ObservableList<Integer> motoresList = FXCollections.observableArrayList();
+
+        for (Motor motor : motores) {
+            motoresList.add(motor.getId());
+        }
+        
+        if (motoresList != null) {            
+            cbTipoMotor.setItems(motoresList);            
+            cbTipoMotor.setConverter(new StringConverter<Integer>() {
+                @Override
+                public String toString(Integer id) {
+                    Motor motor = motores.stream()
+                            .filter(e -> e.getId() == id)
+                            .findFirst()
+                            .orElse(null);
+                    return motor != null ? motor.getMotor() : "";
+                }
+
+                @Override
+                public Integer fromString(String nombre) {                
+                    return motores.stream()
+                            .filter(e -> e.getMotor().equals(nombre))
+                            .map(Motor::getId)
+                            .findFirst()
+                            .orElse(null);
+                }
+            });            
+            cbTipoMotor.setValue(motoresList.isEmpty() ? null : motoresList.get(0));
+        }
     
-        /*cbCamaraReversa.getItems().addAll(1, 0);    
-        cbCamaraReversa.setConverter(new StringConverter<>() {
+        // Lista tipo de vehículo
+        LinkedList<TipoVehiculo> tiposvehiculos = tipoVehiculoModel.obtenerTiposDeVehiculos();
+        ObservableList<Integer> tipovehiculosList = FXCollections.observableArrayList();
+
+        for (TipoVehiculo tiposvehiculo : tiposvehiculos) {
+            tipovehiculosList.add(tiposvehiculo.getId());
+        }
+        
+        if (tipovehiculosList != null) {            
+            cbTipoVehiculo.setItems(tipovehiculosList);            
+            cbTipoVehiculo.setConverter(new StringConverter<Integer>() {
+                @Override
+                public String toString(Integer id) {
+                    TipoVehiculo tiposvehiculo = tiposvehiculos.stream()
+                            .filter(e -> e.getId() == id)
+                            .findFirst()
+                            .orElse(null);
+                    return tiposvehiculo != null ? tiposvehiculo.getType() : "";
+                }
+
+                @Override
+            public Integer fromString(String nombre) {                
+                return tiposvehiculos.stream()
+                        .filter(e -> e.getType().equals(nombre))
+                        .map(TipoVehiculo::getId)
+                        .findFirst()
+                        .orElse(null);
+            }
+        });            
+        cbTipoVehiculo.setValue(tipovehiculosList.isEmpty() ? null : tipovehiculosList.get(0));
+        }
+
+        // Lista los colores
+        ObservableList<String> coloresList = FXCollections.observableArrayList(colorVal.values());
+        cbColor.setItems(coloresList);
+        cbColor.setConverter(new StringConverter<>() {
             @Override
-            public String toString(Integer value) {
-                // Muestra la etiqueta correspondiente al valor Integer
-                return camaraReversaVal.entrySet()
+            public String toString(String key) {
+                return colorVal.entrySet()
                         .stream()
-                        .filter(entry -> entry.getValue().equals(value))
+                        .filter(entry -> entry.getValue().equals(key))
                         .map(Map.Entry::getKey)
                         .findFirst()
                         .orElse("");
             }
-    
-            @Override
-            public Integer fromString(String label) {
-                // Convierte la etiqueta de texto a su valor Integer correspondiente
-                return camaraReversaVal.get(label);
-            }
-        });
 
-        cbSensorColision.setValue(1);
-        cbCamaraReversa.setValue(1);*/
+            @Override
+            public String fromString(String value) {
+                return colorVal.get(value);
+            }
+        });        
+        cbColor.setValue(coloresList.isEmpty() ? null : coloresList.get(0));        
     }
 
     @FXML
-    public void crearVehiculo(ActionEvent event) {
-        try {
+    public void crearVehiculo (ActionEvent event) {
+        try {            
             // Crear un objeto Propiedad y llenarlo con los datos de la vista
-            Propiedad nuevaPropiedad = new Propiedad();
+            Propiedad nuevaPropiedad = new Propiedad();  
             nuevaPropiedad.setIdMotorType(cbTipoMotor.getValue()); 
             nuevaPropiedad.setColor(cbColor.getValue());
             nuevaPropiedad.setCilindraje(txCilindraje.getText());         
             nuevaPropiedad.setNumDoors(Integer.parseInt(txtNumeroPuertas.getText()));
-            nuevaPropiedad.setnumPassengers(Integer.parseInt(txtNumeroPasajeros.getText()));
+            nuevaPropiedad.setNumPassengers(Integer.parseInt(txtNumeroPasajeros.getText()));
             nuevaPropiedad.setCambios(Integer.parseInt(txtCambios.getText()));
             nuevaPropiedad.setNumAirbags(Integer.parseInt(txtNumeroAirBags.getText()));
             nuevaPropiedad.setNumAxles(Integer.parseInt(txtNumeroEjes.getText()));
@@ -277,23 +426,36 @@ public class RegistrarVehiculo {
             nuevaPropiedad.setTrunkCapacity(Integer.parseInt(txtCapacidadMaletero.getText()));
             nuevaPropiedad.setTime100Km(txtAceleracion.getText());
             nuevaPropiedad.setLoadCapacity(txtCapacidadCajaCarga.getText());
-            nuevaPropiedad.setTypeTruck(cbTipoCamion.getText());
+            nuevaPropiedad.setTypeTruck(cbTipoCamion.getValue());
+            nuevaPropiedad.setAirConditioning(cbAireAcondicionado.getValue());
+            nuevaPropiedad.setReverseCamera(cbCamaraReversa.getValue());
+            nuevaPropiedad.setCruisingSpeed(cbVelocidadCrucero.getValue());
+            nuevaPropiedad.setAbsBrakes(cbFrenosABS.getValue());
+            nuevaPropiedad.setAirBrakes(cbFrenosDeAire.getValue());
+            nuevaPropiedad.setCollisionSensor(cbSensorColision.getValue());
+            nuevaPropiedad.setCrossTrafficSensor(cbSensorTrafico.getValue());
+            nuevaPropiedad.setCuatroXcuatro(cbTraccionCuatroXcuatro.getValue());
+            nuevaPropiedad.setLaneKeepingAssist(cbAsistentePermanencia.getValue());
+            nuevaPropiedad.setTipoTransmision(cbTipoTransmision.getValue());
 
-            // Intentar guardar el empleado en la base de datos
-            boolean propiedadCreado = propiedadModel.crearPropiedad(nuevaPropiedad);
-            mostrarAlerta(propiedadCreado ? "Propiedad creado correctamente." : "Error al crear la Propiedad.");
-            // Crear un objeto Vehiculo y llenarlo con los datos de la vista
-            Vehiculo nuevoVehiculo = new Vehiculo();
+            if (!validarCampos()) {
+                return;
+            }
+            // Guarda las propiedades del en la base de datos
+            int propiedadCreado = propiedadModel.crearPropiedad(nuevaPropiedad);
+            mostrarAlerta(propiedadCreado > 0 ? "Propiedad creado correctamente." : "Error al crear la Propiedad.");
+          
+            Vehiculo nuevoVehiculo = new Vehiculo(null);  
             nuevoVehiculo.setIdBrand(cbMarca.getValue()); 
             nuevoVehiculo.setIdModel(cbModelo.getValue());
             nuevoVehiculo.setIdVehicleType(cbTipoVehiculo.getValue());         
             nuevoVehiculo.setIdMotorType(cbTipoMotor.getValue());
-            //nuevoVehiculo.setIdProperty(idProperty.getValue()); // OJO ESTE ID VIENE DE INSERTAR LAS PROPIEDADES PRIMERO
+            nuevoVehiculo.setIdProperty(propiedadCreado);
             nuevoVehiculo.setValorVenta(Double.parseDouble(txtPrecioVenta.getText()));    
             nuevoVehiculo.setValorCompra(Double.parseDouble(txtPrecioCompra.getText()));
             nuevoVehiculo.setTipoServicio(cbTipoServicio.getValue());
 
-            // Intentar guardar el empleado en la base de datos
+            // Guarda el vehiculo del en la base de datos
             boolean creado = vehiculoModel.crearVehiculo(nuevoVehiculo);
             mostrarAlerta(creado ? "Vehículo creado correctamente." : "Error al crear el Vehículo.");
         } catch (NullPointerException e) {
@@ -312,8 +474,40 @@ public class RegistrarVehiculo {
         alert.showAndWait();
     }
 
-    /*public int obtenerValorSeleccionado() {
-        return cbTypeUser.getValue(); // Obtiene el valor entero directamente
+    /*public void obtenerValoresComboBox() {
+        // Obtener valores de los ComboBox, manejar el caso cuando no haya selección.
+        Integer tipoMotor = cbTipoMotor.getValue() != null ? cbTipoMotor.getValue() : -1;
+        String color = cbColor.getValue() != null ? cbColor.getValue() : null;
+        Integer tipoCamion = cbTipoCamion.getValue() != null ? cbTipoCamion.getValue() : -1;
+        Integer tipoVehiculo = cbTipoVehiculo.getValue() != null ? cbTipoVehiculo.getValue() : -1;
+        Integer tipoServicio = cbTipoServicio.getValue() != null ? cbTipoServicio.getValue() : -1;
+        Integer aireAcondicionado = cbAireAcondicionado.getValue() != null ? cbAireAcondicionado.getValue() : -1;
+        Integer camaraReversa = cbCamaraReversa.getValue() != null ? cbCamaraReversa.getValue() : -1;
+        Integer velocidadCrucero = cbVelocidadCrucero.getValue() != null ? cbVelocidadCrucero.getValue() : -1;
+        Integer frenosABS = cbFrenosABS.getValue() != null ? cbFrenosABS.getValue() : -1;
+        Integer frenosDeAire = cbFrenosDeAire.getValue() != null ? cbFrenosDeAire.getValue() : -1;
+        Integer sensorColision = cbSensorColision.getValue() != null ? cbSensorColision.getValue() : -1;
+        Integer sensorTrafico = cbSensorTrafico.getValue() != null ? cbSensorTrafico.getValue() : -1;
+        Integer traccionCuatroXcuatro = cbTraccionCuatroXcuatro.getValue() != null ? cbTraccionCuatroXcuatro.getValue() : -1;
+        Integer asistentePermanencia = cbAsistentePermanencia.getValue() != null ? cbAsistentePermanencia.getValue() : -1;
+        Integer tipoTransmision = cbTipoTransmision.getValue() != null ? cbTipoTransmision.getValue() : -1;
+    
+        // Imprimir los valores de los ComboBox para depuración
+        System.out.println("Tipo de Motor: " + tipoMotor);
+        System.out.println("Color: " + color);
+        System.out.println("Tipo de Camión: " + tipoCamion);
+        System.out.println("Tipo de Vehículo: " + tipoVehiculo);
+        System.out.println("Tipo de Servicio: " + tipoServicio);
+        System.out.println("Aire Acondicionado: " + aireAcondicionado);
+        System.out.println("Cámara Reversa: " + camaraReversa);
+        System.out.println("Velocidad Crucero: " + velocidadCrucero);
+        System.out.println("Frenos ABS: " + frenosABS);
+        System.out.println("Frenos de Aire: " + frenosDeAire);
+        System.out.println("Sensor de Colisión: " + sensorColision);
+        System.out.println("Sensor de Tráfico: " + sensorTrafico);
+        System.out.println("Tracción 4X4: " + traccionCuatroXcuatro);
+        System.out.println("Asistente de Permanencia: " + asistentePermanencia);
+        System.out.println("Tipo de Transmisión: " + tipoTransmision);
     }*/
     
     @FXML
@@ -339,10 +533,6 @@ public class RegistrarVehiculo {
     void OnLeave(ActionEvent event) {
         Platform.exit();
 
-    }
-
-    public RegistrarVehiculo() {
-        vehiculoModel = new VehiculoModel();
     }
 
     @FXML
@@ -449,5 +639,16 @@ public class RegistrarVehiculo {
                 return valoresMap.get(label);
             }
         });
-    }    
+    }
+
+    private boolean validarCampos() {
+        if (cbTipoServicio.getValue() == null || 
+            cbMarca.getValue() == null || 
+            cbModelo.getValue() == null || 
+            cbTipoMotor.getValue() == null) {
+            mostrarAlerta("Error: Hay campos obligatorios sin completar.");
+            return false;
+        }
+        return true;
+    }
 }

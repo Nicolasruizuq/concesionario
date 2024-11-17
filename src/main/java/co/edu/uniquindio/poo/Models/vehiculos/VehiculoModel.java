@@ -35,12 +35,12 @@ public class VehiculoModel {
     }
 
     public LinkedList<Vehiculo> obtenerVehiculos() {        
-        String sql = "SELECT ve.id, br.brand, mo.model, vt.type, mt.motor, mt.plug_in, ve.id_property, ve.sale_price, ve.purchase_price, ve.type_of_service, ve.status "
+        String sql = "SELECT ve.id, ve.id_brand, br.brand, ve.id_model, mo.model, ve.id_vehicle_type, vt.type, ve.id_motor_type, mt.motor, mt.plug_in, ve.id_property, ve.sale_price, ve.purchase_price, ve.type_of_service, ve.status "
                    + "FROM vehicle as ve "
-                   + "INNER JOIN brand as br ON ve.id_brand = br.id"
-                   + "INNER JOIN model as mo ON ve.id_model = mo.id"
-                   + "INNER JOIN vehicle_type as vt ON ve.id_vehicle_type = vt.id"
-                   + "INNER JOIN motor_type as mt ON  ve.id_motor_type = mt.id"
+                   + "INNER JOIN brand as br ON ve.id_brand = br.id "
+                   + "INNER JOIN model as mo ON ve.id_model = mo.id "
+                   + "INNER JOIN vehicle_type as vt ON ve.id_vehicle_type = vt.id "
+                   + "INNER JOIN motor_type as mt ON ve.id_motor_type = mt.id "
                    + "WHERE ve.deleted_at IS NULL";
 
         LinkedList<Vehiculo> vehiculos = new LinkedList<>();
@@ -55,7 +55,7 @@ public class VehiculoModel {
             }
                 
             while (rs.next()) {
-                Vehiculo vehiculo = new Vehiculo();
+                Vehiculo vehiculo = new Vehiculo(null);
                 vehiculo.setId(rs.getInt("id"));
                 vehiculo.setIdBrand(rs.getInt("id_brand"));
                 vehiculo.setIdModel(rs.getInt("id_model"));
@@ -75,9 +75,7 @@ public class VehiculoModel {
     
         System.out.println("Total de vehículos encontrados: " + vehiculos.size());
         return vehiculos;
-    }
-    
-    
+    }   
 
     public Vehiculo obtenerVehiculoPorId(int id) {
         String sql = "SELECT ve.id, br.brand, mo.model, vt.type, mt.motor, mt.plug_in, ve.id_property, ve.sale_price, ve.purchase_price, ve.type_of_service,ve.status "
@@ -97,7 +95,7 @@ public class VehiculoModel {
 
             try (ResultSet rs = pstmt.executeQuery()) {
                 if (rs.next()) {
-                    vehiculo = new Vehiculo();
+                    vehiculo = new Vehiculo(null);
                     vehiculo.setId(rs.getInt("id"));
                     vehiculo.setIdBrand(rs.getInt("id_brand"));
                     vehiculo.setIdModel(rs.getInt("id_model"));

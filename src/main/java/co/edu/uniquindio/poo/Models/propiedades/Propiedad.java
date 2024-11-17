@@ -13,6 +13,7 @@ public class Propiedad {
     private StringProperty cilindraje;
     private IntegerProperty numDoors;
     private IntegerProperty numPassengers;
+    private IntegerProperty cambios;
     private IntegerProperty numAirbags;
     private IntegerProperty numAxles;
     private IntegerProperty numEmergencyExits;
@@ -21,7 +22,7 @@ public class Propiedad {
     private IntegerProperty trunkCapacity;
     private StringProperty time100Km;
     private StringProperty loadCapacity; 
-    private StringProperty typeTruck;
+    private IntegerProperty typeTruck;
     private IntegerProperty airConditioning;
     private IntegerProperty reverseCamera;
     private IntegerProperty cruisingSpeed;
@@ -30,8 +31,7 @@ public class Propiedad {
     private IntegerProperty collisionSensor;
     private IntegerProperty crossTrafficSensor;
     private IntegerProperty cuatroXcuatro;
-    private IntegerProperty laneKeepingAssist;
-    private IntegerProperty cambios;
+    private IntegerProperty laneKeepingAssist;    
     private IntegerProperty tipoTransmision;
 
     
@@ -43,6 +43,7 @@ public class Propiedad {
         this.cilindraje = new SimpleStringProperty();
         this.numDoors = new SimpleIntegerProperty(); 
         this.numPassengers = new SimpleIntegerProperty();
+        this.cambios = new SimpleIntegerProperty();
         this.numAirbags = new SimpleIntegerProperty();
         this.numAxles = new SimpleIntegerProperty();
         this.numEmergencyExits = new SimpleIntegerProperty();
@@ -51,7 +52,7 @@ public class Propiedad {
         this.trunkCapacity = new SimpleIntegerProperty();
         this.time100Km = new SimpleStringProperty();
         this.loadCapacity = new SimpleStringProperty();
-        this.typeTruck = new SimpleStringProperty();
+        this.typeTruck = new SimpleIntegerProperty();
         this.airConditioning = new SimpleIntegerProperty();
         this.reverseCamera = new SimpleIntegerProperty();
         this.cruisingSpeed = new SimpleIntegerProperty();
@@ -61,6 +62,7 @@ public class Propiedad {
         this.crossTrafficSensor = new SimpleIntegerProperty();
         this.cuatroXcuatro = new SimpleIntegerProperty();
         this.laneKeepingAssist = new SimpleIntegerProperty();
+        this.tipoTransmision = new SimpleIntegerProperty();    
     }
 
     // Getters y Setters para las propiedades
@@ -128,7 +130,7 @@ public class Propiedad {
         return numPassengers;
     }
 
-    public void setnumPassengers(int numPassengers) {
+    public void setNumPassengers(int numPassengers) {
         this.numPassengers.set(numPassengers);
     }
 
@@ -232,15 +234,15 @@ public class Propiedad {
         return loadCapacity.get();
     }
 
-    public StringProperty typeTruckProperty() {
+    public IntegerProperty typeTruckProperty() {
         return typeTruck;
     }
 
-    public void setTypeTruck(String typeTruck) {
+    public void setTypeTruck(int typeTruck) {
         this.typeTruck.set(typeTruck);
     }
 
-    public String getTypeTruck() {
+    public int getTypeTruck() {
         return typeTruck.get();
     }
 
@@ -249,7 +251,7 @@ public class Propiedad {
     }
 
     public void setAirConditioning(int airConditioning) {
-        this.id.set(airConditioning);
+        this.airConditioning.set(airConditioning);
     }
 
     public int getAirConditioning() {

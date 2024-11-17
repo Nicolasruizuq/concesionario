@@ -1,6 +1,7 @@
 package co.edu.uniquindio.poo.Controllers.vehiculos;
 
 import java.io.IOException;
+import java.text.DecimalFormat;
 import java.util.LinkedList;
 
 import co.edu.uniquindio.poo.Controllers.clientes.EditarCliente;
@@ -22,6 +23,7 @@ import co.edu.uniquindio.poo.Models.tipovehiculos.TipoVehiculoModel;
 import co.edu.uniquindio.poo.Models.propiedades.Propiedad;
 import co.edu.uniquindio.poo.Models.propiedades.PropiedadModel;
 import javafx.application.Platform;
+import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -37,6 +39,8 @@ import javafx.scene.control.TableCell;
 import javafx.stage.Stage;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.control.TableColumn.CellDataFeatures;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.StackPane;
@@ -47,7 +51,7 @@ public class ListarVehiculo {
     private TableColumn<Vehiculo, Integer> TCId;
 
     @FXML
-    private TableColumn<Marca, String> TCMarca;
+    private TableColumn<Vehiculo, String> TCMarca;
 
     @FXML
     private TableColumn<Modelo, String> TCModelo;
@@ -65,13 +69,13 @@ public class ListarVehiculo {
     private TableColumn<Propiedad, Integer> TCNumeroPuestos;
 
     @FXML
-    private TableColumn<Vehiculo, Double> TCValorCompra;
+    TableColumn<Vehiculo, Double> TCValorCompra = new TableColumn<>("Valor de Compra");
 
     @FXML
-    private TableColumn<Vehiculo, Double> TCValorVenta;
+    private TableColumn<Vehiculo, Double> TCValorVenta = new TableColumn<>("Valor de venta");
 
     @FXML
-    private TableColumn<Vehiculo, String> TCTipoServicio;
+    private TableColumn<Vehiculo, Integer> TCTipoServicio;
 
     @FXML
     private TableColumn<Vehiculo, Void> TCEditar;
@@ -130,17 +134,49 @@ public class ListarVehiculo {
 
     @FXML
     public void initialize() {
+        TCMarca.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getBrand()));
         // Inicializa las columnas del TableView para que se vinculen con las propiedades del vehículo
-        TCId.setCellValueFactory(cellData -> cellData.getValue().idProperty().asObject());
-        TCMarca.setCellValueFactory(cellData -> cellData.getValue().brandProperty());
-        TCModelo.setCellValueFactory(cellData -> cellData.getValue().modelProperty());
+        TCId.setCellValueFactory(cellData -> cellData.getValue().idProperty().asObject());      
+        /*TCModelo.setCellValueFactory(cellData -> cellData.getValue().modelProperty());
         TCColor.setCellValueFactory(cellData -> cellData.getValue().colorProperty());
         TCType.setCellValueFactory(cellData -> cellData.getValue().typeProperty());
         TCMotor.setCellValueFactory(cellData -> cellData.getValue().motorProperty());
-        TCNumeroPuestos.setCellValueFactory(cellData -> cellData.getValue().numPassengersProperty().asObject());
-        TCValorCompra.setCellValueFactory(cellData -> cellData.getValue().valorCompra().asObject());
-        TCValorVenta.setCellValueFactory(cellData -> cellData.getValue().valorVenta().asObject()); 
-        TCTipoServicio.setCellValueFactory(cellData -> cellData.getValue().tipoServicio()); 
+        TCNumeroPuestos.setCellValueFactory(cellData -> cellData.getValue().numPassengersProperty().asObject());*/
+        TCValorCompra.setCellValueFactory(new PropertyValueFactory<>("valorCompra"));
+
+        TCValorCompra.setCellFactory(column -> {
+            return new TableCell<Vehiculo, Double>() {
+                @Override
+                protected void updateItem(Double item, boolean empty) {
+                    super.updateItem(item, empty);
+                    if (empty || item == null) {
+                        setText(null);
+                    } else {
+                        // Formatear el número para evitar notación científica
+                        DecimalFormat df = new DecimalFormat("#,###.##"); // Formato con coma para miles y hasta dos decimales
+                        setText(df.format(item)); // Muestra el número formateado
+                    }
+                }
+            };
+        });
+        TCValorVenta.setCellValueFactory(new PropertyValueFactory<>("valorVenta"));
+
+        TCValorVenta.setCellFactory(column -> {
+            return new TableCell<Vehiculo, Double>() {
+                @Override
+                protected void updateItem(Double item, boolean empty) {
+                    super.updateItem(item, empty);
+                    if (empty || item == null) {
+                        setText(null);
+                    } else {
+                        // Formatear el número para evitar notación científica
+                        DecimalFormat df = new DecimalFormat("#,###.##"); // Formato con coma para miles y hasta dos decimales
+                        setText(df.format(item)); // Muestra el número formateado
+                    }
+                }
+            };
+        });
+        TCTipoServicio.setCellValueFactory(cellData -> cellData.getValue().tipoServicioProperty().asObject());
         TCEditar.setCellFactory(param -> new TableCell<Vehiculo, Void>() {
             private final ImageView editIcon = new ImageView(new Image(getClass().getResourceAsStream("/co/edu/uniquindio/poo/Resources/img/editar.png")));
             private final StackPane container = new StackPane(editIcon);
@@ -261,6 +297,22 @@ public class ListarVehiculo {
     }
 
     @FXML
+    public void obtenerVehiculos () {
+        // Llamamos al modelo para obtener los clientes
+        LinkedList<Vehiculo> vehiculos = vehiculoModel.obtenerVehiculos();
+
+        if (vehiculos != null && !vehiculos.isEmpty()) {
+            ObservableList<Vehiculo> vehiculosObservableList = FXCollections.observableArrayList(vehiculos);
+
+            // Agregar los clientes al TableView
+            TVVehiculos.setItems(vehiculosObservableList);
+        } else {
+            // Mostrar una alerta si no se encontraron clientes
+            mostrarAlerta("No se encontraron vehiculos.");
+        }
+    }
+
+    @FXML
     void OnCloseSesion(ActionEvent event) {
         try {
             // Cargar la pantalla de login
@@ -283,19 +335,6 @@ public class ListarVehiculo {
     void OnLeave(ActionEvent event) {
         Platform.exit();
     }
-    
-    @FXML
-public void obtenerVehiculos() {
-    LinkedList<Vehiculo> vehiculos = vehiculoModel.obtenerVehiculos();
-
-    if (vehiculos != null && !vehiculos.isEmpty()) {
-        ObservableList<Vehiculo> vehiculosObservableList = FXCollections.observableArrayList(vehiculos);
-        TVVehiculos.setItems(vehiculosObservableList);
-        System.out.println("Vehículos cargados en el TableView");
-    } else {
-        mostrarAlerta("No se encontraron vehículos.");
-    }
-}
 
     private void mostrarAlerta(String mensaje) {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
@@ -388,5 +427,40 @@ public void obtenerVehiculos() {
             e.printStackTrace();
         }
     }
+
+    @FXML
+    void OnRegistrarVehiculo (ActionEvent event) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getClassLoader().getResource("co/edu/uniquindio/poo/Views/vehiculos/registrarVehiculo.fxml"));
+            Parent registerRoot = loader.load();
+            
+            // Obtener la escena actual y el Stage
+            Stage stage = (Stage) MBMain.getScene().getWindow();
+            
+            // Configurar la nueva escena con la pantalla de login
+            Scene registerScene = new Scene(registerRoot);
+            stage.setScene(registerScene);
+            stage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void configurarTabla() {
+        // Configurar columna para la marca
+        TableColumn<Vehiculo, String> colMarca = new TableColumn<>("Marca");
+        colMarca.setCellValueFactory(new PropertyValueFactory<>("brand")); // La propiedad del modelo
+
+        // Configurar otras columnas de tu TableView si es necesario
+        TableColumn<Vehiculo, String> colModelo = new TableColumn<>("Modelo");
+        colModelo.setCellValueFactory(new PropertyValueFactory<>("idModel")); // Ejemplo
+
+        TableColumn<Vehiculo, Double> colValorVenta = new TableColumn<>("Valor Venta");
+        colValorVenta.setCellValueFactory(new PropertyValueFactory<>("valorVenta"));
+
+        // Agregar las columnas al TableView
+        TVVehiculos.getColumns().addAll(colMarca, colModelo, colValorVenta);
+    }
+
 }
 

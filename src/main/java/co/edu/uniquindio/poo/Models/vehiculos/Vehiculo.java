@@ -1,5 +1,6 @@
 package co.edu.uniquindio.poo.Models.vehiculos;
 
+import co.edu.uniquindio.poo.Models.marcas.Marca;
 import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleDoubleProperty;
@@ -18,9 +19,10 @@ public class Vehiculo {
     private DoubleProperty valorVenta;
     private DoubleProperty valorCompra;
     private IntegerProperty tipoServicio;
+    private Marca marca;
 
 
-    public Vehiculo () {
+    public Vehiculo (Marca marca) {
         this.id = new SimpleIntegerProperty();
         this.idBrand = new SimpleIntegerProperty();
         this.idModel = new SimpleIntegerProperty();
@@ -30,6 +32,7 @@ public class Vehiculo {
         this.valorVenta = new SimpleDoubleProperty();
         this.valorCompra = new SimpleDoubleProperty();
         this.tipoServicio = new SimpleIntegerProperty();
+        this.marca = marca;
         
     }
 
@@ -106,7 +109,7 @@ public class Vehiculo {
         return idProperty.get();
     }
 
-    public DoubleProperty valorVenta() {
+    public DoubleProperty valorVentaProperty() {
         return valorVenta;
     }
 
@@ -118,7 +121,7 @@ public class Vehiculo {
         return valorVenta.get();
     }
 
-    public DoubleProperty valorCompra() {
+    public DoubleProperty valorCompraProperty() {
         return valorCompra;
     }
 
@@ -130,7 +133,7 @@ public class Vehiculo {
         return valorCompra.get();
     }
 
-    public IntegerProperty tipoServicio() {
+    public IntegerProperty tipoServicioProperty() {
         return tipoServicio;
     }
 
@@ -140,6 +143,14 @@ public class Vehiculo {
 
     public int getTipoServicio() {
         return tipoServicio.get();
+    }
+
+    public Marca getMarca() {
+        return marca;
+    }
+
+    public String getBrand() {
+        return marca != null ? marca.getBrand() : "Desconocida";
     }
 
     

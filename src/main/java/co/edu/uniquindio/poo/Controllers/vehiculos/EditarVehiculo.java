@@ -24,6 +24,8 @@ import co.edu.uniquindio.poo.Models.clientes.Cliente;
 import co.edu.uniquindio.poo.Models.clientes.ClienteModel;
 import co.edu.uniquindio.poo.Models.empleados.Empleado;
 import co.edu.uniquindio.poo.Models.empleados.EmpleadoModel;
+import co.edu.uniquindio.poo.Models.propiedades.Propiedad;
+import co.edu.uniquindio.poo.Models.propiedades.PropiedadModel;
 import co.edu.uniquindio.poo.Models.vehiculos.Vehiculo;
 import co.edu.uniquindio.poo.Models.vehiculos.VehiculoModel;
 import co.edu.uniquindio.poo.Controllers.clientes.ListarCliente;
@@ -54,7 +56,7 @@ public class EditarVehiculo {
     private Menu MVehiculos;
 
     @FXML
-    private Button btnRegistrarVehículo;
+    private Button btnGuardarVehiculo;
 
     @FXML
     private ComboBox<Integer> cbAireAcondicionado;
@@ -67,6 +69,9 @@ public class EditarVehiculo {
 
     @FXML
     private ComboBox<Integer> cbCamaraReversa;
+
+    @FXML
+    private ComboBox<String> cbColor;
 
     @FXML
     private ComboBox<Integer> cbFrenosABS;
@@ -96,13 +101,19 @@ public class EditarVehiculo {
     private ComboBox<Integer> cbTipoVehiculo;
 
     @FXML
-    private ComboBox<Integer> cbTraccion4X4;
+    private ComboBox<Integer> cbTraccionCuatroXcuatro;
 
     @FXML
     private ComboBox<Integer> cbVelocidadCrucero;
 
     @FXML
+    private ComboBox<Integer> cbTipoTransmision;
+
+    @FXML
     private TextField txCilindraje;
+
+    @FXML
+    private TextField txtCambios;
 
     @FXML
     private TextField txtAceleracion;
@@ -140,9 +151,13 @@ public class EditarVehiculo {
     @FXML
     private TextField txtPrecioVenta;
 
-    private VehiculoModel vehiculoModel;
-
     private Vehiculo vehiculoActual;
+
+    private Propiedad propiedadActual;
+
+
+    private VehiculoModel vehiculoModel;
+    private PropiedadModel propiedadModel;
 
     private final Map<String, Integer> rolValores = new HashMap<>();
 
@@ -156,40 +171,93 @@ public class EditarVehiculo {
     }
 
     private void rellenarCampos() {
-        if (vehiculoActual != null) {
-            cbTipoVehiculo.setValue(vehiculoActual.getClass());
-            txtEmail.setText(vehiculoActual.getId());
+        if (vehiculoActual != null) {            
+            cbAireAcondicionado.setValue(propiedadActual.getAirConditioning());
+            cbTipoServicio.setValue(vehiculoActual.getTipoServicio());
+            cbAsistentePermanencia.setValue(propiedadActual.getLaneKeepingAssist());
+            cbCamaraReversa.setValue(propiedadActual.getReverseCamera());
+            cbColor.setValue(propiedadActual.getColor());
+            cbFrenosABS.setValue(propiedadActual.getAbsBrakes());
+            cbFrenosDeAire.setValue(propiedadActual.getAirBrakes());
             cbMarca.setValue(vehiculoActual.getIdBrand());
             cbModelo.setValue(vehiculoActual.getIdModel());
+            cbSensorColision.setValue(propiedadActual.getCollisionSensor());
+            cbSensorTrafico.setValue(propiedadActual.getCrossTrafficSensor());
             cbTipoMotor.setValue(vehiculoActual.getIdMotorType());
             cbTipoVehiculo.setValue(vehiculoActual.getIdVehicleType());
+            cbTraccionCuatroXcuatro.setValue(propiedadActual.getCuatroXcuatro());
+            cbVelocidadCrucero.setValue(propiedadActual.getCruisingSpeed());
+            cbTipoTransmision.setValue(propiedadActual.getTipoTransmision());
+            txCilindraje.setText(propiedadActual.getCilindraje());
+            txtCambios.setText(String.valueOf(propiedadActual.getCambios()));
+            txtAceleracion.setText(String.valueOf(propiedadActual.getTime100Km()));
+            txtCapacidadCajaCarga.setText(String.valueOf(propiedadActual.getLoadCapacity()));
+            txtCapacidadMaletero.setText(String.valueOf(propiedadActual.getTrunkCapacity()));
+            txtNumeroAirBags.setText(String.valueOf(propiedadActual.getNumAirbags()));
+            txtNumeroEjes.setText(String.valueOf(propiedadActual.getNumAxles()));
+            txtNumeroPasajeros.setText(String.valueOf(propiedadActual.getnumPassengers()));
+            txtNumeroPuertas.setText(String.valueOf(propiedadActual.getNumDoors()));
+            txtNumeroSalidasEmergencia.setText(String.valueOf(propiedadActual.getNumEmergencyExits()));
+            txtPotencia.setText(String.valueOf(propiedadActual.getHorsePower()));
+            txtVelocidadMaxima.setText(String.valueOf(propiedadActual.getMaximumSpeed()));
+            txtPrecioCompra.setText(String.valueOf(vehiculoActual.getValorCompra()));
+            txtPrecioVenta.setText(String.valueOf(vehiculoActual.getValorVenta()));
+            
         }
     }
 
     @FXML
     void EditarVehiculo (ActionEvent event) {
-        if (vehiculoActual != null) {
-            vehiculoActual.setClass(txtEmail.getText());
-            vehiculoActual.setPassword(txtPassword.getText());
-            vehiculoActual.setUsername(txtUsername.getText());
-            vehiculoActual.setUserType(cbTypeUser.getValue());
-            vehiculoActual.setFullName(txtNombre.getText());
-            vehiculoActual.setIdNumber(txtCedula.getText());
-            vehiculoActual.setAddress(txtDireccion.getText());
-            vehiculoActual.setTelephone(txtTelefono.getText());
+        if (vehiculoActual != null) {           
+            
+            propiedadActual.setIdMotorType(cbTipoMotor.getValue()); 
+            propiedadActual.setColor(cbColor.getValue());
+            propiedadActual.setCilindraje(txCilindraje.getText());         
+            propiedadActual.setNumDoors(Integer.parseInt(txtNumeroPuertas.getText()));
+            propiedadActual.setNumPassengers(Integer.parseInt(txtNumeroPasajeros.getText()));
+            propiedadActual.setCambios(Integer.parseInt(txtCambios.getText()));
+            propiedadActual.setNumAirbags(Integer.parseInt(txtNumeroAirBags.getText()));
+            propiedadActual.setNumAxles(Integer.parseInt(txtNumeroEjes.getText()));
+            propiedadActual.setNumEmergencyExits(Integer.parseInt(txtNumeroSalidasEmergencia.getText()));
+            propiedadActual.setHorsePower(txtPotencia.getText());
+            propiedadActual.setMaximumSpeed(txtVelocidadMaxima.getText());
+            propiedadActual.setTrunkCapacity(Integer.parseInt(txtCapacidadMaletero.getText()));
+            propiedadActual.setTime100Km(txtAceleracion.getText());
+            propiedadActual.setLoadCapacity(txtCapacidadCajaCarga.getText());
+            propiedadActual.setTypeTruck(cbTipoCamion.getValue());
+            propiedadActual.setAirConditioning(cbAireAcondicionado.getValue());
+            propiedadActual.setReverseCamera(cbCamaraReversa.getValue());
+            propiedadActual.setCruisingSpeed(cbVelocidadCrucero.getValue());
+            propiedadActual.setAbsBrakes(cbFrenosABS.getValue());
+            propiedadActual.setAirBrakes(cbFrenosDeAire.getValue());
+            propiedadActual.setCollisionSensor(cbSensorColision.getValue());
+            propiedadActual.setCrossTrafficSensor(cbSensorTrafico.getValue());
+            propiedadActual.setCuatroXcuatro(cbTraccionCuatroXcuatro.getValue());
+            propiedadActual.setLaneKeepingAssist(cbAsistentePermanencia.getValue());
+            propiedadActual.setTipoTransmision(cbTipoTransmision.getValue());
+            propiedadActual.setTypeTruck(cbTipoCamion.getValue());
 
-            boolean actualizado = vehiculoModel.actualizarVehiculo(vehiculoActual);
-            if (actualizado) {
-                mostrarAlerta("Vehiculo actualizado correctamente.", Alert.AlertType.INFORMATION);
-                volverAListarEmpleados();
-            } else {
-                mostrarAlerta("Error al actualizar el vehiculo.", Alert.AlertType.ERROR);
-            }
+            // Intentar guardar el empleado en la base de datos
+            boolean propiedadActualizado = propiedadModel.actualizarPropiedad(propiedadActual);
+            mostrarAlerta(propiedadActualizado ? "Propiedad actualizada correctamente." : "Error al actualizar la Propiedad.");
+            // Crear un objeto Vehiculo y llenarlo con los datos de la vista
+            vehiculoActual.setIdBrand(cbMarca.getValue()); 
+            vehiculoActual.setIdModel(cbModelo.getValue());
+            vehiculoActual.setIdVehicleType(cbTipoVehiculo.getValue());         
+            vehiculoActual.setIdMotorType(cbTipoMotor.getValue());
+            //nuevoVehiculo.setIdProperty(idProperty.getValue()); // OJO ESTE ID VIENE DE INSERTAR LAS PROPIEDADES PRIMERO
+            vehiculoActual.setValorVenta(Double.parseDouble(txtPrecioVenta.getText()));    
+            vehiculoActual.setValorCompra(Double.parseDouble(txtPrecioCompra.getText()));
+            vehiculoActual.setTipoServicio(cbTipoServicio.getValue());
+
+            // Intentar guardar el empleado en la base de datos
+            boolean vehiculoActualizado = vehiculoModel.actualizarVehiculo(vehiculoActual);
+            mostrarAlerta(vehiculoActualizado ? "Vehículo actualizada correctamente." : "Error al actualizar el vehículo.");
         }
     }
 
-    private void mostrarAlerta(String mensaje, Alert.AlertType tipo) {
-        Alert alert = new Alert(tipo);
+    private void mostrarAlerta(String mensaje) {
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle("Resultado");
         alert.setHeaderText(null);
         alert.setContentText(mensaje);

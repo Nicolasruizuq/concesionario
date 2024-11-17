@@ -3,11 +3,13 @@
 <?import javafx.scene.control.Menu?>
 <?import javafx.scene.control.MenuBar?>
 <?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="co.edu.uniquindio.poo.Controllers.Main">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="co.edu.uniquindio.poo.Controllers.vehiculos.ListarVehiculo">
    <children>
-      <MenuBar fx:id="MBMain" layoutY="1.0" prefHeight="26.0" prefWidth="900.0">
+      <MenuBar fx:id="MBMain" layoutY="1.0" prefHeight="26.0" prefWidth="1000.0">
         <menus>
           <Menu fx:id="MEmpleados" mnemonicParsing="false" text="Empleados">
             <items>
@@ -27,7 +29,7 @@
                   <MenuItem mnemonicParsing="false" text="Alquilar Vehiculos" />
                   <MenuItem mnemonicParsing="false" text="Comprar Vehiculos" />
                   <MenuItem mnemonicParsing="false" text="Vender Vehiculos" />
-                  <MenuItem mnemonicParsing="false" onAction="#OnListarVehiculo" text="Listar Vehiculos" />
+                  <MenuItem mnemonicParsing="false" text="Listar Vehiculos" />
             </items>
           </Menu>
             <Menu fx:id="MReportes" mnemonicParsing="false" text="Reportes">
@@ -48,5 +50,21 @@
                </items></Menu>
         </menus>
       </MenuBar>
+      <TableView fx:id="TVVehiculos" layoutY="27.0" prefHeight="700.0" prefWidth="1000.0">
+        <columns>
+          <TableColumn fx:id="TCId" prefWidth="75.0" text="Id" />
+          <TableColumn fx:id="TCMarca" prefWidth="75.0" text="Marca" />
+            <TableColumn fx:id="TCModelo" prefWidth="75.0" text="Modelo" />
+            <TableColumn fx:id="TCColor" prefWidth="75.0" text="Color" />
+            <TableColumn fx:id="TCType" prefWidth="75.0" text="Tipo" />
+            <TableColumn fx:id="TCMotor" prefWidth="75.0" text="Motor" />
+            <TableColumn fx:id="TCNumeroPuestos" prefWidth="75.0" text="Puestos" />
+            <TableColumn fx:id="TCValorCompra" prefWidth="97.60003662109375" text="Valor Compra" />
+            <TableColumn fx:id="TCValorVenta" prefWidth="89.5999755859375" text="Valor Venta" />
+            <TableColumn fx:id="TCTipoServicio" prefWidth="120.0" text="Tipo De Servicio" />
+            <TableColumn fx:id="TCEditar" prefWidth="82.4000244140625" text="Editar" />
+            <TableColumn fx:id="TCEliminar" prefWidth="84.7999267578125" text="Eliminar" />
+        </columns>
+      </TableView>
    </children>
 </AnchorPane>

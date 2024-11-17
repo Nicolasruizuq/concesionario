@@ -66,7 +66,7 @@
       <Label layoutX="15.0" layoutY="230.0" text="Cilindraje:" />
       <Label layoutX="330.0" layoutY="280.0" text="Numero De Pasajeros:" />
       <Label layoutX="15.0" layoutY="280.0" text="Cambios:" />
-      <Button fx:id="btnRegistrarVehículo" layoutX="759.0" layoutY="626.0" mnemonicParsing="false" onAction="#crearEmpleado" text="Registrar Vehículo" />
+      <Button fx:id="btnRegistrarVehículo" layoutX="759.0" layoutY="626.0" mnemonicParsing="false" onAction="#crearVehiculo" text="Registrar Vehículo" />
       <ComboBox fx:id="cbMarca" layoutX="180.0" layoutY="125.0" prefHeight="26.0" prefWidth="130.0" />
       <Label layoutX="330.0" layoutY="330.0" text="Numero De Airbags:" />
       <Label layoutX="15.0" layoutY="330.0" text="Numero De Ejes:" />
@@ -93,7 +93,7 @@
       <ComboBox fx:id="cbFrenosABS" layoutX="750.0" layoutY="325.0" prefHeight="26.0" prefWidth="130.0" />
       <ComboBox fx:id="cbFrenosDeAire" layoutX="750.0" layoutY="375.0" prefHeight="26.0" prefWidth="130.0" />
       <ComboBox fx:id="cbSensorColision" layoutX="750.0" layoutY="425.0" prefHeight="26.0" prefWidth="130.0" />
-      <ComboBox fx:id="cbTraccion4X4" layoutX="750.0" layoutY="475.0" prefHeight="26.0" prefWidth="130.0" />
+      <ComboBox fx:id="cbTraccionCuatroXcuatro" layoutX="750.0" layoutY="475.0" prefHeight="26.0" prefWidth="130.0" />
       <TextField fx:id="txtNumeroAirBags" layoutX="490.0" layoutY="325.0" prefHeight="26.0" prefWidth="130.0" />
       <TextField fx:id="txtNumeroPasajeros" layoutX="490.0" layoutY="275.0" prefHeight="26.0" prefWidth="130.0" />
       <TextField fx:id="txtNumeroPuertas" layoutX="490.0" layoutY="225.0" prefHeight="26.0" prefWidth="130.0" />
