@@ -172,7 +172,7 @@ public class Propiedad {
     }
 
     public void setNumAirbags(int numAirbags) {
-        this.id.set(numAirbags);
+        this.numAirbags.set(numAirbags); // Estaba asignando incorrectamente a this.id
     }
 
     public int getNumAirbags() {
@@ -196,7 +196,7 @@ public class Propiedad {
     }
 
     public void setNumEmergencyExits(int numEmergencyExits) {
-        this.id.set(numEmergencyExits);
+        this.numEmergencyExits.set(numEmergencyExits); 
     }
 
     public int getNumEmergencyExits() {

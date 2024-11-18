@@ -1,5 +1,6 @@
 package co.edu.uniquindio.poo.Models.vehiculos;
 
+import co.edu.uniquindio.poo.Models.empleados.Empleado;
 import co.edu.uniquindio.poo.Models.marcas.Marca;
 import co.edu.uniquindio.poo.Models.modelos.Modelo;
 import co.edu.uniquindio.poo.Models.motores.Motor;
@@ -20,6 +21,7 @@ public class Vehiculo {
     private IntegerProperty idVehicleType;
     private IntegerProperty idMotorType;
     private IntegerProperty idProperty;
+    private IntegerProperty idEmployee;
     private DoubleProperty valorVenta;
     private DoubleProperty valorCompra;
     private IntegerProperty tipoServicio;
@@ -28,6 +30,7 @@ public class Vehiculo {
     private Modelo modelo;
     private Motor motor;
     private TipoVehiculo tipoVehiculo;
+    private Empleado empleado;
 
 
     public Vehiculo (Marca marca, Modelo modelo, Propiedad propiedad, Motor motor, TipoVehiculo tipoVehiculo) {
@@ -37,6 +40,7 @@ public class Vehiculo {
         this.idVehicleType = new SimpleIntegerProperty();
         this.idMotorType = new SimpleIntegerProperty();
         this.idProperty = new SimpleIntegerProperty();
+        this.idEmployee = new SimpleIntegerProperty();
         this.valorVenta = new SimpleDoubleProperty();
         this.valorCompra = new SimpleDoubleProperty();
         this.tipoServicio = new SimpleIntegerProperty();
@@ -45,6 +49,7 @@ public class Vehiculo {
         this.motor = motor;
         this.modelo = modelo;
         this.tipoVehiculo = tipoVehiculo;
+        this.empleado = empleado;
         
     }
 
@@ -119,6 +124,18 @@ public class Vehiculo {
 
     public int getIdProperty() {
         return idProperty.get();
+    }
+
+    public IntegerProperty idEmployeeProperty() {
+        return idEmployee;
+    }
+
+    public void setIdEmployee(int idEmployee) {
+        this.idEmployee.set(idEmployee);
+    }
+
+    public int getIdEmployee() {
+        return idEmployee.get();
     }
 
     public DoubleProperty valorVentaProperty() {

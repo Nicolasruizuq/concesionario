@@ -29,7 +29,7 @@
                   <MenuItem mnemonicParsing="false" text="Alquilar Vehiculos" />
                   <MenuItem mnemonicParsing="false" text="Comprar Vehiculos" />
                   <MenuItem mnemonicParsing="false" text="Vender Vehiculos" />
-                  <MenuItem mnemonicParsing="false" text="Listar Vehiculos" />
+                  <MenuItem mnemonicParsing="false" onAction="#OnListarVehiculo" text="Listar Vehiculos" />
             </items>
           </Menu>
             <Menu fx:id="MReportes" mnemonicParsing="false" text="Reportes">

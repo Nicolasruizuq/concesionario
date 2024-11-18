@@ -26,6 +26,7 @@ import co.edu.uniquindio.poo.Models.empleados.Empleado;
 import co.edu.uniquindio.poo.Models.empleados.EmpleadoModel;
 import co.edu.uniquindio.poo.Controllers.clientes.ListarCliente;
 import co.edu.uniquindio.poo.Controllers.empleados.ListarEmpleado;
+import co.edu.uniquindio.poo.Controllers.vehiculos.ListarVehiculo;
 
 public class EditarEmpleado {
     
@@ -270,6 +271,48 @@ public class EditarEmpleado {
         
             // Llamar al método para cargar los empleados
             controller.obtenerEmpleados();
+
+            // Obtener la escena actual y el Stage
+            Stage stage = (Stage) MBMain.getScene().getWindow();
+
+            // Configurar la nueva escena con la pantalla de login
+            Scene listScene = new Scene(listRoot);
+            stage.setScene(listScene);
+            stage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @FXML
+    void OnRegistrarVehiculo (ActionEvent event) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getClassLoader().getResource("co/edu/uniquindio/poo/Views/vehiculos/registrarVehiculo.fxml"));
+            Parent registerRoot = loader.load();
+            
+            // Obtener la escena actual y el Stage
+            Stage stage = (Stage) MBMain.getScene().getWindow();
+            
+            // Configurar la nueva escena con la pantalla de login
+            Scene registerScene = new Scene(registerRoot);
+            stage.setScene(registerScene);
+            stage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+    }
+
+    @FXML
+    void OnListarVehiculo (ActionEvent event) {
+        try {       
+            FXMLLoader loader = new FXMLLoader(getClass().getClassLoader().getResource("co/edu/uniquindio/poo/Views/vehiculos/listarVehiculo.fxml"));
+            Parent listRoot = loader.load();
+
+            ListarVehiculo controller = loader.getController();
+        
+            // Llamar al método para cargar los empleados
+            controller.obtenerVehiculos();
 
             // Obtener la escena actual y el Stage
             Stage stage = (Stage) MBMain.getScene().getWindow();

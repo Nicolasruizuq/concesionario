@@ -104,6 +104,9 @@ public class RegistrarVehiculo {
     private ComboBox<Integer> cbTipoCamion;
 
     @FXML
+    private ComboBox<Integer> cbEmpleado;
+
+    @FXML
     private ComboBox<Integer> cbTipoMotor;
 
     @FXML
@@ -129,6 +132,9 @@ public class RegistrarVehiculo {
 
     @FXML
     private TextField txtCapacidadCajaCarga;
+
+    @FXML
+    private TextField txtTiempoCarga;
 
     @FXML
     private TextField txtCapacidadMaletero;
@@ -167,6 +173,7 @@ public class RegistrarVehiculo {
     private MotorModel motorModel;
     private TipoVehiculoModel tipoVehiculoModel;
     private ModeloModel modeloModel;
+    private EmpleadoModel empleadoModel;
 
     private final Map<String, Integer> tipoSerVal = new HashMap<>();
     private final Map<String, Integer> asisPermVal = new HashMap<>();
@@ -190,6 +197,7 @@ public class RegistrarVehiculo {
         modeloModel = new ModeloModel();
         motorModel = new MotorModel();
         tipoVehiculoModel = new TipoVehiculoModel();
+        empleadoModel = new EmpleadoModel();
     }
 
     @FXML
@@ -404,7 +412,46 @@ public class RegistrarVehiculo {
                 return colorVal.get(value);
             }
         });        
-        cbColor.setValue(coloresList.isEmpty() ? null : coloresList.get(0));        
+        cbColor.setValue(coloresList.isEmpty() ? null : coloresList.get(0));
+        
+        // Lista los empleados
+        LinkedList<Empleado> empleados = empleadoModel.obtenerEmpleados();
+        ObservableList<Integer> empleadosList = FXCollections.observableArrayList();
+
+        for (Empleado empleado : empleados) {
+            empleadosList.add(empleado.getId());
+        }
+        
+        if (empleadosList != null) {
+            // Carga los empleados en el ComboBox
+            cbEmpleado.setItems(empleadosList);
+
+            // Usar StringConverter para mostrar el nombre pero usar el id como valor
+            cbEmpleado.setConverter(new StringConverter<Integer>() {
+            @Override
+            public String toString(Integer idEmpleado) {
+                // Buscar el empleado por id y mostrar su nombre
+                Empleado empleado = empleados.stream()
+                        .filter(e -> e.getId() == idEmpleado)
+                        .findFirst()
+                        .orElse(null);
+                return empleado != null ? empleado.getFullName() : "";
+            }
+
+            @Override
+            public Integer fromString(String nombre) {
+                // Este método no se usa mucho porque el ComboBox ya está trabajando con ids, pero lo dejamos por si es necesario.
+                return empleados.stream()
+                        .filter(e -> e.getFullName().equals(nombre))
+                        .map(Empleado::getId)
+                        .findFirst()
+                        .orElse(null);
+            }
+        });
+
+            // Selecciona un valor por defecto (si es necesario)
+            cbEmpleado.setValue(empleadosList.isEmpty() ? null : empleadosList.get(0));
+        }
     }
 
     @FXML
@@ -451,6 +498,7 @@ public class RegistrarVehiculo {
             nuevoVehiculo.setIdVehicleType(cbTipoVehiculo.getValue());         
             nuevoVehiculo.setIdMotorType(cbTipoMotor.getValue());
             nuevoVehiculo.setIdProperty(propiedadCreado);
+            nuevoVehiculo.setIdEmployee(cbEmpleado.getValue());
             nuevoVehiculo.setValorVenta(Double.parseDouble(txtPrecioVenta.getText()));    
             nuevoVehiculo.setValorCompra(Double.parseDouble(txtPrecioCompra.getText()));
             nuevoVehiculo.setTipoServicio(cbTipoServicio.getValue());
@@ -473,42 +521,7 @@ public class RegistrarVehiculo {
         alert.setContentText(mensaje);
         alert.showAndWait();
     }
-
-    /*public void obtenerValoresComboBox() {
-        // Obtener valores de los ComboBox, manejar el caso cuando no haya selección.
-        Integer tipoMotor = cbTipoMotor.getValue() != null ? cbTipoMotor.getValue() : -1;
-        String color = cbColor.getValue() != null ? cbColor.getValue() : null;
-        Integer tipoCamion = cbTipoCamion.getValue() != null ? cbTipoCamion.getValue() : -1;
-        Integer tipoVehiculo = cbTipoVehiculo.getValue() != null ? cbTipoVehiculo.getValue() : -1;
-        Integer tipoServicio = cbTipoServicio.getValue() != null ? cbTipoServicio.getValue() : -1;
-        Integer aireAcondicionado = cbAireAcondicionado.getValue() != null ? cbAireAcondicionado.getValue() : -1;
-        Integer camaraReversa = cbCamaraReversa.getValue() != null ? cbCamaraReversa.getValue() : -1;
-        Integer velocidadCrucero = cbVelocidadCrucero.getValue() != null ? cbVelocidadCrucero.getValue() : -1;
-        Integer frenosABS = cbFrenosABS.getValue() != null ? cbFrenosABS.getValue() : -1;
-        Integer frenosDeAire = cbFrenosDeAire.getValue() != null ? cbFrenosDeAire.getValue() : -1;
-        Integer sensorColision = cbSensorColision.getValue() != null ? cbSensorColision.getValue() : -1;
-        Integer sensorTrafico = cbSensorTrafico.getValue() != null ? cbSensorTrafico.getValue() : -1;
-        Integer traccionCuatroXcuatro = cbTraccionCuatroXcuatro.getValue() != null ? cbTraccionCuatroXcuatro.getValue() : -1;
-        Integer asistentePermanencia = cbAsistentePermanencia.getValue() != null ? cbAsistentePermanencia.getValue() : -1;
-        Integer tipoTransmision = cbTipoTransmision.getValue() != null ? cbTipoTransmision.getValue() : -1;
     
-        // Imprimir los valores de los ComboBox para depuración
-        System.out.println("Tipo de Motor: " + tipoMotor);
-        System.out.println("Color: " + color);
-        System.out.println("Tipo de Camión: " + tipoCamion);
-        System.out.println("Tipo de Vehículo: " + tipoVehiculo);
-        System.out.println("Tipo de Servicio: " + tipoServicio);
-        System.out.println("Aire Acondicionado: " + aireAcondicionado);
-        System.out.println("Cámara Reversa: " + camaraReversa);
-        System.out.println("Velocidad Crucero: " + velocidadCrucero);
-        System.out.println("Frenos ABS: " + frenosABS);
-        System.out.println("Frenos de Aire: " + frenosDeAire);
-        System.out.println("Sensor de Colisión: " + sensorColision);
-        System.out.println("Sensor de Tráfico: " + sensorTrafico);
-        System.out.println("Tracción 4X4: " + traccionCuatroXcuatro);
-        System.out.println("Asistente de Permanencia: " + asistentePermanencia);
-        System.out.println("Tipo de Transmisión: " + tipoTransmision);
-    }*/
     
     @FXML
     void OnCloseSesion(ActionEvent event) {
@@ -650,5 +663,47 @@ public class RegistrarVehiculo {
             return false;
         }
         return true;
+    }
+
+    @FXML
+    void OnRegistrarVehiculo (ActionEvent event) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getClassLoader().getResource("co/edu/uniquindio/poo/Views/vehiculos/registrarVehiculo.fxml"));
+            Parent registerRoot = loader.load();
+            
+            // Obtener la escena actual y el Stage
+            Stage stage = (Stage) MBMain.getScene().getWindow();
+            
+            // Configurar la nueva escena con la pantalla de login
+            Scene registerScene = new Scene(registerRoot);
+            stage.setScene(registerScene);
+            stage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+    }
+
+    @FXML
+    void OnListarVehiculo (ActionEvent event) {
+        try {       
+            FXMLLoader loader = new FXMLLoader(getClass().getClassLoader().getResource("co/edu/uniquindio/poo/Views/vehiculos/listarVehiculo.fxml"));
+            Parent listRoot = loader.load();
+
+            ListarVehiculo controller = loader.getController();
+        
+            // Llamar al método para cargar los empleados
+            controller.obtenerVehiculos();
+
+            // Obtener la escena actual y el Stage
+            Stage stage = (Stage) MBMain.getScene().getWindow();
+
+            // Configurar la nueva escena con la pantalla de login
+            Scene listScene = new Scene(listRoot);
+            stage.setScene(listScene);
+            stage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }

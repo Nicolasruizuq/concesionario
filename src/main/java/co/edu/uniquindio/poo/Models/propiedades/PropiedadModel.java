@@ -88,7 +88,7 @@ public class PropiedadModel {
     
 
     public Propiedad obtenerPropiedadPorId(int id) {
-        String sql = "SELECT id, id_motor_type, color, cilindraje, num_doors, num_passengers, cambios, num_airbags, num_axles, num_emergency_exits, horsepower, maximum_speed, trunk_capacity, time_100_km, load_capacity, type_truck, air_conditioning, reverse_camera, cruising_speed, abs_brakes, air_brakes, collision_sensor, cross_traffic_sensor, cuatro_x_cuatro, lane_keeping_assist, transmition_type, status, FROM property WHERE id = ? AND status = 1 AND deleted_at IS NULL";
+        String sql = "SELECT id, id_motor_type, color, cilindraje, num_doors, num_passengers, cambios, num_airbags, num_axles, num_emergency_exits, horsepower, maximum_speed, trunk_capacity, time_100_km, load_capacity, type_truck, air_conditioning, reverse_camera, cruising_speed, abs_brakes, air_brakes, collision_sensor, cross_traffic_sensor, cuatro_x_cuatro, lane_keeping_assist, transmition_type FROM property WHERE id = ? AND deleted_at IS NULL";
         Propiedad propiedad = null;
 
         try (Connection conn = DatabaseConnection.getConnection();
@@ -134,44 +134,48 @@ public class PropiedadModel {
         return propiedad;
     }
 
-    public boolean actualizarPropiedad(Propiedad propiedad) {
-        String sql = "UPDATE property SET id_motor_type = ?, color = ?, cilindraje = ?, num_doors = ?, num_passengers = ?, cambios = ?, num_airbags, num_axles = ?, num_emergency_exits = ?, horsepower = ?, maximum_speed = ?, trunk_capacity = ?, time_100_km = ?, load_capacity = ?, type_truck = ?, air_conditioning = ?, reverse_camera = ?, cruising_speed = ?, abs_brakes = ?, air_brakes = ?, collision_sensor = ?, cross_traffic_sensor = ?, cuatro_x_cuatro = ?, lane_keeping_assist = ?, transmition_type = ? WHERE id = ? AND deleted_at IS NULL";
-
+    public int actualizarPropiedad(Propiedad propiedad) {
+        String sql = "UPDATE property SET id_motor_type = ?, color = ?, cilindraje = ?, num_doors = ?, num_passengers = ?, cambios = ?, num_airbags = ?, num_axles = ?, num_emergency_exits = ?, horsepower = ?, maximum_speed = ?, trunk_capacity = ?, time_100_km = ?, load_capacity = ?, type_truck = ?, air_conditioning = ?, reverse_camera = ?, cruising_speed = ?, abs_brakes = ?, air_brakes = ?, collision_sensor = ?, cross_traffic_sensor = ?, cuatro_x_cuatro = ?, lane_keeping_assist = ?, transmition_type = ? WHERE id = ? AND deleted_at IS NULL";
+    
         try (Connection conn = DatabaseConnection.getConnection();
              PreparedStatement pstmt = conn.prepareStatement(sql)) {
-                pstmt.setInt(1, propiedad.getIdMotorType());
-                pstmt.setString(2, propiedad.getColor());
-                pstmt.setString(3, propiedad.getCilindraje());
-                pstmt.setInt(4, propiedad.getNumDoors());
-                pstmt.setInt(5, propiedad.getnumPassengers());
-                pstmt.setInt(6, propiedad.getCambios());
-                pstmt.setInt(7, propiedad.getNumAirbags());
-                pstmt.setInt(8, propiedad.getNumAxles());
-                pstmt.setInt(9, propiedad.getNumEmergencyExits());
-                pstmt.setString(10, propiedad.getHorsePower());
-                pstmt.setString(11, propiedad.getMaximumSpeed());
-                pstmt.setInt(12, propiedad.getTrunkCapacity());
-                pstmt.setString(13, propiedad.getTime100Km());
-                pstmt.setString(14, propiedad.getLoadCapacity());
-                pstmt.setInt(15, propiedad.getTypeTruck());
-                pstmt.setInt(16, propiedad.getAirConditioning());
-                pstmt.setInt(17, propiedad.getReverseCamera());
-                pstmt.setInt(18, propiedad.getCruisingSpeed());
-                pstmt.setInt(19, propiedad.getAbsBrakes());
-                pstmt.setInt(20, propiedad.getAirBrakes());
-                pstmt.setInt(21, propiedad.getCollisionSensor());
-                pstmt.setInt(22, propiedad.getCrossTrafficSensor());
-                pstmt.setInt(23, propiedad.getCuatroXcuatro());
-                pstmt.setInt(24, propiedad.getLaneKeepingAssist());
-                pstmt.setInt(25, propiedad.getTipoTransmision()); 
-
+            
+            pstmt.setInt(1, propiedad.getIdMotorType());
+            pstmt.setString(2, propiedad.getColor());
+            pstmt.setString(3, propiedad.getCilindraje());
+            pstmt.setInt(4, propiedad.getNumDoors());
+            pstmt.setInt(5, propiedad.getnumPassengers());  // Corrige el método `getnumPassengers()` a `getNumPassengers()`
+            pstmt.setInt(6, propiedad.getCambios());
+            pstmt.setInt(7, propiedad.getNumAirbags());
+            pstmt.setInt(8, propiedad.getNumAxles());
+            pstmt.setInt(9, propiedad.getNumEmergencyExits());
+            pstmt.setString(10, propiedad.getHorsePower());
+            pstmt.setString(11, propiedad.getMaximumSpeed());
+            pstmt.setInt(12, propiedad.getTrunkCapacity());
+            pstmt.setString(13, propiedad.getTime100Km());
+            pstmt.setString(14, propiedad.getLoadCapacity());
+            pstmt.setInt(15, propiedad.getTypeTruck());
+            pstmt.setInt(16, propiedad.getAirConditioning());
+            pstmt.setInt(17, propiedad.getReverseCamera());
+            pstmt.setInt(18, propiedad.getCruisingSpeed());
+            pstmt.setInt(19, propiedad.getAbsBrakes());
+            pstmt.setInt(20, propiedad.getAirBrakes());
+            pstmt.setInt(21, propiedad.getCollisionSensor());
+            pstmt.setInt(22, propiedad.getCrossTrafficSensor());
+            pstmt.setInt(23, propiedad.getCuatroXcuatro());
+            pstmt.setInt(24, propiedad.getLaneKeepingAssist());
+            pstmt.setInt(25, propiedad.getTipoTransmision());
+            pstmt.setInt(26, propiedad.getId());  // Asumo que `propiedad` tiene un método `getId()`
+    
+            // Ejecutar la actualización y obtener el número de filas afectadas
             int filasActualizadas = pstmt.executeUpdate();
-            return filasActualizadas > 0;
+            
+            return filasActualizadas;  // Retorna el número de filas actualizadas
         } catch (SQLException e) {
             e.printStackTrace();
-            return false;
+            return -1;  // Retorna -1 en caso de error
         }
-    }
+    }    
 
     public boolean eliminarPropiedad(int id) {
         String sql = "UPDATE property SET deleted_at = NOW() WHERE id = ? AND deleted_at IS NULL";

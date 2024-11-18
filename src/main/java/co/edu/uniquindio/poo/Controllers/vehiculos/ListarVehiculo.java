@@ -29,6 +29,7 @@ import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
+import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -77,7 +78,7 @@ public class ListarVehiculo {
     private TableColumn<Vehiculo, Double> TCValorVenta = new TableColumn<>("Valor de venta");
 
     @FXML
-    private TableColumn<Vehiculo, Integer> TCTipoServicio;
+    private TableColumn<Vehiculo, String> TCTipoServicio;
 
     @FXML
     private TableColumn<Vehiculo, Void> TCEditar;
@@ -178,7 +179,13 @@ public class ListarVehiculo {
                 }
             };
         });
-        TCTipoServicio.setCellValueFactory(cellData -> cellData.getValue().tipoServicioProperty().asObject());
+        TCTipoServicio.setCellValueFactory(cellData -> {
+            int tipoServicio = cellData.getValue().getTipoServicio();
+            // Convertir el valor numérico a texto
+            String tipoServicioTexto = tipoServicio == 1 ? "Venta" :
+                                       tipoServicio == 2 ? "Alquiler" : "Otro";
+            return new SimpleStringProperty(tipoServicioTexto);
+        });
         TCEditar.setCellFactory(param -> new TableCell<Vehiculo, Void>() {
             private final ImageView editIcon = new ImageView(new Image(getClass().getResourceAsStream("/co/edu/uniquindio/poo/Resources/img/editar.png")));
             private final StackPane container = new StackPane(editIcon);
@@ -196,7 +203,7 @@ public class ListarVehiculo {
                     setGraphic(container);
                     editIcon.setOnMouseClicked(event -> {
                         Vehiculo vehiculo = getTableView().getItems().get(getIndex());
-                        System.out.println("Clic en editar vehículo: " + vehiculo.getId());
+                        System.out.println("Clic en editar vehiculo: " + vehiculo.getId());
                         if (vehiculo != null) {
                             OnEditarVehiculo(vehiculo);
                         }
@@ -276,10 +283,10 @@ public class ListarVehiculo {
         }
     }
 
-    private void OnEditarVehiculo (Vehiculo vehiculo) {
+    private void OnEditarVehiculo(Vehiculo vehiculo) {
         try {
             // Cargar la vista de editar cliente
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/co/edu/uniquindio/poo/Views/vehiculos/editarvehiculo.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/co/edu/uniquindio/poo/Views/vehiculos/editarVehiculo.fxml"));
             Parent editarRoot = loader.load();
     
             // Obtener el controlador de la vista editarCliente.fxml
@@ -446,23 +453,30 @@ public class ListarVehiculo {
         } catch (IOException e) {
             e.printStackTrace();
         }
+
     }
 
-    private void configurarTabla() {
-        // Configurar columna para la marca
-        TableColumn<Vehiculo, String> colMarca = new TableColumn<>("Marca");
-        colMarca.setCellValueFactory(new PropertyValueFactory<>("brand")); // La propiedad del modelo
+    @FXML
+    void OnListarVehiculo (ActionEvent event) {
+        try {       
+            FXMLLoader loader = new FXMLLoader(getClass().getClassLoader().getResource("co/edu/uniquindio/poo/Views/vehiculos/listarVehiculo.fxml"));
+            Parent listRoot = loader.load();
 
-        // Configurar otras columnas de tu TableView si es necesario
-        TableColumn<Vehiculo, String> colModelo = new TableColumn<>("Modelo");
-        colModelo.setCellValueFactory(new PropertyValueFactory<>("idModel")); // Ejemplo
+            ListarVehiculo controller = loader.getController();
+        
+            // Llamar al método para cargar los empleados
+            controller.obtenerVehiculos();
 
-        TableColumn<Vehiculo, Double> colValorVenta = new TableColumn<>("Valor Venta");
-        colValorVenta.setCellValueFactory(new PropertyValueFactory<>("valorVenta"));
+            // Obtener la escena actual y el Stage
+            Stage stage = (Stage) MBMain.getScene().getWindow();
 
-        // Agregar las columnas al TableView
-        TVVehiculos.getColumns().addAll(colMarca, colModelo, colValorVenta);
+            // Configurar la nueva escena con la pantalla de login
+            Scene listScene = new Scene(listRoot);
+            stage.setScene(listScene);
+            stage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
-
 }
 
