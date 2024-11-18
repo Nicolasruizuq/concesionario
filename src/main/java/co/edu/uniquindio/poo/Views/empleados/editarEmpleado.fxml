@@ -31,7 +31,7 @@
           <Menu fx:id="MVehiculos" mnemonicParsing="false" text="Vehículos">
             <items>
               <MenuItem mnemonicParsing="false" onAction="#OnRegistrarVehiculo" text="Registrar Vehiculos" />
-                  <MenuItem mnemonicParsing="false" text="Alquilar Vehiculos" />
+                  <MenuItem mnemonicParsing="false" onAction="#OnAlquilarVehiculo" text="Alquilar Vehiculos" />
                   <MenuItem mnemonicParsing="false" text="Comprar Vehiculos" />
                   <MenuItem mnemonicParsing="false" text="Vender Vehiculos" />
                   <MenuItem mnemonicParsing="false" onAction="#OnListarVehiculo" text="Listar Vehiculos" />
@@ -73,8 +73,8 @@
       <TextField fx:id="txtTelefono" layoutX="189.0" layoutY="291.0" />
       <TextField fx:id="txtDireccion" layoutX="545.0" layoutY="236.0" />
       <TextField fx:id="txtEmail" layoutX="545.0" layoutY="291.0" />
-      <TextField fx:id="txtUsername" editable="false" layoutX="189.0" layoutY="346.0" />
-      <TextField fx:id="txtPassword" layoutX="547.0" layoutY="346.0" />
+      <TextField fx:id="txtUsername" disable="true" editable="false" layoutX="189.0" layoutY="346.0" />
+      <TextField fx:id="txtPassword" disable="true" editable="false" layoutX="547.0" layoutY="346.0" />
       <RadioButton fx:id="rbFemenino" layoutX="182.0" layoutY="240.0" mnemonicParsing="false" text="Femenino">
          <toggleGroup>
             <ToggleGroup fx:id="sexoGroup" />

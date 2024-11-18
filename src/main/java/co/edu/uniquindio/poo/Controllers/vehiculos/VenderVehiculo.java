@@ -1,21 +1,36 @@
 package co.edu.uniquindio.poo.Controllers.vehiculos;
 
 import java.io.IOException;
+import java.util.LinkedList;
 
 import co.edu.uniquindio.poo.Controllers.clientes.ListarCliente;
 import co.edu.uniquindio.poo.Controllers.empleados.ListarEmpleado;
+import co.edu.uniquindio.poo.Models.clientes.Cliente;
+import co.edu.uniquindio.poo.Models.clientes.ClienteModel;
+import co.edu.uniquindio.poo.Models.empleados.Empleado;
+import co.edu.uniquindio.poo.Models.empleados.EmpleadoModel;
+import co.edu.uniquindio.poo.Models.rentas.Renta;
+import co.edu.uniquindio.poo.Models.rentas.RentaModel;
+import co.edu.uniquindio.poo.Models.vehiculos.Vehiculo;
+import co.edu.uniquindio.poo.Models.vehiculos.VehiculoModel;
+import co.edu.uniquindio.poo.Models.ventas.Venta;
+import co.edu.uniquindio.poo.Models.ventas.VentaModel;
 import javafx.application.Platform;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Menu;
 import javafx.scene.control.MenuBar;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
+import javafx.util.StringConverter;
 
 public class VenderVehiculo {
 
@@ -50,10 +65,181 @@ public class VenderVehiculo {
     private ComboBox<Integer> cbEmpleado;
 
     @FXML
-    private ComboBox<Integer> cbVehiculo;
+    private ComboBox<String> cbVehiculo;
+
+    @FXML
+    private TextField txtCantidad;
+
+    @FXML
+    private TextField txtSubtotal;
 
     @FXML
     private TextField txtValorTotal;
+
+    private EmpleadoModel empleadoModel;
+
+    private VehiculoModel vehiculoModel;
+
+    private ClienteModel clienteModel;
+
+    private VentaModel ventaModel;
+
+    public VenderVehiculo () {
+        ventaModel = new VentaModel();
+        vehiculoModel = new VehiculoModel();
+        empleadoModel = new EmpleadoModel();
+        clienteModel = new ClienteModel();
+    }
+
+    @FXML
+    public void initialize() {       
+        LinkedList<Empleado> empleados = empleadoModel.obtenerEmpleados();
+        ObservableList<Integer> empleadosList = FXCollections.observableArrayList();
+
+        for (Empleado empleado : empleados) {
+            empleadosList.add(empleado.getId());
+        }
+        
+        if (empleadosList != null) {
+            // Carga los empleados en el ComboBox
+            cbEmpleado.setItems(empleadosList);
+
+            // Usar StringConverter para mostrar el nombre pero usar el id como valor
+            cbEmpleado.setConverter(new StringConverter<Integer>() {
+            @Override
+            public String toString(Integer idEmpleado) {
+                // Buscar el empleado por id y mostrar su nombre
+                Empleado empleado = empleados.stream()
+                        .filter(e -> e.getId() == idEmpleado)
+                        .findFirst()
+                        .orElse(null);
+                return empleado != null ? empleado.getFullName() : "";
+            }
+
+            @Override
+            public Integer fromString(String nombre) {
+                // Este método no se usa mucho porque el ComboBox ya está trabajando con ids, pero lo dejamos por si es necesario.
+                return empleados.stream()
+                        .filter(e -> e.getFullName().equals(nombre))
+                        .map(Empleado::getId)
+                        .findFirst()
+                        .orElse(null);
+            }
+        });
+
+            // Selecciona un valor por defecto (si es necesario)
+            cbEmpleado.setValue(empleadosList.isEmpty() ? null : empleadosList.get(0));
+        }
+
+        LinkedList<Vehiculo> vehiculos = vehiculoModel.obtenerVehiculos();
+        ObservableList<String> vehiculosList = FXCollections.observableArrayList();
+
+        for (Vehiculo vehiculo : vehiculos) {
+            vehiculosList.add(vehiculo.getBrand()+ vehiculo.getModel());
+        }
+        
+        if (vehiculosList != null) {
+            // Carga los empleados en el ComboBox
+            cbVehiculo.setItems(vehiculosList);
+
+            // Usar StringConverter para mostrar el nombre pero usar el id como valor
+            cbVehiculo.setConverter(new StringConverter<String>() {
+                @Override
+                public String toString(String brand) {
+                    // Retornar directamente la marca, ya que es el valor mostrado en el ComboBox
+                    return brand;
+                }
+        
+                @Override
+                public String fromString(String brand) {
+                    // Devuelve la marca tal como está, ya que no estás trabajando con un ID
+                    return brand;
+                }
+            });
+        
+            // Seleccionar un valor por defecto si es necesario
+            cbVehiculo.setValue(vehiculosList.isEmpty() ? null : vehiculosList.get(0));
+        }
+        LinkedList<Cliente> clientes = clienteModel.obtenerClientes();
+        ObservableList<Integer> clientesList = FXCollections.observableArrayList();
+
+        for (Cliente cliente : clientes) {
+            clientesList.add(cliente.getId());
+        }
+        
+        if (clientesList != null) {
+            // Carga los empleados en el ComboBox
+            cbCliente.setItems(clientesList);
+
+            // Usar StringConverter para mostrar el nombre pero usar el id como valor
+            cbCliente.setConverter(new StringConverter<Integer>() {
+            @Override
+            public String toString(Integer idCustomer) {
+                // Buscar el empleado por id y mostrar su nombre
+                Cliente cliente = clientes.stream()
+                        .filter(e -> e.getId() == idCustomer)
+                        .findFirst()
+                        .orElse(null);
+                return cliente != null ? cliente.getFullname() : "";
+            }
+
+            @Override
+            public Integer fromString(String nombre) {
+                // Este método no se usa mucho porque el ComboBox ya está trabajando con ids, pero lo dejamos por si es necesario.
+                return clientes.stream()
+                        .filter(e -> e.getFullname().equals(nombre))
+                        .map(Cliente::getId)
+                        .findFirst()
+                        .orElse(null);
+            }
+        });
+
+            // Selecciona un valor por defecto (si es necesario)
+            cbCliente.setValue(clientesList.isEmpty() ? null : clientesList.get(0));
+        }
+    }
+
+    @FXML
+    public void venderVehiculo(ActionEvent event) {
+        try {
+            
+            Venta nuevaVenta = new Venta();
+            nuevaVenta.setIdCustomer(cbCliente.getValue()); 
+            nuevaVenta.setIdEmployee(cbEmpleado.getValue());
+            nuevaVenta.setProduct(cbVehiculo.getValue());         
+            try {
+                int amount = Integer.parseInt(txtCantidad.getText());
+                int salesPrice = Integer.parseInt(txtSubtotal.getText());
+                int total = Integer.parseInt(txtValorTotal.getText());
+
+                nuevaVenta.setAmount(amount);
+                nuevaVenta.setSalesPrice(salesPrice);
+                nuevaVenta.setTotal(total);
+            } catch (NumberFormatException e) {
+                System.out.println("Error: Los campos deben contener valores numéricos.");
+            }
+        
+            boolean creado = ventaModel.crearVenta(nuevaVenta);
+            mostrarAlerta(creado ? "Venta creada correctamente." : "Error al crear la venta.");
+        } catch (NullPointerException e) {
+            mostrarAlerta("Error: Hay campos obligatorios sin completar.");
+        } catch (Exception e) {
+            e.printStackTrace();
+            mostrarAlerta("Ocurrió un error al intentar crear la venta.");
+        }
+    }
+    
+    private void mostrarAlerta(String mensaje) {
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle("Resultado");
+        alert.setHeaderText(null);
+        alert.setContentText(mensaje);
+        alert.showAndWait();
+    }
+
+    public int obtenerValorSeleccionado() {
+        return cbCliente.getValue() + cbEmpleado.getValue(); // Obtiene el valor entero directamente
+    }
 
     @FXML
     void OnCloseSesion(ActionEvent event) {
@@ -203,6 +389,25 @@ public class VenderVehiculo {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    @FXML
+    void OnAlquilarVehiculo (ActionEvent event) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getClassLoader().getResource("co/edu/uniquindio/poo/Views/vehiculos/alquilarVehiculo.fxml"));
+            Parent registerRoot = loader.load();
+            
+            // Obtener la escena actual y el Stage
+            Stage stage = (Stage) MBMain.getScene().getWindow();
+            
+            // Configurar la nueva escena con la pantalla de login
+            Scene registerScene = new Scene(registerRoot);
+            stage.setScene(registerScene);
+            stage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
     }
     
 }

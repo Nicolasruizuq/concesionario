@@ -218,5 +218,10 @@ public class Vehiculo {
         return motor != null ? motor.getMotor() : "Desconocida";
     }
 
+    @Override
+    public String toString() {
+        return getBrand() + " " + getModel();
+    }
+
     
 }

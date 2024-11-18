@@ -90,6 +90,7 @@ public class ListarCliente{
 
     @FXML
     public void initialize() {
+
         // Inicializa las columnas del TableView para que se vinculen con las propiedades de Empleado
         TCId.setCellValueFactory(cellData -> cellData.getValue().idProperty().asObject());
         TCNombreCompleto.setCellValueFactory(cellData -> cellData.getValue().fullnameProperty());
@@ -392,5 +393,24 @@ public class ListarCliente{
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    @FXML
+    void OnAlquilarVehiculo (ActionEvent event) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getClassLoader().getResource("co/edu/uniquindio/poo/Views/vehiculos/alquilarVehiculo.fxml"));
+            Parent registerRoot = loader.load();
+            
+            // Obtener la escena actual y el Stage
+            Stage stage = (Stage) MBMain.getScene().getWindow();
+            
+            // Configurar la nueva escena con la pantalla de login
+            Scene registerScene = new Scene(registerRoot);
+            stage.setScene(registerScene);
+            stage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
     }
 }

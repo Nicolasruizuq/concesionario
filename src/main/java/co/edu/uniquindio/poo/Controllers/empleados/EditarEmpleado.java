@@ -93,6 +93,42 @@ public class EditarEmpleado {
 
     private EmpleadoModel empleadoModel;
 
+    private final Map<String, Integer> rolValores = new HashMap<>();
+
+    @FXML
+    public void initialize() {
+        // Configura los valores del mapa antes de añadir al ComboBox
+        rolValores.put("Administrador", 1);
+        rolValores.put("Empleado", 2);
+    
+        cbTypeUser.getItems().addAll(1, 2);
+    
+        cbTypeUser.setConverter(new StringConverter<>() {
+            @Override
+            public String toString(Integer value) {
+                // Muestra la etiqueta correspondiente al valor Integer
+                return rolValores.entrySet()
+                        .stream()
+                        .filter(entry -> entry.getValue().equals(value))
+                        .map(Map.Entry::getKey)
+                        .findFirst()
+                        .orElse("");
+            }
+    
+            @Override
+            public Integer fromString(String label) {
+                // Convierte la etiqueta de texto a su valor Integer correspondiente
+                return rolValores.get(label);
+            }
+        });
+    
+        cbTypeUser.setValue(1); // Selecciona "Administrador" por defecto
+    
+        // Asigna el grupo de selección de sexo a los RadioButtons
+        rbFemenino.setToggleGroup(sexoGroup);
+        rbMasculino.setToggleGroup(sexoGroup);
+    }
+
     public EditarEmpleado() {
         clienteModel = new ClienteModel();
         empleadoModel = new EmpleadoModel();
@@ -324,6 +360,25 @@ public class EditarEmpleado {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    @FXML
+    void OnAlquilarVehiculo (ActionEvent event) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getClassLoader().getResource("co/edu/uniquindio/poo/Views/vehiculos/alquilarVehiculo.fxml"));
+            Parent registerRoot = loader.load();
+            
+            // Obtener la escena actual y el Stage
+            Stage stage = (Stage) MBMain.getScene().getWindow();
+            
+            // Configurar la nueva escena con la pantalla de login
+            Scene registerScene = new Scene(registerRoot);
+            stage.setScene(registerScene);
+            stage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
     }
 
 }

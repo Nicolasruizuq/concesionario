@@ -29,7 +29,7 @@
           <Menu fx:id="MVehiculos" mnemonicParsing="false" text="Vehículos">
             <items>
               <MenuItem mnemonicParsing="false" onAction="#OnRegistrarVehiculo" text="Registrar Vehiculos" />
-                  <MenuItem mnemonicParsing="false" text="Alquilar Vehiculos" />
+                  <MenuItem mnemonicParsing="false" onAction="#OnAlquilarVehiculo" text="Alquilar Vehiculos" />
                   <MenuItem mnemonicParsing="false" text="Comprar Vehiculos" />
                   <MenuItem mnemonicParsing="false" text="Vender Vehiculos" />
                   <MenuItem mnemonicParsing="false" onAction="#OnListarVehiculo" text="Listar Vehiculos" />
@@ -60,12 +60,16 @@
       </Label>
       <Label layoutX="80.0" layoutY="180.0" text="Cliente:" />
       <Label layoutX="80.0" layoutY="240.0" text="Empleado:" />
-      <Label layoutX="470.0" layoutY="240.0" text="Valor Total:" />
-      <TextField fx:id="txtValorTotal" layoutX="545.0" layoutY="235.0" />
+      <Label layoutX="470.0" layoutY="240.0" text="Valor Por Dia:" />
+      <TextField fx:id="txtValorTotal" layoutX="545.0" layoutY="293.0" />
       <ComboBox fx:id="cbVehiculo" layoutX="545.0" layoutY="175.0" prefWidth="150.0" />
       <Label layoutX="470.0" layoutY="180.0" text="Vehiculo:" />
-      <Button fx:id="btnAlquilar" layoutX="406.0" layoutY="511.0" mnemonicParsing="false" onAction="#crearEmpleado" text="Alquilar" />
+      <Button fx:id="btnAlquilar" layoutX="406.0" layoutY="511.0" mnemonicParsing="false" onAction="#crearRenta" text="Alquilar" />
       <ComboBox fx:id="cbEmpleado" layoutX="190.0" layoutY="235.0" prefWidth="150.0" />
       <ComboBox fx:id="cbCliente" layoutX="190.0" layoutY="175.0" prefWidth="150.0" />
+      <Label layoutX="80.0" layoutY="297.0" text="Días:" />
+      <TextField fx:id="txtValorDia" layoutX="545.0" layoutY="236.0" />
+      <TextField fx:id="txtNumDias" layoutX="190.0" layoutY="293.0" />
+      <Label layoutX="470.0" layoutY="297.0" text="ValorTotal:" />
    </children>
 </AnchorPane>

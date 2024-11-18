@@ -345,4 +345,23 @@ public class EditarVehiculo {
         }
     }
 
+    @FXML
+    void OnAlquilarVehiculo (ActionEvent event) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getClassLoader().getResource("co/edu/uniquindio/poo/Views/vehiculos/alquilarVehiculo.fxml"));
+            Parent registerRoot = loader.load();
+            
+            // Obtener la escena actual y el Stage
+            Stage stage = (Stage) MBMain.getScene().getWindow();
+            
+            // Configurar la nueva escena con la pantalla de login
+            Scene registerScene = new Scene(registerRoot);
+            stage.setScene(registerScene);
+            stage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+    }
+
 }
