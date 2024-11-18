@@ -10,7 +10,6 @@ public class Renta {
     private IntegerProperty id;
     private IntegerProperty idEmployee;
     private IntegerProperty idCustomer;
-    private StringProperty telephone; 
     private StringProperty vehicle; 
     private IntegerProperty numDays;
     private IntegerProperty valuePerDay;
@@ -21,8 +20,7 @@ public class Renta {
         // Inicialización de las propiedades
         this.id = new SimpleIntegerProperty();
         this.idEmployee = new SimpleIntegerProperty();
-        this.idCustomer = new SimpleIntegerProperty();        
-        this.telephone = new SimpleStringProperty();
+        this.idCustomer = new SimpleIntegerProperty();
         this.vehicle = new SimpleStringProperty();
         this.numDays = new SimpleIntegerProperty();
         this.valuePerDay = new SimpleIntegerProperty();
@@ -65,18 +63,6 @@ public class Renta {
 
     public int getIdCustomer() {
         return idCustomer.get();
-    }
-
-    public StringProperty telephoneProperty() {
-        return telephone;
-    }
-
-    public void setTelephone(String telephone) {
-        this.telephone.set(telephone);
-    }
-
-    public String getTelephone() {
-        return telephone.get();
     }
 
     public StringProperty vehicleProperty() {

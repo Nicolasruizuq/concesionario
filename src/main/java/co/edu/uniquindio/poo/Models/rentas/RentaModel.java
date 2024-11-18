@@ -10,19 +10,18 @@ import co.edu.uniquindio.poo.Connection.DatabaseConnection;
 
 public class RentaModel {
     public boolean crearRenta(Renta renta) {
-        String sql = "INSERT INTO rented (id_employee, id_customer, telephone, vehicle, num_days, value_per_day, total, status, created_at) " 
-                   + "VALUES (?, ?, ?, ?, ?, ?, ?, 1, NOW())";
+        String sql = "INSERT INTO rented (id_employee, id_customer, vehicle, num_days, value_per_day, total, status, created_at) " 
+                   + "VALUES (?, ?, ?, ?, ?, ?,  1, NOW())";
 
         try (Connection conn = DatabaseConnection.getConnection();
              PreparedStatement pstmt = conn.prepareStatement(sql)) {
 
                 pstmt.setInt(1, renta.getIdEmployee());
                 pstmt.setInt(2, renta.getIdCustomer());
-                pstmt.setString(3, renta.getTelephone());
-                pstmt.setString(4, renta.getvehicle());
-                pstmt.setInt(5, renta.getNumDays());
-                pstmt.setInt(6, renta.getValuePerDay());
-                pstmt.setInt(7, renta.getTotal());
+                pstmt.setString(3, renta.getvehicle());
+                pstmt.setInt(4, renta.getNumDays());
+                pstmt.setInt(5, renta.getValuePerDay());
+                pstmt.setInt(6, renta.getTotal());
 
             int filasInsertadas = pstmt.executeUpdate();
             return filasInsertadas > 0;
@@ -34,7 +33,7 @@ public class RentaModel {
     }
 
     public LinkedList<Renta> obtenerRentas() {
-        String sql = "SELECT id, id_employee, id_customer, telephone, vehicle, num_days, value_per_day, total, status, created_at FROM rented WHERE status = 1 AND deleted_at IS NULL";
+        String sql = "SELECT id, id_employee, id_customer, vehicle, num_days, value_per_day, total, status, created_at FROM rented WHERE status = 1 AND deleted_at IS NULL";
         LinkedList<Renta> rentas = new LinkedList<>();
     
         try (Connection conn = DatabaseConnection.getConnection();
@@ -51,7 +50,6 @@ public class RentaModel {
                 renta.setId(rs.getInt("id"));
                 renta.setIdEmployee(rs.getInt("id_employee"));
                 renta.setIdCustomer(rs.getInt("id_customer"));
-                renta.setVehicle(rs.getString("telephone"));
                 renta.setNumDays(rs.getInt("vehicle"));
                 renta.setNumDays(rs.getInt("num_days"));
                 renta.setValuePerDay(rs.getInt("value_per_day"));
@@ -70,7 +68,7 @@ public class RentaModel {
     }   
 
     public Renta obtenerRentaPorId(int id) {
-        String sql = "SELECT id, id, id_employee, id_customer, telephone, vehicle, num_days, value_per_day, total, status, created_at FROM rented WHERE id = ? AND status = 1 AND deleted_at IS NULL";
+        String sql = "SELECT id, id, id_employee, id_customer, vehicle, num_days, value_per_day, total, status, created_at FROM rented WHERE id = ? AND status = 1 AND deleted_at IS NULL";
         Renta renta = null;
 
         try (Connection conn = DatabaseConnection.getConnection();
@@ -84,7 +82,6 @@ public class RentaModel {
                     renta.setId(rs.getInt("id"));
                     renta.setIdEmployee(rs.getInt("id_employee"));
                     renta.setIdCustomer(rs.getInt("id_customer"));
-                    renta.setVehicle(rs.getString("telephone"));
                     renta.setNumDays(rs.getInt("vehicle"));
                     renta.setNumDays(rs.getInt("num_days"));
                     renta.setValuePerDay(rs.getInt("value_per_day"));
@@ -100,14 +97,13 @@ public class RentaModel {
     }
 
     public boolean actualizarRenta(Renta renta) {
-        String sql = "UPDATE rented SET id_employee = ?, id_customer = ?, telephone = ?, vehicle = ?, num_days = ?, value_per_day = ?, total = ? WHERE id = ? AND status = 1 AND deleted_at IS NULL";
+        String sql = "UPDATE rented SET id_employee = ?, id_customer = ?, vehicle = ?, num_days = ?, value_per_day = ?, total = ? WHERE id = ? AND status = 1 AND deleted_at IS NULL";
 
         try (Connection conn = DatabaseConnection.getConnection();
              PreparedStatement pstmt = conn.prepareStatement(sql)) {
             
             pstmt.setInt(1, renta.getIdEmployee());
             pstmt.setInt(2, renta.getIdCustomer());
-            pstmt.setString(3, renta.getTelephone());
             pstmt.setString(4, renta.getvehicle());
             pstmt.setInt(5, renta.getNumDays());
             pstmt.setInt(6, renta.getValuePerDay());

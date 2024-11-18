@@ -10,7 +10,6 @@ public class Venta {
     private IntegerProperty id;
     private IntegerProperty idEmployee;
     private IntegerProperty idCustomer;
-    private StringProperty telephoneCustomer;
     private StringProperty product;
     private IntegerProperty amount;
     private IntegerProperty salesPrice;
@@ -20,8 +19,7 @@ public class Venta {
     public Venta() {
         this.id = new SimpleIntegerProperty();        
         this.idEmployee = new SimpleIntegerProperty();
-        this.idCustomer = new SimpleIntegerProperty();          
-        this.telephoneCustomer = new SimpleStringProperty();
+        this.idCustomer = new SimpleIntegerProperty();
         this.product = new SimpleStringProperty();
         this.amount = new SimpleIntegerProperty();
         this.salesPrice = new SimpleIntegerProperty();
@@ -65,19 +63,7 @@ public class Venta {
     public int getIdCustomer() {
         return idCustomer.get();
     }
-
-    public StringProperty telephoneCustomerProperty() {
-        return telephoneCustomer;
-    }
-
-    public void setTelephoneCustomer(String telephoneCustomer) {
-        this.telephoneCustomer.set(telephoneCustomer);
-    }
-
-    public String getTelephoneCustomer() {
-        return telephoneCustomer.get();
-    }
-
+    
     public StringProperty productProperty() {
         return product;
     }
