@@ -33,19 +33,13 @@
               <MenuItem mnemonicParsing="false" onAction="#OnRegistrarVehiculo" text="Registrar Vehiculos" />
                   <MenuItem mnemonicParsing="false" onAction="#OnAlquilarVehiculo" text="Alquilar Vehiculos" />
                   <MenuItem mnemonicParsing="false" text="Comprar Vehiculos" />
-                  <MenuItem mnemonicParsing="false" text="Vender Vehiculos" />
+                  <MenuItem mnemonicParsing="false" onAction="#OnVenderVehiculo" text="Vender Vehiculos" />
                   <MenuItem mnemonicParsing="false" onAction="#OnListarVehiculo" text="Listar Vehiculos" />
             </items>
           </Menu>
             <Menu fx:id="MReportes" mnemonicParsing="false" text="Reportes">
               <items>
-                <MenuItem mnemonicParsing="false" text="Action 1" />
-              </items>
-            </Menu>
-            <Menu fx:id="MUsuarios" mnemonicParsing="false" text="Usuarios">
-              <items>
-                <MenuItem mnemonicParsing="false" text="Registrar Usuarios" />
-                  <MenuItem mnemonicParsing="false" text="Listar Usuarios" />
+                <MenuItem mnemonicParsing="false" onAction="#OnReportes" text="Reportes Empleados" />
               </items>
             </Menu>
             <Menu fx:id="MMiCuenta" mnemonicParsing="false" text="Mi Cuenta">

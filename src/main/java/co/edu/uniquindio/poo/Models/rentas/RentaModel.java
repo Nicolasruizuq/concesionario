@@ -50,7 +50,7 @@ public class RentaModel {
                 renta.setId(rs.getInt("id"));
                 renta.setIdEmployee(rs.getInt("id_employee"));
                 renta.setIdCustomer(rs.getInt("id_customer"));
-                renta.setNumDays(rs.getInt("vehicle"));
+                renta.setVehicle(rs.getString("vehicle"));
                 renta.setNumDays(rs.getInt("num_days"));
                 renta.setValuePerDay(rs.getInt("value_per_day"));
                 renta.setTotal(rs.getInt("total"));
@@ -94,6 +94,41 @@ public class RentaModel {
         }
 
         return renta;
+    }
+
+    public LinkedList<Renta> obtenerRentasPorEmpleado() {
+        String sql = "SELECT id, id_employee, id_customer, vehicle, num_days, value_per_day, total, status, created_at FROM rented WHERE status = 1 AND deleted_at IS NULL";
+        LinkedList<Renta> rentas = new LinkedList<>();
+    
+        try (Connection conn = DatabaseConnection.getConnection();
+             PreparedStatement pstmt = conn.prepareStatement(sql);
+             ResultSet rs = pstmt.executeQuery()) {
+    
+            if (!rs.isBeforeFirst()) {
+                System.out.println("No se encontraron vehiculos rentados.");
+                return rentas;
+            }
+    
+            while (rs.next()) {
+                Renta renta = new Renta();
+                renta.setId(rs.getInt("id"));
+                renta.setIdEmployee(rs.getInt("id_employee"));
+                renta.setIdCustomer(rs.getInt("id_customer"));
+                renta.setVehicle(rs.getString("vehicle"));
+                renta.setNumDays(rs.getInt("num_days"));
+                renta.setValuePerDay(rs.getInt("value_per_day"));
+                renta.setTotal(rs.getInt("total"));
+                renta.setStatus(rs.getInt("status"));
+                rentas.add(renta);
+    
+                System.out.println("Renta: " + renta.getId() + ", " + ", " + renta.getvehicle());
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    
+        System.out.println("Total de rentas de vehículos encontrados: " + rentas.size());
+        return rentas;
     }
 
     public boolean actualizarRenta(Renta renta) {

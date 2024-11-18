@@ -89,7 +89,38 @@ public class VentaModel {
         }
 
         return venta;
-    }    
+    }
+    
+    public LinkedList<Venta> obtenerVentaPorEmpleado(int id) {
+        LinkedList<Venta> ventas = new LinkedList<>();
+        String sql = "sa.id, sa.id_employee, em.full_name, sa.product, sa.amount, sa.sales_price"
+                      + "FROM sale as sa"
+                      + "INNER JOIN employee as em ON sa.id_employee = em.id "
+                      + "WHERE sa.id_employee = 4 "
+                      + "GROUP BY sa.id, sa.id_employee WHERE id = ? AND status = 1 AND deleted_at IS NULL";
+        Venta venta = null;
+
+        try (Connection conn = DatabaseConnection.getConnection();
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+
+            pstmt.setInt(1, id);
+
+            try (ResultSet rs = pstmt.executeQuery()) {
+                if (rs.next()) {
+                    venta = new Venta();
+                    venta.setId(rs.getInt("id"));
+                    venta.setIdEmployee(rs.getInt("id_employee"));
+                    venta.setProduct(rs.getString("product"));
+                    venta.setAmount(rs.getInt("amount"));
+                    venta.setSalesPrice(rs.getInt("sales_price"));
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return ventas;
+    }
 
     public boolean eliminarVenta(int id) {
         String sql = "UPDATE sale SET deleted_at = NOW() WHERE id = ? AND status = 1 AND deleted_at IS NULL";
